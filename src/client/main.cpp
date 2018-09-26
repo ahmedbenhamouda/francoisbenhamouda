@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
@@ -19,7 +20,17 @@ int main(int argc,char* argv[])
     Exemple exemple;
     exemple.setX(53);
 
-    cout << "It works !" << endl;
-
+    if (argc < 2) {
+        cout << "Missing the \"hello\" argument." << endl;
+    } else if (argc > 2) {
+        cout << "Too many arguments." << endl;
+    } else {
+        string myString(argv[1]);
+        if (myString != "hello") {
+            cout << "Invalid argument." << endl;
+        } else {
+            cout << "Hello World (totally original)." << endl;
+        }
+    }
     return 0;
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" nextobjectid="1">
+ <tileset firstgid="1" name="Carte" tilewidth="16" tileheight="16" tilecount="87">
+  <image source="../textures/terrain.png" width="464" height="48"/>
+ </tileset>
+ <layer name="Calque de Tile 1" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJytk7EKwjAQhoN2UbF7p5JFpZLZQehSHcT3fx8TyMHxc3e5gMNHUpp++a+XzCGE+Y/sKvuObx4CuOYJziSsSczn2RedVrYyP2SOlZPhlOqXartkrpVbozbMyj2U66v4PPVruTSf1LPCxOax01fGwci41nHLvIC34vP0PbK59O+1s5kU52rsbbmtnBHeSTk9XnL2ZMS7ZfUIOVdGI6d1jxA6Px/F7b37BJ5Lco/Mh84BaPkkp6eH6Fvg+S70WqOVj/taTp7vByssNuU=
+  </data>
+ </layer>
+ <layer name="Calque 2" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMApIBwAGQAAB
+  </data>
+ </layer>
+</map>
