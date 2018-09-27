@@ -29,7 +29,7 @@ int main(int argc,char* argv[])
         if (myString != "hello") {
             cout << "Invalid argument." << endl;
         } else {
-            cout << "Hello World (totally original)." << endl;
+            cout << "- Hello there !\n- General Kenobi !" << endl;
         }
     }
     return 0;
