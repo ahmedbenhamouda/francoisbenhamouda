@@ -2,5 +2,16 @@
 #ifndef __STATE__H
 #define __STATE__H
 
-#include "state/Exemple.h"
+#include "state/TerrainTypeId.h"
+#include "state/Position.h"
+#include "state/TerrainTab.h"
+#include "state/Unite.h"
+#include "state/Batiment.h"
+#include "state/Terrain.h"
+#include "state/Jeu.h"
+#include "state/Tank.h"
+#include "state/Mech.h"
+#include "state/Infantry.h"
+#include "state/Recon.h"
+#include "state/HTank.h"
 #endif
