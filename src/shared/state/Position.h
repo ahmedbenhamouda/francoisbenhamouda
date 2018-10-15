@@ -8,7 +8,7 @@ namespace state {
   /// class Position - 
   class Position {
     // Attributes
-  public:
+  private:
     int x;
     int y;
     // Operations
@@ -16,6 +16,7 @@ namespace state {
     Position (int x, int y);
     int getX ();
     int getY ();
+    ~Position ();
     // Setters and Getters
   };
 

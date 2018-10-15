@@ -12,8 +12,9 @@ namespace state {
 }
 
 #include "TerrainTab.h"
-#include "Unite.h"
 #include "Position.h"
+#include "TerrainTypeId.h"
+#include "Unite.h"
 #include "Batiment.h"
 
 namespace state {
@@ -22,13 +23,17 @@ namespace state {
   class Terrain {
     // Associations
     // Attributes
-  public:
+  private:
     std::map<Position, Unite> unites;
     std::map<Position, Batiment> batiments;
     TerrainTab sol;
     // Operations
   public:
     Terrain (std::map<Position, Unite> unites, std::map<Position, Batiment> batiments, TerrainTab sol);
+    Unite& getUnite (Position position);
+    Batiment& getBatiment (Position position);
+    TerrainTypeId getGround (Position position);
+    ~Terrain ();
     // Setters and Getters
   };
 

@@ -16,19 +16,14 @@ namespace state {
   /// class TerrainTab - 
   class TerrainTab {
     // Attributes
-  public:
-    int width;
-    int height;
   private:
-    std::vector<std::vector<TerrainTypeId>> list;
+    std::vector<std::vector<TerrainTypeId>> grid;
     // Operations
   public:
-    TerrainTab (int width, int height);
+    TerrainTab (std::vector<std::vector<TerrainTypeId>> grid);
+    TerrainTab ();
     TerrainTypeId get (Position position);
-  private:
-    /// 	
-    /// @param list		(???) 
-    void fill (std::vector<std::vector<TerrainTypeId>> list);
+    ~TerrainTab ();
     // Setters and Getters
   };
 

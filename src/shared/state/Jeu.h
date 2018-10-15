@@ -22,7 +22,9 @@ namespace state {
     bool fin;
     // Operations
   public:
+    Jeu ();
     void main ();
+    ~Jeu ();
     // Setters and Getters
   };
 
