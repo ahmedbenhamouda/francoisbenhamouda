@@ -3,7 +3,7 @@
 namespace state {
 	Terrain::Terrain(std::map<Position, Unite> unites, std::map<Position, Batiment> batiments, TerrainTab sol) {
 		this->unites = unites;
-		this-> batiments = batiments;
+		this->batiments = batiments;
 		this->sol = sol;
 	}
 	Unite& Terrain::getUnite(Position position) {

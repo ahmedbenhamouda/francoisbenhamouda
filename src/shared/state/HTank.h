@@ -24,6 +24,7 @@ namespace state {
     int puissance     = 200;
     // Operations
   public:
+    HTank ();
     HTank (Position position, int color);
     std::vector<Position> getLegalMove ();
     ~HTank ();

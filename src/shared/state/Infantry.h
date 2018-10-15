@@ -24,6 +24,7 @@ namespace state {
     int puissance     = 60;
     // Operations
   public:
+    Infantry ();
     Infantry (Position position, int color);
     std::vector<Position> getLegalMove ();
     ~Infantry ();

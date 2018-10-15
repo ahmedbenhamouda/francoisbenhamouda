@@ -22,6 +22,7 @@ namespace state {
     int color;
     // Operations
   public:
+    Batiment ();
     Batiment (Position position, int color);
     void creerU (int argent, std::string typeUnite, Terrain& terrain);
     ~Batiment ();

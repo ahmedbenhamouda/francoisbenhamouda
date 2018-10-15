@@ -24,6 +24,7 @@ namespace state {
     int puissance     = 150;
     // Operations
   public:
+    Mech ();
     Mech (Position position, int color);
     std::vector<Position> getLegalMove ();
     ~Mech ();

@@ -25,6 +25,7 @@ namespace state {
     int puissance;
     // Operations
   public:
+    Unite ();
     Unite (Position position, int color);
     std::vector<Position> getLegalMove ();
     ~Unite ();

@@ -24,6 +24,7 @@ namespace state {
     int puissance     = 80;
     // Operations
   public:
+    Recon ();
     Recon (Position position, int color);
     std::vector<Position> getLegalMove ();
     ~Recon ();
