@@ -31,9 +31,21 @@ void tests() {
                                                            {plaine,plaine,route,plaine,plaine,plaine,plaine,plaine}};
     TerrainTab* terrainTab = new TerrainTab(defaultVector);
     cout<<"Terrain : "<<terrainTab->get(*pos)<<endl;
-
+    Unite* U = new Unite(*pos, 0);
+    cout<<"la position de l'unité est :"<<U->position.getX()<<","<<U->position.getY()<<"."<<endl;
+    Position* pos2 = new Position(2, 4);
+    Batiment* B = new Batiment(*pos2, 1);
+    cout<<"la position du batiment est :"<<B->position.getX()<<","<<B->position.getY()<<"."<<endl;
+    Position* pos3 = new Position(6, 3);
+    Unite* U2 = new Infantry(*pos3, 0);
+    cout<<"la position de l'unité est :"<<U2->position.getX()<<","<<U2->position.getY()<<"."<<endl;
+    delete pos2;
     delete pos;
     delete terrainTab;
+    delete U;
+    delete B;
+    delete pos3;
+    delete U2;
 }
 
 int main(int argc,char* argv[]) 
