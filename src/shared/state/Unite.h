@@ -27,6 +27,7 @@ namespace state {
   public:
     Unite (Position position, int color);
     std::vector<Position> getLegalMove ();
+    ~Unite ();
     // Setters and Getters
   };
 

@@ -21,11 +21,12 @@ namespace state {
     int vie     = 250;
     int prix     = 10000;
     int mvt     = 2;
-    int puissance;
+    int puissance     = 200;
     // Operations
   public:
     HTank (Position position, int color);
     std::vector<Position> getLegalMove ();
+    ~HTank ();
     // Setters and Getters
   };
 

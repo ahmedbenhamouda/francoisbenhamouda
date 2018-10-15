@@ -21,11 +21,12 @@ namespace state {
     int vie     = 100;
     int prix     = 1000;
     int mvt     = 3;
-    int puissance;
+    int puissance     = 60;
     // Operations
   public:
     Infantry (Position position, int color);
     std::vector<Position> getLegalMove ();
+    ~Infantry ();
     // Setters and Getters
   };
 

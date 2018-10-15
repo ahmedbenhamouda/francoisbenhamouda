@@ -24,6 +24,7 @@ namespace state {
   public:
     Batiment (Position position, int color);
     void creerU (int argent, std::string typeUnite, Terrain& terrain);
+    ~Batiment ();
     // Setters and Getters
   };
 

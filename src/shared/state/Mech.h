@@ -19,13 +19,14 @@ namespace state {
     // Attributes
   public:
     int vie     = 120;
-    int prix     = 3000;
+    int prix     = 3500;
     int mvt     = 3;
-    int puissance;
+    int puissance     = 150;
     // Operations
   public:
     Mech (Position position, int color);
     std::vector<Position> getLegalMove ();
+    ~Mech ();
     // Setters and Getters
   };
 

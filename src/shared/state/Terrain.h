@@ -14,8 +14,8 @@ namespace state {
 #include "TerrainTab.h"
 #include "Position.h"
 #include "TerrainTypeId.h"
-#include "Unite.h"
 #include "Batiment.h"
+#include "Unite.h"
 
 namespace state {
 
@@ -30,6 +30,7 @@ namespace state {
     // Operations
   public:
     Terrain (std::map<Position, Unite> unites, std::map<Position, Batiment> batiments, TerrainTab sol);
+    Terrain ();
     Unite& getUnite (Position position);
     Batiment& getBatiment (Position position);
     TerrainTypeId getGround (Position position);
