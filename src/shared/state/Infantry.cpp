@@ -12,4 +12,16 @@ namespace state {
 	}
 	Infantry::~Infantry(){
 	}
+	int Infantry::getvie(){
+		return this->vie;
+	}
+	int Infantry::getprix(){
+		return this->prix;
+	}
+	int Infantry::getmvt(){
+		return this->mvt;
+	}
+	int Infantry::getpuissance(){
+		return this->puissance;
+	}
 }

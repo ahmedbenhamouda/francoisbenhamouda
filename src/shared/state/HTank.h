@@ -27,6 +27,10 @@ namespace state {
     HTank ();
     HTank (Position position, int color);
     std::vector<Position> getLegalMove ();
+    int getvie ();
+    int getprix ();
+    int getmvt ();
+    int getpuissance ();
     ~HTank ();
     // Setters and Getters
   };

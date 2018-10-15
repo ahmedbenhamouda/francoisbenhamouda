@@ -27,6 +27,10 @@ namespace state {
     Infantry ();
     Infantry (Position position, int color);
     std::vector<Position> getLegalMove ();
+    int getvie ();
+    int getprix ();
+    int getmvt ();
+    int getpuissance ();
     ~Infantry ();
     // Setters and Getters
   };

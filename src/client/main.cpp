@@ -39,6 +39,7 @@ void tests() {
     Position* pos3 = new Position(6, 3);
     Unite* U2 = new Infantry(*pos3, 0);
     cout<<"la position de l'unité est :"<<U2->position.getX()<<","<<U2->position.getY()<<"."<<endl;
+    cout<<"la vie de l'unité est :"<<U2->getvie()<<"."<<endl;
     delete pos2;
     delete pos;
     delete terrainTab;
