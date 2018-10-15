@@ -14,6 +14,7 @@ namespace state {
     // Operations
   public:
     Position (int x, int y);
+    Position ();
     int getX ();
     int getY ();
     ~Position ();

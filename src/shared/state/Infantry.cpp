@@ -9,7 +9,6 @@ namespace state {
 		this->color = color;
 	}
 	std::vector<Position> Infantry::getLegalMove(){
-		
 	}
 	Infantry::~Infantry(){
 	}

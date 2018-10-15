@@ -6,8 +6,6 @@ namespace state {
 	}
 	// Constructeur par defaut
 	TerrainTab::TerrainTab() {
-		std::vector<std::vector<TerrainTypeId>> defaultVector;
-		this->grid = defaultVector;
 	}
 	TerrainTypeId TerrainTab::get(Position position) {
 		return this->grid[position.getX()][position.getY()];
