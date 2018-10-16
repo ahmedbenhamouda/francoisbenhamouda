@@ -14,8 +14,8 @@ namespace state {
 #include "TerrainTab.h"
 #include "Position.h"
 #include "TerrainTypeId.h"
-#include "Batiment.h"
 #include "Unite.h"
+#include "Batiment.h"
 
 namespace state {
 

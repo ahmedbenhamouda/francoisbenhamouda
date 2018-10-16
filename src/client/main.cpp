@@ -36,15 +36,17 @@ void tests() {
     // Test sur la classe Unite
     Unite* U = new Unite(*pos, 0);
     cout<<"la position de l'unité est : "<<U->position.getX()<<", "<<U->position.getY()<<"."<<endl;
+    Position* pos3 = new Position(6, 3);
+    Unite* U2 = new HTank(*pos3, 0);
+    cout<<"la position de l'unité est :"<<U2->position.getX()<<","<<U2->position.getY()<<"."<<endl;
+    cout<<"la vie de l'unité est :"<<U2->getvie()<<"."<<endl;
+    cout<<"le mouvement de l'unité est :"<<U2->getmvt()<<"."<<endl;
 
     // test sur la classe Batiment
     Position* pos2 = new Position(2, 4);
     Batiment* B = new Batiment(*pos2, 1);
     cout<<"la position du batiment est : "<<B->position.getX()<<", "<<B->position.getY()<<"."<<endl;
-    Position* pos3 = new Position(6, 3);
-    Unite* U2 = new Infantry(*pos3, 0);
-    cout<<"la position de l'unité est :"<<U2->position.getX()<<","<<U2->position.getY()<<"."<<endl;
-    cout<<"la vie de l'unité est :"<<U2->getvie()<<"."<<endl;
+
 
     // test sur la classe Terrain
     std::vector<std::vector<Unite*>> unites (8, std::vector<Unite*>(8));
@@ -60,9 +62,17 @@ void tests() {
     cout<<"Batiment "<<foundBat<<" trouvé à la position ("<<foundBat->position.getX()<<","<<foundBat->position.getY()<<")."<<endl;
     cout<<"Le type de terrain à la position ("<<pos->getX()<<","<<pos->getY()<<") est : "<<terrain->getGround(*pos)<<"."<<endl;
 
+    // test mouvement possible
+    std::vector<Position> moveset = U2->getLegalMove(); 
+    cout<<"Liste des mouvements possibles : "<<endl;
+    for (Position pos : moveset) {
+	cout<<" * ("<<pos.getX()<<","<<pos.getY()<<")"<<endl;
+    }
+
     // Test critique
     Unite* noUnit = terrain->getUnite(*pos2);
     cout<<noUnit<<" n'existe pas."<<endl;
+
 
     delete pos2;
     delete pos;
