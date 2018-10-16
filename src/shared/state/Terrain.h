@@ -2,13 +2,13 @@
 #ifndef STATE__TERRAIN__H
 #define STATE__TERRAIN__H
 
-#include <map>
+#include <vector>
 
 namespace state {
   class TerrainTab;
   class Unite;
-  class Position;
   class Batiment;
+  class Position;
 }
 
 #include "TerrainTab.h"
@@ -24,15 +24,15 @@ namespace state {
     // Associations
     // Attributes
   private:
-    std::map<Position, Unite> unites;
-    std::map<Position, Batiment> batiments;
+    std::vector<std::vector<Unite*>> unites;
+    std::vector<std::vector<Batiment*>> batiments;
     TerrainTab sol;
     // Operations
   public:
-    Terrain (std::map<Position, Unite> unites, std::map<Position, Batiment> batiments, TerrainTab sol);
+    Terrain (std::vector<std::vector<Unite*>> unites, std::vector<std::vector<Batiment*>> batiments, TerrainTab sol);
     Terrain ();
-    Unite& getUnite (Position position);
-    Batiment& getBatiment (Position position);
+    Unite* getUnite (Position position);
+    Batiment* getBatiment (Position position);
     TerrainTypeId getGround (Position position);
     ~Terrain ();
     // Setters and Getters

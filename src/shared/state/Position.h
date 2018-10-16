@@ -17,6 +17,7 @@ namespace state {
     Position ();
     int getX ();
     int getY ();
+    void move (int x, int y);
     ~Position ();
     // Setters and Getters
   };
