@@ -27,6 +27,10 @@ namespace state {
     Mech ();
     Mech (Position position, int color);
     std::vector<Position> getLegalMove ();
+    int getvie ();
+    int getprix ();
+    int getmvt ();
+    int getpuissance ();
     ~Mech ();
     // Setters and Getters
   };

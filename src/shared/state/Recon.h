@@ -27,6 +27,10 @@ namespace state {
     Recon ();
     Recon (Position position, int color);
     std::vector<Position> getLegalMove ();
+    int getvie ();
+    int getprix ();
+    int getmvt ();
+    int getpuissance ();
     ~Recon ();
     // Setters and Getters
   };

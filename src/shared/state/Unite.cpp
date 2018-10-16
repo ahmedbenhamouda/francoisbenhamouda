@@ -12,4 +12,16 @@ namespace state {
 	}
 	Unite::~Unite(){
 	}
+	int Unite::getvie(){
+		return this->vie;
+	}
+	int Unite::getprix(){
+		return this->prix;
+	}
+	int Unite::getmvt(){
+		return this->mvt;
+	}
+	int Unite::getpuissance(){
+		return this->puissance;
+	}
 }

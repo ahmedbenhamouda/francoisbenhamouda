@@ -43,7 +43,8 @@ void tests() {
     cout<<"la position du batiment est : "<<B->position.getX()<<", "<<B->position.getY()<<"."<<endl;
     Position* pos3 = new Position(6, 3);
     Unite* U2 = new Infantry(*pos3, 0);
-    cout<<"la position de l'Infantry est : "<<U2->position.getX()<<", "<<U2->position.getY()<<"."<<endl;
+    cout<<"la position de l'unité est :"<<U2->position.getX()<<","<<U2->position.getY()<<"."<<endl;
+    cout<<"la vie de l'unité est :"<<U2->getvie()<<"."<<endl;
 
     // test sur la classe Terrain
     std::vector<std::vector<Unite*>> unites (8, std::vector<Unite*>(8));

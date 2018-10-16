@@ -28,7 +28,11 @@ namespace state {
     Unite ();
     Unite (Position position, int color);
     std::vector<Position> getLegalMove ();
-    ~Unite ();
+    virtual int getvie ();
+    virtual int getprix ();
+    virtual int getmvt ();
+    virtual int getpuissance ();
+    virtual ~Unite ();
     // Setters and Getters
   };
 
