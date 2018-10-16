@@ -50,10 +50,10 @@ void tests() {
 
     // test sur la classe Terrain
     std::vector<std::vector<Unite*>> unites (8, std::vector<Unite*>(8));
-    unites[U->position.getX()][U->position.getY()] = U;
-    unites[U2->position.getX()][U2->position.getY()] = U2;
+    unites[U->position.getY()][U->position.getX()] = U;
+    unites[U2->position.getY()][U2->position.getX()] = U2;
     std::vector<std::vector<Batiment*>> batiments (8, std::vector<Batiment*>(8));
-    batiments[B->position.getX()][B->position.getY()] = B;
+    batiments[B->position.getY()][B->position.getX()] = B;
     Terrain* terrain = new Terrain(unites, batiments, *terrainTab);
 
     Unite* foundUnit = terrain->getUnite(*pos3);

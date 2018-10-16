@@ -11,10 +11,10 @@ namespace state {
 	}
 
 	Unite* Terrain::getUnite(Position position) {
-		return unites[position.getX()][position.getY()];
+		return unites[position.getY()][position.getX()];
 	}
 	Batiment* Terrain::getBatiment(Position position) {
-		return batiments[position.getX()][position.getY()];
+		return batiments[position.getY()][position.getX()];
 	}
 	TerrainTypeId Terrain::getGround(Position position) {
 		return sol.get(position);
