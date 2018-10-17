@@ -37,7 +37,7 @@ void tests() {
     Unite* U = new Unite(*pos, 0);
     cout<<"la position de l'unité est : "<<U->position.getX()<<", "<<U->position.getY()<<"."<<endl;
     Position* pos3 = new Position(6, 3);
-    Unite* U2 = new HTank(*pos3, 0);
+    Unite* U2 = new Recon(*pos3, 1);
     cout<<"la position de l'unité est :"<<U2->position.getX()<<","<<U2->position.getY()<<"."<<endl;
     cout<<"la vie de l'unité est :"<<U2->getvie()<<"."<<endl;
     cout<<"le mouvement de l'unité est :"<<U2->getmvt()<<"."<<endl;
@@ -72,7 +72,6 @@ void tests() {
     // Test critique
     Unite* noUnit = terrain->getUnite(*pos2);
     cout<<noUnit<<" n'existe pas."<<endl;
-
 
     delete pos2;
     delete pos;

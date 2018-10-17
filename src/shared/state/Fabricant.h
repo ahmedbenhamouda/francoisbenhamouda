@@ -15,7 +15,7 @@ namespace state {
 namespace state {
 
   /// class Fabricant - 
-  template <  class T>
+  template <  typename T>
   class Fabricant : public state::Batiment {
     // Operations
   public:
