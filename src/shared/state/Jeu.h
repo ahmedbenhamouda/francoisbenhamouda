@@ -2,7 +2,6 @@
 #ifndef STATE__JEU__H
 #define STATE__JEU__H
 
-#include <vector>
 
 namespace state {
   class Terrain;
@@ -17,13 +16,12 @@ namespace state {
     // Associations
     // Attributes
   public:
-    std::vector<Terrain> bordInit;
+    Terrain* etatJeu;
     int tour;
     bool fin;
     // Operations
   public:
-    Jeu ();
-    void main ();
+    Jeu (Terrain* etatJeu);
     ~Jeu ();
     // Setters and Getters
   };

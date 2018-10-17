@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <memory>
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
@@ -17,11 +18,12 @@ using namespace std;
 using namespace state;
 
 void tests() {
-    // test sur la classe Position
-    Position* pos = new Position(5, 1);
-    cout<<"Pos x : "<<pos->getX()<<", pos y : "<<pos->getY()<<"."<<endl;
+    // création d'objets Position
+    unique_ptr<Position> pos (new Position(5, 1));
+    unique_ptr<Position> pos2 (new Position(2, 4));
+    unique_ptr<Position> pos3 (new Position(6, 3));
 
-    // test sur la classe TerrainTab
+    // création d'un objet TerrainTab
     std::vector<std::vector<TerrainTypeId>> defaultVector {{plaine,plaine,plaine,plaine,plaine,plaine,plaine,plaine},
                                                            {route,route,route,route,plaine,foret,plaine,plaine},
                                                            {plaine,plaine,plaine,route,plaine,plaine,foret,plaine},
@@ -30,58 +32,58 @@ void tests() {
                                                            {plaine,foret,plaine,route,plaine,route,route,route},
                                                            {plaine,plaine,route,route,montagne,montagne,plaine,plaine},
                                                            {plaine,plaine,route,plaine,plaine,plaine,plaine,plaine}};
-    TerrainTab* terrainTab = new TerrainTab(defaultVector);
-    cout<<"Terrain : "<<terrainTab->get(*pos)<<endl;
+    unique_ptr<TerrainTab> terrainTab (new TerrainTab(defaultVector));
 
-    // Test sur la classe Unite
-    Unite* U = new Unite(*pos, 0);
-    cout<<"la position de l'unité est : "<<U->position.getX()<<", "<<U->position.getY()<<"."<<endl;
-    Position* pos3 = new Position(6, 3);
-    Unite* U2 = new HTank(*pos3, 0);
-    cout<<"la position de l'unité est :"<<U2->position.getX()<<","<<U2->position.getY()<<"."<<endl;
-    cout<<"la vie de l'unité est :"<<U2->getvie()<<"."<<endl;
-    cout<<"le mouvement de l'unité est :"<<U2->getmvt()<<"."<<endl;
+    // création d'objets Unite
+    unique_ptr<Unite> U (new Unite(*pos, 0));
+    unique_ptr<Unite> U2 (new HTank(*pos3, 0));
 
-    // test sur la classe Batiment
-    Position* pos2 = new Position(2, 4);
-    Batiment* B = new Batiment(*pos2, 1);
-    cout<<"la position du batiment est : "<<B->position.getX()<<", "<<B->position.getY()<<"."<<endl;
+    // création d'un objet Batiment
+    unique_ptr<Batiment> B (new Batiment(*pos2, 1));
 
-
-    // test sur la classe Terrain
+    // création d'un objet Terrain
     std::vector<std::vector<Unite*>> unites (8, std::vector<Unite*>(8));
-    unites[U->position.getY()][U->position.getX()] = U;
-    unites[U2->position.getY()][U2->position.getX()] = U2;
+    unites[U->position.getY()][U->position.getX()] = U.get();
+    unites[U2->position.getY()][U2->position.getX()] = U2.get();
     std::vector<std::vector<Batiment*>> batiments (8, std::vector<Batiment*>(8));
-    batiments[B->position.getY()][B->position.getX()] = B;
-    Terrain* terrain = new Terrain(unites, batiments, *terrainTab);
+    batiments[B->position.getY()][B->position.getX()] = B.get();
 
-    Unite* foundUnit = terrain->getUnite(*pos3);
-    Batiment* foundBat = terrain->getBatiment(*pos2);
+    unique_ptr<Terrain> terrain(new Terrain(unites, batiments, *terrainTab));
+
+    // creation d'un objet Jeu
+    unique_ptr<Jeu> jeu(new Jeu(terrain.get()));
+    
+    // test sur l'attribut etatJeu de la classe Jeu
+    Terrain* newTerrain = jeu->etatJeu;
+    cout<<"Terrain à l'adresse "<<newTerrain<<"."<<endl;
+
+    // test sur TerrainTab
+    cout<<"Le type de terrain à la position ("<<pos->getX()<<","<<pos->getY()<<") est : "<<newTerrain->getGround(*pos)<<"."<<endl;
+
+    // tests sur Unite
+    Unite* foundUnit = newTerrain->getUnite(*pos3);
     cout<<"Unité "<<foundUnit<<" trouvée à la position ("<<foundUnit->position.getX()<<","<<foundUnit->position.getY()<<")."<<endl;
-    cout<<"Batiment "<<foundBat<<" trouvé à la position ("<<foundBat->position.getX()<<","<<foundBat->position.getY()<<")."<<endl;
-    cout<<"Le type de terrain à la position ("<<pos->getX()<<","<<pos->getY()<<") est : "<<terrain->getGround(*pos)<<"."<<endl;
-
+    cout<<"la vie de l'unité est :"<<foundUnit->getvie()<<"."<<endl;
+    cout<<"La distance max de déplacement de l'unité est :"<<foundUnit->getmvt()<<"."<<endl;
     // test mouvement possible
-    std::vector<Position> moveset = U2->getLegalMove(); 
+    std::vector<Position> moveset = foundUnit->getLegalMove(); 
     cout<<"Liste des mouvements possibles : "<<endl;
     for (Position pos : moveset) {
 	cout<<" * ("<<pos.getX()<<","<<pos.getY()<<")"<<endl;
     }
+    //delete foundUnit;
 
     // Test critique
-    Unite* noUnit = terrain->getUnite(*pos2);
+    Unite* noUnit = newTerrain->getUnite(*pos2);
     cout<<noUnit<<" n'existe pas."<<endl;
+    //delete noUnit;
 
+    // test sur Batiment
+    Batiment* foundBat = newTerrain->getBatiment(*pos2);
+    cout<<"Batiment "<<foundBat<<" trouvé à la position ("<<foundBat->position.getX()<<","<<foundBat->position.getY()<<")."<<endl;
+    //delete foundBat;
 
-    delete pos2;
-    delete pos;
-    delete terrainTab;
-    delete U;
-    delete B;
-    delete pos3;
-    delete U2;
-    delete terrain;
+    //delete newTerrain;
 }
 
 int main(int argc,char* argv[]) 
