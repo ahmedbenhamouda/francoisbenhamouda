@@ -7,11 +7,26 @@ namespace render {
 
   /// class Tile - 
   class Tile {
+    // Attributes
+  protected:
+    int x     = 0;
+    int y     = 0;
+    int width;
+    int height;
     // Operations
   public:
     Tile ();
     ~Tile ();
+    Tile (int x, int y, int width, int heigth);
     // Setters and Getters
+    int getX() const;
+    void setX(int x);
+    int getY() const;
+    void setY(int y);
+    int getWidth() const;
+    void setWidth(int width);
+    int getHeight() const;
+    void setHeight(int height);
   };
 
 };

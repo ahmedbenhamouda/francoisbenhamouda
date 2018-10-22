@@ -25,7 +25,7 @@ namespace render {
     UniteTileSet ();
     ~UniteTileSet ();
     int const getWidth ();
-    int const getHeigth ();
+    int const getHeight ();
     std::string const getImageFile ();
     // Setters and Getters
   };

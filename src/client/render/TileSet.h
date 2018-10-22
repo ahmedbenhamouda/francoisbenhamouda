@@ -20,7 +20,7 @@ namespace render {
     TileSet ();
     ~TileSet ();
     int const getCellWidth ();
-    int const getCellHeigth ();
+    int const getCellHeight ();
     std::string const getImageFile ();
     // Setters and Getters
   };

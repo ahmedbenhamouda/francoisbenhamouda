@@ -5,14 +5,18 @@
 
 namespace state {
   class Jeu;
+};
+namespace render {
+  class Layer;
 }
 
 #include "state/Jeu.h"
+#include "Layer.h"
 
 namespace render {
 
   /// class Tilemap - 
-  class Tilemap {
+  class Tilemap : public render::Layer {
     // Associations
     // Attributes
   public:
