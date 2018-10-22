@@ -13,9 +13,11 @@ void testSFML() {
 // Fin test SFML
 
 #include "state.h"
+#include "render.h"
 
 using namespace std;
 using namespace state;
+using namespace render;
 
 void tests() {
     // création d'objets Position
@@ -53,7 +55,7 @@ void tests() {
     // creation d'un objet Jeu
     unique_ptr<Jeu> jeu(new Jeu(terrain.get()));
     
-    // test sur l'attribut etatJeu de la classe Jeu
+/*    // test sur l'attribut etatJeu de la classe Jeu
     Terrain* newTerrain = jeu->etatJeu;
     cout<<"Terrain à l'adresse "<<newTerrain<<"."<<endl;
 
@@ -83,7 +85,7 @@ void tests() {
     cout<<"Batiment "<<foundBat<<" trouvé à la position ("<<foundBat->position.getX()<<","<<foundBat->position.getY()<<")."<<endl;
     //delete foundBat;
 
-    //delete newTerrain;
+    //delete newTerrain;*/
 }
 
 int main(int argc,char* argv[]) 
@@ -92,12 +94,12 @@ int main(int argc,char* argv[])
     //exemple.setX(53);
 
     if (argc < 2) {
-        cout << "Missing the \"state\" argument." << endl;
+        cout << "Missing the \"render\" argument." << endl;
     } else if (argc > 2) {
         cout << "Too many arguments." << endl;
     } else {
         string myString(argv[1]);
-        if (myString != "state") {
+        if (myString != "render") {
             cout << "Invalid argument." << endl;
         } else {
             // Tests unitaires
