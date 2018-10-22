@@ -9,8 +9,7 @@ namespace state {
     route     = 0,
     plaine     = 1,
     foret     = 2,
-    montagne     = 3,
-    ville     = 4
+    montagne     = 3
   };
 
 };

@@ -27,6 +27,7 @@ namespace render {
   public:
     Layer ();
     ~Layer ();
+
     const Surface* const getSurface ();
     void setSurface (Surface* surface);
     void initSurface ();
