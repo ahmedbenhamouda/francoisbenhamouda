@@ -27,6 +27,7 @@ namespace render {
     int const getWidth ();
     int const getHeight ();
     std::string const getImageFile ();
+    Tile&  getTile (std::string c);
     // Setters and Getters
   };
 

@@ -22,6 +22,7 @@ namespace render {
     int const getCellWidth ();
     int const getCellHeight ();
     std::string const getImageFile ();
+    Tile&  getTile (std::string c);
     // Setters and Getters
   };
 
