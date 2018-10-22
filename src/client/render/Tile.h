@@ -17,7 +17,7 @@ namespace render {
   public:
     Tile ();
     ~Tile ();
-    Tile (int x, int y, int width, int heigth);
+    Tile (int x, int y, int width, int height);
     // Setters and Getters
     int getX() const;
     void setX(int x);
