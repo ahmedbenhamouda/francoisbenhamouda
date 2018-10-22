@@ -1,5 +1,5 @@
-#import <string>
-#import "TerrainTileSet.h"
+#include <string>
+#include "TerrainTileSet.h"
 
 namespace render {
 	TerrainTileSet::TerrainTileSet() {
