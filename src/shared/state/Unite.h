@@ -23,6 +23,7 @@ namespace state {
     int prix;
     int mvt;
     int puissance;
+    int id;
     // Operations
   public:
     Unite ();
@@ -32,7 +33,10 @@ namespace state {
     virtual int getprix ();
     virtual int getmvt ();
     virtual int getpuissance ();
+    virtual int getId ();
     virtual ~Unite ();
+    virtual int getColor ();
+    int operator= ();
     // Setters and Getters
   };
 

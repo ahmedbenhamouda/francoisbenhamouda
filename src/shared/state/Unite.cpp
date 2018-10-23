@@ -38,4 +38,8 @@ namespace state {
 	int Unite::getpuissance(){
 		return this->puissance;
 	}
+
+	int Unite::operator=() {
+		return 0;
+	}
 }

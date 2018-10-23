@@ -22,6 +22,7 @@ namespace state {
     int prix     = 4500;
     int mvt     = 4;
     int puissance     = 80;
+    int id     = 1;
     // Operations
   public:
     Recon ();
@@ -31,6 +32,8 @@ namespace state {
     int getprix ();
     int getmvt ();
     int getpuissance ();
+    int getId ();
+    int getColor ();
     ~Recon ();
     // Setters and Getters
   };

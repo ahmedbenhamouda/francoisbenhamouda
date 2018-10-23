@@ -22,6 +22,7 @@ namespace state {
     int prix     = 10000;
     int mvt     = 2;
     int puissance     = 200;
+    int id     = 4;
     // Operations
   public:
     HTank ();
@@ -31,6 +32,8 @@ namespace state {
     int getprix ();
     int getmvt ();
     int getpuissance ();
+    int getId ();
+    int getColor ();
     ~HTank ();
     // Setters and Getters
   };

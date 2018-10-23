@@ -18,11 +18,14 @@ namespace state {
   public:
     Position position;
     int color;
+    int id_b;
     // Operations
   public:
     Batiment ();
     Batiment (Position position, int color);
-    ~Batiment ();
+    virtual int getId_b ();
+    virtual int getColor ();
+    virtual ~Batiment ();
     // Setters and Getters
   };
 

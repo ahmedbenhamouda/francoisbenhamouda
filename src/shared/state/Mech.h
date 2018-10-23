@@ -22,6 +22,7 @@ namespace state {
     int prix     = 3500;
     int mvt     = 3;
     int puissance     = 150;
+    int id     = 2;
     // Operations
   public:
     Mech ();
@@ -31,6 +32,8 @@ namespace state {
     int getprix ();
     int getmvt ();
     int getpuissance ();
+    int getId ();
+    int getColor ();
     ~Mech ();
     // Setters and Getters
   };

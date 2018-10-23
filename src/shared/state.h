@@ -14,6 +14,7 @@
 #include "state/Infantry.h"
 #include "state/Recon.h"
 #include "state/HTank.h"
-#include "state/Fabricant.h"
+#include "state/Usine.h"
 #include "state/PorteMonnaie.h"
+#include "state/QG.h"
 #endif

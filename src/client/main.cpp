@@ -106,5 +106,12 @@ int main(int argc,char* argv[])
             tests();
         }
     }
+
+    Unite u;
+    int i = 12;
+    i = u;
+    cout << i << endl;
     return 0;
+}
+
 }
