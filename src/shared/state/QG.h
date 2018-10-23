@@ -24,9 +24,10 @@ namespace state {
   public:
     QG ();
     bool Drapeau_E ();
-    bool Drapeu ();
+    bool Drapeau ();
     int getId_b ();
     int getColor ();
+    int getTileId ();
     ~QG ();
     // Setters and Getters
   };

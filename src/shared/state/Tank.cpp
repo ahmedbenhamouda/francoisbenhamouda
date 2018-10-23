@@ -39,4 +39,13 @@ namespace state {
 	int Tank::getpuissance(){
 		return this->puissance;
 	}
+	int Tank::getColor(){
+		return this->color;
+	}
+	int Tank::getId(){
+		return this->id;
+	}
+	int Tank::getTileId(){
+		return (4*this->getId()+this->getColor());
+	}
 }

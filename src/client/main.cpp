@@ -13,11 +13,11 @@ void testSFML() {
 // Fin test SFML
 
 #include "state.h"
-#include "render.h"
+//#include "render.h"
 
 using namespace std;
 using namespace state;
-using namespace render;
+//using namespace render;
 
 void tests() {
     // création d'objets Position
@@ -38,8 +38,14 @@ void tests() {
 
     // création d'objets Unite
     unique_ptr<Unite> U (new Unite(*pos, 0));
-    unique_ptr<Unite> U2 (new HTank(*pos3, 0));
+    unique_ptr<Unite> U2 (new Infantry(*pos3, 0));
 
+    //teste 1 sur les unites
+
+
+    cout<<"la vie de l'unité est :"<<U2->getvie()<<"."<<endl;
+    cout<<"La distance max de déplacement de l'unité est :"<<U2->getmvt()<<"."<<endl;
+/*
     // création d'un objet Batiment
     unique_ptr<Batiment> B (new Batiment(*pos2, 1));
 
@@ -54,7 +60,7 @@ void tests() {
 
     // creation d'un objet Jeu
     unique_ptr<Jeu> jeu(new Jeu(terrain.get()));
-    
+*/    
 /*    // test sur l'attribut etatJeu de la classe Jeu
     Terrain* newTerrain = jeu->etatJeu;
     cout<<"Terrain à l'adresse "<<newTerrain<<"."<<endl;
@@ -73,6 +79,7 @@ void tests() {
     for (Position pos : moveset) {
 	cout<<" * ("<<pos.getX()<<","<<pos.getY()<<")"<<endl;
     }
+
     //delete foundUnit;
 
     // Test critique
@@ -106,12 +113,7 @@ int main(int argc,char* argv[])
             tests();
         }
     }
-
-    Unite u;
-    int i = 12;
-    i = u;
-    cout << i << endl;
     return 0;
 }
 
-}
+

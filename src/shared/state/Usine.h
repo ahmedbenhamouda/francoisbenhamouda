@@ -28,6 +28,7 @@ namespace state {
     Unite creerU (int argent, Position& position);
     int getId_b ();
     int getColor ();
+    int getTileId ();
     // Setters and Getters
   };
 

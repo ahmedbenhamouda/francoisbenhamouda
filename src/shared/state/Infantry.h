@@ -34,6 +34,7 @@ namespace state {
     int getpuissance ();
     int getId ();
     int getColor ();
+    int getTileId ();
     ~Infantry ();
     // Setters and Getters
   };

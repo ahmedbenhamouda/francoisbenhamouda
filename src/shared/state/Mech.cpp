@@ -1,5 +1,5 @@
 #include "Mech.h"
-#include "Unite.h"
+#include "Mech.h"
 #include <cmath>
 
 namespace state {
@@ -38,5 +38,14 @@ namespace state {
 	}
 	int Mech::getpuissance(){
 		return this->puissance;
+	}
+	int Mech::getColor(){
+		return this->color;
+	}
+	int Mech::getId(){
+		return this->id;
+	}
+	int Mech::getTileId(){
+		return (4*this->getId()+this->getColor());
 	}
 }

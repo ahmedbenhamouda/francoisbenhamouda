@@ -17,4 +17,5 @@
 #include "state/Usine.h"
 #include "state/PorteMonnaie.h"
 #include "state/QG.h"
+#include "state/TerrainTile.h"
 #endif

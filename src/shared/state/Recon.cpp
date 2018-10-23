@@ -39,4 +39,13 @@ namespace state {
 	int Recon::getpuissance(){
 		return this->puissance;
 	}
+	int Recon::getColor(){
+		return this->color;
+	}
+	int Recon::getId(){
+		return this->id;
+	}
+	int Recon::getTileId(){
+		return (4*this->getId()+this->getColor());
+	}
 }

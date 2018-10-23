@@ -35,6 +35,7 @@ namespace state {
     virtual int getpuissance ();
     virtual int getId ();
     virtual int getColor ();
+    virtual int getTileId ();
     virtual ~Unite ();
     // Setters and Getters
   };

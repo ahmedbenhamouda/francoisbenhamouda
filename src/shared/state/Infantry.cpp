@@ -1,5 +1,5 @@
 #include "Infantry.h"
-#include "Unite.h"
+#include "Infantry.h"
 #include <cmath>
 
 namespace state {
@@ -15,9 +15,9 @@ namespace state {
 		int y = position.getY();
 		std::vector<Position> list;
 		for (int i = x-mvt; i <= x+mvt; i++){
-			int dx = std::fabs(x-i);
+			int dx = std::abs(x-i);
 			for (int j = y-mvt; j <= y+mvt; j++){
-				int dy = std::fabs(y-j);
+				int dy = std::abs(y-j);
 				if (dx+dy <= mvt){
 					list.push_back (Position(i,j));
 				}
@@ -38,5 +38,14 @@ namespace state {
 	}
 	int Infantry::getpuissance(){
 		return this->puissance;
+	}
+	int Infantry::getColor(){
+		return this->color;
+	}
+	int Infantry::getId(){
+		return this->id;
+	}
+	int Infantry::getTileId(){
+		return (4*this->getId()+this->getColor());
 	}
 }

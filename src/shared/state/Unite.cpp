@@ -38,8 +38,13 @@ namespace state {
 	int Unite::getpuissance(){
 		return this->puissance;
 	}
-
-	int Unite::operator=() {
-		return 0;
+	int Unite::getColor(){
+		return this->color;
+	}
+	int Unite::getId(){
+		return this->id;
+	}
+	int Unite::getTileId(){
+		return (4*this->getId()+this->getColor());
 	}
 }

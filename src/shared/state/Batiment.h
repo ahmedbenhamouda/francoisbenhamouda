@@ -25,6 +25,7 @@ namespace state {
     Batiment (Position position, int color);
     virtual int getId_b ();
     virtual int getColor ();
+    virtual int getTileId ();
     virtual ~Batiment ();
     // Setters and Getters
   };

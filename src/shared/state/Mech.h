@@ -34,6 +34,7 @@ namespace state {
     int getpuissance ();
     int getId ();
     int getColor ();
+    int getTileId ();
     ~Mech ();
     // Setters and Getters
   };
