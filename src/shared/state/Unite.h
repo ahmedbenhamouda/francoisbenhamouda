@@ -34,9 +34,8 @@ namespace state {
     virtual int getmvt ();
     virtual int getpuissance ();
     virtual int getId ();
-    virtual ~Unite ();
     virtual int getColor ();
-    int operator= ();
+    virtual ~Unite ();
     // Setters and Getters
   };
 
