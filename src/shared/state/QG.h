@@ -23,6 +23,7 @@ namespace state {
     // Operations
   public:
     QG ();
+    QG (Position position, int color);
     bool Drapeau_E ();
     bool Drapeau ();
     int getId_b ();

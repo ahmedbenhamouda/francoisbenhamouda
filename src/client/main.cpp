@@ -102,11 +102,13 @@ void renderTest() {
     render::TileSet<Unite> test("res/units.png");
     Tile newTile = test.getTile(unit.get());
     cout<<"x : "<<newTile.getX()<<", y : "<<newTile.getY()<<", Height : "<<newTile.getHeight()<<", Width : "<<newTile.getWidth()<<endl;
+
     // Test with Batiment
     unique_ptr<Batiment> batiment (new Batiment(*pos, 0));
     render::TileSet<Batiment> test2("res/batiments.png");
     Tile batTile = test2.getTile(batiment.get());
     cout<<"x : "<<batTile.getX()<<", y : "<<batTile.getY()<<", Height : "<<batTile.getHeight()<<", Width : "<<batTile.getWidth()<<endl;
+
     // création d'un objet TerrainTab
     std::vector<std::vector<TerrainTypeId>> defaultVector {{plaine,plaine,plaine,plaine,plaine,plaine,plaine,plaine},
                                                            {route,route,route,route,plaine,foret,plaine,plaine},
@@ -116,11 +118,29 @@ void renderTest() {
                                                            {plaine,foret,plaine,route,plaine,route,route,route},
                                                            {plaine,plaine,route,route,montagne,montagne,plaine,plaine},
                                                            {plaine,plaine,route,plaine,plaine,plaine,plaine,plaine}};
+
     // Test with TerrainTypeId
     unique_ptr<TerrainTile> terrainTile(new TerrainTile(defaultVector[0][0]));
     render::TileSet<TerrainTile> test3("res/terrain.png");
     Tile caseTile = test3.getTile(terrainTile.get());
     cout<<"x : "<<caseTile.getX()<<", y : "<<caseTile.getY()<<", Height : "<<caseTile.getHeight()<<", Width : "<<caseTile.getWidth()<<endl;
+
+    // création d'objets Unite
+    unique_ptr<Position> pos3 (new Position(6, 3));
+    unique_ptr<Unite> U (new Infantry(*pos3, 0));
+
+    //teste sur les unites
+    cout<<"la vie de l'unité est :"<<U->getvie()<<"."<<endl;
+    cout<<"La distance max de déplacement de l'unité est :"<<U->getmvt()<<"."<<endl;
+
+
+   // création d'objets Usine
+    unique_ptr<Position> pos2 (new Position(7, 2));
+    unique_ptr<Batiment> B (new Usine(*pos2, 1));
+
+    //teste sur l'usine
+    cout<<"la couleur du batiment est :"<<B->getColor()<<"."<<endl;
+    cout<<"L'identité du batiment est :"<<B->getId_b()<<"."<<endl;
 }
 
 int main(int argc,char* argv[]) 

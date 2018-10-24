@@ -1,9 +1,13 @@
 #include "QG.h"
-#include "Batiment.h"
+#include "QG.h"
 
 
 namespace state {
 	QG::QG(){	
+	}
+	QG::QG(Position position, int color) {
+		this->position = position;
+		this->color = color;
 	}
 	bool QG::Drapeau_E(){
 		return false;

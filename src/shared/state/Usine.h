@@ -6,18 +6,18 @@
 namespace state {
   class Position;
   class Unite;
-  class Batiment;
+  class Usine;
 }
 
 #include "Position.h"
 #include "Unite.h"
-#include "Batiment.h"
+#include "Usine.h"
 
 namespace state {
 
   /// class Usine - 
   template <  typename T>
-  class Usine : public state::Batiment {
+  class Usine : public state::Usine {
     // Attributes
   public:
     Position position;
@@ -25,12 +25,46 @@ namespace state {
     int id_b     = 1;
     // Operations
   public:
+    Usine ();
     Unite creerU (int argent, Position& position);
     int getId_b ();
     int getColor ();
     int getTileId ();
+    ~Usine ();
     // Setters and Getters
   };
+template<class T>
+Usine<T>::~Usine() {
+}
+
+
+template<class T>
+Usine<T>::Usine(Position position, int color) {
+	this->position = position;
+	this->color = color;
+}
+template<class T>
+int Usine<T>::getColor {
+    return this->color;
+}
+
+template<class T>
+int Usine<T>::getId_b {
+    return return this->id_b;
+}
+
+template<class T>
+int Usine<T>::getTileId() {
+    return (4*this->getId_b()+this->getColor());
+}
+
+template<class T>
+Unite Usine<T>::creerU(int argent, Position& position, T* pt) {
+ 
+}
+
+
+
 
 };
 
