@@ -7,10 +7,16 @@ namespace render {
 	}
 	Tile::~Tile() {
 	}
-	int Tile::getWidth() {
+	int Tile::getX() const  {
+		return x;
+	}
+	int Tile::getY() const  {
+		return y;
+	}
+	int Tile::getWidth() const  {
 		return width;
 	}
-	int Tile::getHeight() {
+	int Tile::getHeight() const  {
 		return height;
 	}
 }

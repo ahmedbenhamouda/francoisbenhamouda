@@ -5,14 +5,23 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+namespace sf {
+  class Texture;
+  class VertexArray;
+};
 namespace render {
   class Tile;
+};
+namespace sf {
+  class Drawable;
+  class Transformable;
 }
+
 
 namespace render {
 
   /// class Surface - 
-  class Surface {
+  class Surface : public sf::Drawable, public sf::Transformable {
     // Attributes
   private:
     sf::Texture texture;
