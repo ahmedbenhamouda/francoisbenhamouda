@@ -104,7 +104,7 @@ void renderTest() {
     cout<<"x : "<<newTile.getX()<<", y : "<<newTile.getY()<<", Height : "<<newTile.getHeight()<<", Width : "<<newTile.getWidth()<<endl;
 
     // Test with Batiment
-    unique_ptr<Batiment> batiment (new Batiment(*pos, 0));
+    unique_ptr<Batiment> batiment (new state::Usine<Infantry>(*pos, 0));
     render::TileSet<Batiment> test2("res/batiments.png");
     Tile batTile = test2.getTile(batiment.get());
     cout<<"x : "<<batTile.getX()<<", y : "<<batTile.getY()<<", Height : "<<batTile.getHeight()<<", Width : "<<batTile.getWidth()<<endl;
