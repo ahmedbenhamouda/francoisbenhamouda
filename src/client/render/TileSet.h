@@ -11,10 +11,11 @@ namespace render {
 
 #include "Tile.h"
 
+
 namespace render {
 
   /// class TileSet - 
-  template <  class T>
+  template <class T>
   class TileSet {
     // Associations
     // Attributes
@@ -25,23 +26,96 @@ namespace render {
     // Operations
   public:
     TileSet (std::string filename);
-    int const getCellWidth ();
-    int const getCellHeight ();
-    std::string const getImageFile ();
-    Tile& getTile (T& t);
+    ~TileSet();
+    int getCellWidth() const;
+    int getCellHeight() const;
+    std::string getImageFile() const;
+    Tile& getTile (T* t);
     // Setters and Getters
   };
 
 template<class T>
 TileSet<T>::TileSet (std::string filename) : filename(filename) {
     // peuplement de tiles
+    if (filename=="res/terrain.png") {
+            //terrain
+            Tile route(400,16,16,16);
+            Tile plaine(16,16,16,16);
+            Tile foret(240,16,16,16);
+            Tile montagne(48,0,16,16);
 
+            tiles = {route,plaine,foret,montagne};
+    }
+
+    if (filename=="res/batiments.png") {
+            //QG
+            Tile qgRouge(0,31,16,31);
+            Tile qgBleu(0,62,16,31);
+            Tile qgVert(0,93,16,31);
+            Tile qgJaune(0,124,16,31);
+            //Usine
+            Tile usineRouge(32,31,16,31);
+            Tile usineBleu(32,62,16,31);
+            Tile usineVert(32,93,16,31);
+            Tile usineJaune(32,124,16,31);
+
+            tiles = {qgRouge,qgBleu,qgVert,qgJaune,usineRouge,usineBleu,usineVert,usineJaune};
+    }
+
+    if (filename=="res/units.png") {
+            //Infantry
+            Tile infantryRouge(16,0,16,16);
+            Tile infantryBleu(16,16,16,16);
+            Tile infantryVert(16,32,16,16);
+            Tile infantryJaune(16,48,16,16);
+            //Recon
+            Tile reconRouge(0,0,16,16);
+            Tile reconBleu(0,16,16,16);
+            Tile reconVert(0,32,16,16);
+            Tile reconJaune(0,48,16,16);
+            //Mech
+            Tile mechRouge(32,0,16,16);
+            Tile mechBleu(32,16,16,16);
+            Tile mechVert(32,32,16,16);
+            Tile mechJaune(32,48,16,16);
+            //Tank
+            Tile tankRouge(64,0,16,16);
+            Tile tankBleu(64,16,16,16);
+            Tile tankVert(64,32,16,16);
+            Tile tankJaune(64,48,16,16);
+            //HTank
+            Tile hTankRouge(80,0,16,16);
+            Tile hTankBleu(80,16,16,16);
+            Tile hTankVert(80,32,16,16);
+            Tile hTankJaune(80,48,16,16);
+            tiles = {infantryRouge,infantryBleu,infantryVert,infantryJaune,reconRouge,reconBleu,reconVert,reconJaune,mechRouge,mechBleu,mechVert,mechJaune,tankRouge,tankBleu,tankVert,tankJaune,hTankRouge,hTankBleu,hTankVert,hTankJaune};
+    }
 }
 
 template<class T>
-Tile& TileSet<T>::getTile(T& t) {
-    int i = t;
+TileSet<T>::~TileSet() {
+}
+
+template<class T>
+int TileSet<T>::getCellWidth() const {
+    return tiles[0].getWidth();
+}
+
+template<class T>
+int TileSet<T>::getCellHeight() const {
+    return tiles[0].getHeight();
+}
+
+template<class T>
+std::string TileSet<T>::getImageFile() const {
+    return filename;
+}
+
+template<class T>
+Tile& TileSet<T>::getTile(T* pt) {
+    int i = pt->getTileId();
     return this->tiles[i];
-};
+}
+}
 
 #endif

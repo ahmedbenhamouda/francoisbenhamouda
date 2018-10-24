@@ -13,11 +13,11 @@ void testSFML() {
 // Fin test SFML
 
 #include "state.h"
-//#include "render.h"
+#include "render.h"
 
 using namespace std;
 using namespace state;
-//using namespace render;
+using namespace render;
 
 void tests() {
     // création d'objets Position
@@ -95,6 +95,34 @@ void tests() {
     //delete newTerrain;*/
 }
 
+void renderTest() {
+    // Test with Unite
+    unique_ptr<Position> pos (new Position(5, 1));
+    unique_ptr<Unite> unit (new Infantry(*pos, 2));
+    render::TileSet<Unite> test("res/units.png");
+    Tile newTile = test.getTile(unit.get());
+    cout<<"x : "<<newTile.getX()<<", y : "<<newTile.getY()<<", Height : "<<newTile.getHeight()<<", Width : "<<newTile.getWidth()<<endl;
+    // Test with Batiment
+    unique_ptr<Batiment> batiment (new Batiment(*pos, 0));
+    render::TileSet<Batiment> test2("res/batiments.png");
+    Tile batTile = test2.getTile(batiment.get());
+    cout<<"x : "<<batTile.getX()<<", y : "<<batTile.getY()<<", Height : "<<batTile.getHeight()<<", Width : "<<batTile.getWidth()<<endl;
+    // création d'un objet TerrainTab
+    std::vector<std::vector<TerrainTypeId>> defaultVector {{plaine,plaine,plaine,plaine,plaine,plaine,plaine,plaine},
+                                                           {route,route,route,route,plaine,foret,plaine,plaine},
+                                                           {plaine,plaine,plaine,route,plaine,plaine,foret,plaine},
+                                                           {plaine,plaine,plaine,route,plaine,plaine,plaine,plaine},
+                                                           {plaine,foret,plaine,route,route,route,plaine,plaine},
+                                                           {plaine,foret,plaine,route,plaine,route,route,route},
+                                                           {plaine,plaine,route,route,montagne,montagne,plaine,plaine},
+                                                           {plaine,plaine,route,plaine,plaine,plaine,plaine,plaine}};
+    // Test with TerrainTypeId
+    unique_ptr<TerrainTile> terrainTile(new TerrainTile(defaultVector[0][0]));
+    render::TileSet<TerrainTile> test3("res/terrain.png");
+    Tile caseTile = test3.getTile(terrainTile.get());
+    cout<<"x : "<<caseTile.getX()<<", y : "<<caseTile.getY()<<", Height : "<<caseTile.getHeight()<<", Width : "<<caseTile.getWidth()<<endl;
+}
+
 int main(int argc,char* argv[]) 
 {
     //Exemple exemple;
@@ -110,7 +138,8 @@ int main(int argc,char* argv[])
             cout << "Invalid argument." << endl;
         } else {
             // Tests unitaires
-            tests();
+            //tests();
+	    renderTest();
         }
     }
     return 0;
