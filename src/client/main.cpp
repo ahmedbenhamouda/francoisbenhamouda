@@ -136,7 +136,7 @@ void renderTest() {
 
    // création d'objets Usine
     unique_ptr<Position> pos2 (new Position(7, 2));
-    unique_ptr<Batiment> B (new Usine(*pos2, 1));
+    unique_ptr<Batiment> B (new state::Usine<Infantry>(*pos2, 1));
 
     //teste sur l'usine
     cout<<"la couleur du batiment est :"<<B->getColor()<<"."<<endl;

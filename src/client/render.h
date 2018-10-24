@@ -2,8 +2,8 @@
 #ifndef __RENDER__H
 #define __RENDER__H
 
-#include "render/Surface.h"
-#include "render/Tile.h"
-#include "render/Layer.h"
 #include "render/Tilemap.h"
+#include "render/Tile.h"
+#include "render/Surface.h"
+#include "render/Layer.h"
 #endif
