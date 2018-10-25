@@ -57,16 +57,16 @@ int Usine<T>::getTileId() {
     return (4*this->getId_b()+this->getColor());
 }
 
-<<<<<<< Updated upstream
 
 
 
 
-=======
-/*template<class T>
+
+/*
+template<class T>
 Unite Usine<T>::creerU(int argent, Position& position, T* pt) {
-}*/
->>>>>>> Stashed changes
+}
+*/
 };
 
 #endif
