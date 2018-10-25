@@ -57,9 +57,6 @@ int Usine<T>::getTileId() {
     return (4*this->getId_b()+this->getColor());
 }
 
-template<class T>
-Unite Usine<T>::creerU(int argent, Position& position, T* pt) {
-}
 
 
 
