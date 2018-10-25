@@ -9,11 +9,13 @@ namespace state {
   class Unite;
   class Batiment;
   class Position;
+  class TerrainTile;
 }
 
 #include "TerrainTab.h"
 #include "Position.h"
 #include "TerrainTypeId.h"
+#include "TerrainTile.h"
 #include "Unite.h"
 #include "Batiment.h"
 

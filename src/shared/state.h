@@ -5,6 +5,7 @@
 #include "state/TerrainTypeId.h"
 #include "state/Position.h"
 #include "state/TerrainTab.h"
+#include "state/TerrainTile.h"
 #include "state/Unite.h"
 #include "state/Batiment.h"
 #include "state/Terrain.h"
@@ -16,5 +17,4 @@
 #include "state/HTank.h"
 #include "state/PorteMonnaie.h"
 #include "state/QG.h"
-#include "state/TerrainTile.h"
 #endif
