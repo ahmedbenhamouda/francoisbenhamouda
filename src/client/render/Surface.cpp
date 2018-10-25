@@ -6,7 +6,7 @@ namespace render {
 	}
 	Surface::~Surface () {
 	}
-	void Surface::loadTexture (std::string& image_file) {
+	void Surface::loadTexture (std::string image_file) {
 		if (!texture.loadFromFile(image_file)) {
 			throw std::runtime_error("No such file");
 		}
@@ -29,7 +29,7 @@ namespace render {
 		quad[2].texCoords = sf::Vector2f(tex.getX()+tex.getWidth(),tex.getY()+tex.getHeight());
 		quad[3].texCoords = sf::Vector2f(tex.getX(),tex.getY()+tex.getHeight());
 	}
-	void const Surface::draw (sf::RenderTarget& target, sf::RenderStates states) {
+	void Surface::draw (sf::RenderTarget& target, sf::RenderStates states) const {
 		states.transform *= getTransform();
 		states.texture = &texture;
 

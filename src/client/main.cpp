@@ -125,7 +125,7 @@ void renderTest() {
     Tile caseTile = test3.getTile(terrainTile.get());
     cout<<"x : "<<caseTile.getX()<<", y : "<<caseTile.getY()<<", Height : "<<caseTile.getHeight()<<", Width : "<<caseTile.getWidth()<<endl;
 
-    // création d'objets Unite
+    /*// création d'objets Unite
     unique_ptr<Position> pos3 (new Position(6, 3));
     unique_ptr<Unite> U (new Infantry(*pos3, 0));
 
@@ -140,7 +140,30 @@ void renderTest() {
 
     //teste sur l'usine
     cout<<"la couleur du batiment est :"<<B->getColor()<<"."<<endl;
-    cout<<"L'identité du batiment est :"<<B->getId_b()<<"."<<endl;
+    cout<<"L'identité du batiment est :"<<B->getId_b()<<"."<<endl;*/
+    //unique_ptr<Surface> surf(new Surface());
+    //surf->loadTexture("res/terrain.png");
+    unique_ptr<render::Surface> surf(new render::Surface());
+    surf->loadTexture(test3.getImageFile());
+    surf->initQuads(64);
+    //for (int i=0; i<8; i++) {
+        //for (int j=0; j<8; j++) {
+    surf->setSpriteLocation(0,0,8,16);
+    surf->setSpriteTexture(0,0,8,caseTile);
+	//}
+    //}
+    sf::RenderWindow window(sf::VideoMode(800,600), "window");
+    sf::Event event;
+    while(window.pollEvent(event))
+    {
+	if(event.type == sf::Event::Closed) {
+	    window.close();
+	}
+	window.clear();
+	window.draw(*surf);
+	window.display(); 
+    }
+
 }
 
 int main(int argc,char* argv[]) 
