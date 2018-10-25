@@ -4,8 +4,12 @@
 
 #include <vector>
 
+namespace state {
+  class Jeu;
+};
 class TileSet;
 class Surface;
+#include "state/Jeu.h"
 #include "TileSet.h"
 #include "Surface.h"
 
