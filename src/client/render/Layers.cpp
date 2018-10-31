@@ -5,44 +5,50 @@ namespace render {
 	}
 	Layers::~Layers() {
 	}
-	void Layers::setUniteSurface (std::vector<std::vector<state::Unite*>> unites) {
-		//Creat the Unite Tileset
-		render::TileSet<state::Unite> uniteTileSet("res/units.png");
+	void Layers::setUniteSurface (state::Terrain* terrain) {
+		//Create a Tileset
+		render::Tileset<state::Unite> uniteTileset("res/units.png");
 		//Initialise the Unite Surface
-		uniteSurface.loadTexture(uniteTileSet.getImageFile());
+		uniteSurface.loadTexture(uniteTileset.getImageFile());
 		uniteSurface.initQuads(64);
 		for (int i = 0; i<8; i++) {
 			for (int j = 0; j<8; j++) {
-				uniteSurface.setSpriteLocation(j,i,8,16);
-    				uniteSurface.setSpriteTexture(j,i,8,uniteTileSet.getTile(unites[i][j]));
+				state::Position pos(j,i);
+				if (terrain->getUnite(pos)) {
+					uniteSurface.setSpriteLocation(j,i,8,16);
+    					uniteSurface.setSpriteTexture(j,i,8,uniteTileset.getTile(terrain->getUnite(pos)));
+				}
 			}
 		}
 	}
-	void Layers::setBatimentSurface (std::vector<std::vector<state::Batiment*>> batiments) {
-		//Creat the Batiment Tileset
-		render::TileSet<state::Batiment> batimentTileSet("res/batiments.png");
+	void Layers::setBatimentSurface (state::Terrain* terrain) {
+		//Create a Tileset
+		render::Tileset<state::Batiment> batimentTileset("res/batiments.png");
 		//Initialise the Batiment Surface
-		batimentSurface.loadTexture(batimentTileSet.getImageFile());
+		batimentSurface.loadTexture(batimentTileset.getImageFile());
 		batimentSurface.initQuads(64);
 		for (int i = 0; i<8; i++) {
 			for (int j = 0; j<8; j++) {
-				batimentSurface.setSpriteLocation(j,i,8,16);
-    				batimentSurface.setSpriteTexture(j,i,8,batimentTileSet.getTile(batiments[i][j]));
+				state::Position pos(j,i);
+				if (terrain->getBatiment(pos)) {
+					batimentSurface.setSpriteLocation(j,i,8,16);
+    					batimentSurface.setSpriteTexture(j,i,8,batimentTileset.getTile(terrain->getBatiment(pos)));
+				}
 			}
 		}
 	}
-	void Layers::setTerrainSurface (state::TerrainTab terrainTab) {
-		//Creat the terrain Tileset
-		render::TileSet<state::TerrainTile> terrainTileSet("res/terrain.png");
-		//Initialise the Terrain Surface
-		terrainSurface.loadTexture(terrainTileSet.getImageFile());
+	void Layers::setTerrainSurface (state::Terrain* terrain) {
+		//Create a Tileset
+		render::Tileset<state::TerrainTile> terrainTileset("res/terrain.png");
+		//Initialise the Batiment Surface
+		terrainSurface.loadTexture(terrainTileset.getImageFile());
 		terrainSurface.initQuads(64);
 		for (int i = 0; i<8; i++) {
 			for (int j = 0; j<8; j++) {
-				std::unique_ptr<state::Position> pos(new state::Position(j,i));
-				std::unique_ptr<state::TerrainTile> tt(new state::TerrainTile(terrainTab.get(*pos)));
+				state::Position pos(j,i);
+				state::TerrainTile tt(terrain->getGround(pos));
 				terrainSurface.setSpriteLocation(j,i,8,16);
-    				terrainSurface.setSpriteTexture(j,i,8,terrainTileSet.getTile(tt.get()));
+    				terrainSurface.setSpriteTexture(j,i,8,terrainTileset.getTile(&tt));
 			}
 		}
 	}

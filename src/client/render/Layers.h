@@ -2,15 +2,14 @@
 #ifndef RENDER__LAYERS__H
 #define RENDER__LAYERS__H
 
-#include <vector>
 
 namespace state {
   class Jeu;
 };
-class TileSet;
+class Tileset;
 class Surface;
 #include "state/Jeu.h"
-#include "TileSet.h"
+#include "Tileset.h"
 #include "Surface.h"
 
 namespace render {
@@ -27,9 +26,9 @@ namespace render {
   public:
     Layers ();
     ~Layers ();
-    void setUniteSurface (std::vector<std::vector<state::Unite*>> unites);
-    void setBatimentSurface (std::vector<std::vector<state::Batiment*>> batiments);
-    void setTerrainSurface (state::TerrainTab terrainTab);
+    void setUniteSurface (state::Terrain* terrain);
+    void setBatimentSurface (state::Terrain* terrain);
+    void setTerrainSurface (state::Terrain* terrain);
     void displayLayers ();
     // Setters and Getters
   };

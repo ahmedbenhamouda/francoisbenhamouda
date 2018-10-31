@@ -115,20 +115,21 @@ void renderTest() {
                                                            {plaine,plaine,route,plaine,plaine,plaine,plaine,plaine}};
 	unique_ptr<TerrainTab> terrainTab (new TerrainTab(defaultVector));
     
-    // création de vecteurs 2D
+    // création d'un objet Terrain
     vector<vector<Unite*>> unites (8, vector<Unite*>(8));
     unites[unit->position.getY()][unit->position.getX()] = unit.get();
 
     vector<vector<Batiment*>> batiments (8, vector<Batiment*>(8));
     batiments[batiment->position.getY()][batiment->position.getX()] = batiment.get();
 
+    unique_ptr<Terrain> terrain(new Terrain(unites, batiments, *terrainTab));
 
     // creation d'un objet Layers
     unique_ptr<Layers> layers(new Layers());
-    layers->setUniteSurface (unites);
-    layers->setBatimentSurface (batiments);
-    layers->setTerrainSurface (*terrainTab);
-    layers->displayLayers ();
+    layers->setUniteSurface (terrain.get());
+    layers->setBatimentSurface (terrain.get());
+    layers->setTerrainSurface (terrain.get());
+    //layers->displayLayers ();
 }
 
 int main(int argc,char* argv[]) 

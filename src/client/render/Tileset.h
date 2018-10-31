@@ -14,9 +14,9 @@ namespace render {
 
 namespace render {
 
-  /// class TileSet - 
+  /// class Tileset - 
   template <class T>
-  class TileSet {
+  class Tileset {
     // Associations
     // Attributes
     std::vector<Tile> tiles;
@@ -25,8 +25,8 @@ namespace render {
     T t;
     // Operations
   public:
-    TileSet (std::string filename);
-    ~TileSet();
+    Tileset (std::string filename);
+    ~Tileset();
     int getCellWidth() const;
     int getCellHeight() const;
     std::string getImageFile() const;
@@ -35,7 +35,7 @@ namespace render {
   };
 
 template<class T>
-TileSet<T>::TileSet (std::string filename) : filename(filename) {
+Tileset<T>::Tileset (std::string filename) : filename(filename) {
     // peuplement de tiles
     if (filename=="res/terrain.png") {
             //terrain
@@ -93,26 +93,26 @@ TileSet<T>::TileSet (std::string filename) : filename(filename) {
 }
 
 template<class T>
-TileSet<T>::~TileSet() {
+Tileset<T>::~Tileset() {
 }
 
 template<class T>
-int TileSet<T>::getCellWidth() const {
+int Tileset<T>::getCellWidth() const {
     return tiles[0].getWidth();
 }
 
 template<class T>
-int TileSet<T>::getCellHeight() const {
+int Tileset<T>::getCellHeight() const {
     return tiles[0].getHeight();
 }
 
 template<class T>
-std::string TileSet<T>::getImageFile() const {
+std::string Tileset<T>::getImageFile() const {
     return filename;
 }
 
 template<class T>
-Tile& TileSet<T>::getTile(T* pt) {
+Tile& Tileset<T>::getTile(T* pt) {
     int i = pt->getTileId();
     return this->tiles[i];
 }
