@@ -129,7 +129,7 @@ void renderTest() {
     layers->setUniteSurface (terrain.get());
     layers->setBatimentSurface (terrain.get());
     layers->setTerrainSurface (terrain.get());
-    //layers->displayLayers ();
+    layers->displayLayers ();
 }
 
 int main(int argc,char* argv[]) 

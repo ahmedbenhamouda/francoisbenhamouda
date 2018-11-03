@@ -30,7 +30,7 @@ namespace render {
     int getCellWidth() const;
     int getCellHeight() const;
     std::string getImageFile() const;
-    Tile& getTile (T* t);
+    Tile& getTile (T* pt);
     // Setters and Getters
   };
 
