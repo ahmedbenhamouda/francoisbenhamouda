@@ -55,17 +55,20 @@ namespace render {
 		}
 	}
 	void Layers::displayLayers() {
-		sf::RenderWindow window(sf::VideoMode(128,128), "window");
-		sf::Event event;
-		while(window.pollEvent(event)) {
-			if(event.type == sf::Event::Closed) {
-				window.close();
+		sf::RenderWindow window(sf::VideoMode(64,64), "Advance Wars");
+		//window.setVerticalSyncEnabled(false);
+		while(window.isOpen()) {
+			sf::Event event;
+			while(window.pollEvent(event)) {
+				if(event.type == sf::Event::Closed) {
+					window.close();
+				}
+				window.clear();
+				window.draw(terrainSurface);
+				window.draw(batimentSurface);
+				window.draw(uniteSurface);
+				window.display();
 			}
-			window.clear();
-			window.draw(terrainSurface);
-			window.draw(batimentSurface);
-			window.draw(uniteSurface);
-			window.display();
 		}
 	}
 }
