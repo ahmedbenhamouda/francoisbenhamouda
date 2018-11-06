@@ -36,6 +36,7 @@ namespace state {
     Unite* getUnite (Position position);
     Batiment* getBatiment (Position position);
     TerrainTypeId getGround (Position position);
+    void moveUnite (Position pos_init, Position pos_final);
     ~Terrain ();
     // Setters and Getters
   };

@@ -47,4 +47,21 @@ namespace state {
 	int Unite::getTileId(){
 		return (4*this->getId()+this->getColor());
 	}
+	void Unite::setpuissance(int p){
+		this->puissance = p;
+	}
+	void Unite::setvie(int v){
+		this->vie = v;
+	}
+	void Unite::attacker(Unite* unite){
+		int nvie;
+		int np;
+		nvie = unite->getvie()-this->getpuissance();
+		if (nvie<0) {
+			nvie = 0;
+		}
+		np = int(unite->getpuissance()*float(nvie)/unite->getvie());
+		unite->setvie(nvie);
+		unite->setpuissance(np);
+	}
 }

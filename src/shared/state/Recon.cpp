@@ -48,4 +48,23 @@ namespace state {
 	int Recon::getTileId(){
 		return (4*this->getId()+this->getColor());
 	}
+	void Recon::setpuissance(int p){
+		this->puissance = p;
+	}
+	void Recon::setvie(int v){
+		this->vie = v;
+
+	}
+	void Recon::attacker(Unite* unite){
+		int nvie;
+		int npuissance;
+		nvie = unite->getvie()-this->getpuissance();
+		if (nvie<0) {
+			nvie = 0;
+		}
+		npuissance = this->getpuissance() * (nvie/this->getvie());
+		unite->setvie(nvie);
+		unite->setpuissance(npuissance);
+		
+	}
 }

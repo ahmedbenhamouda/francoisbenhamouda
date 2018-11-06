@@ -35,6 +35,9 @@ namespace state {
     int getId ();
     int getColor ();
     int getTileId ();
+    void setvie (int v);
+    void attacker (Unite* unite);
+    void setpuissance (int p);
     ~Tank ();
     // Setters and Getters
   };

@@ -1,5 +1,5 @@
 #include "HTank.h"
-#include "Unite.h"
+#include "HTank.h"
 #include <cmath>
 
 namespace state {
@@ -47,5 +47,23 @@ namespace state {
 	}
 	int HTank::getTileId(){
 		return (4*this->getId()+this->getColor());
+	}
+	void HTank::setpuissance(int p){
+		this->puissance = p;
+	}
+	void HTank::setvie(int v){
+		this->vie = v;
+
+	}
+	void HTank::attacker(Unite* unite){
+		int nvie;
+		int np;
+		nvie = unite->getvie()-this->getpuissance();
+		if (nvie<0) {
+			nvie = 0;
+		}
+		np = int(unite->getpuissance()*float(nvie)/unite->getvie());
+		unite->setvie(nvie);
+		unite->setpuissance(np);
 	}
 }

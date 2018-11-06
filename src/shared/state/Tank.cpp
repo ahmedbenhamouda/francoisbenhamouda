@@ -48,4 +48,22 @@ namespace state {
 	int Tank::getTileId(){
 		return (4*this->getId()+this->getColor());
 	}
+	void Tank::setpuissance(int p){
+		this->puissance = p;
+	}
+	void Tank::setvie(int v){
+		this->vie = v;
+
+	}
+	void Tank::attacker(Unite* unite){
+		int nvie;
+		int npuissance;
+		nvie = unite->getvie()-this->getpuissance();
+		if (nvie<0) {
+			nvie = 0;
+		}
+		npuissance = this->getpuissance() * (nvie/this->getvie());
+		unite->setvie(nvie);
+		unite->setpuissance(npuissance);
+	}
 }
