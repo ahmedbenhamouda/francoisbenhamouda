@@ -64,4 +64,10 @@ namespace state {
 		unite->setvie(nvie);
 		unite->setpuissance(np);
 	}
+	void Unite::move(Position position) {
+		this->position = position;
+	}
+	bool Unite::PossedeDrapeau() {
+		return false;
+	}
 }

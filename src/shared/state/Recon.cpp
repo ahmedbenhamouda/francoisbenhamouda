@@ -65,6 +65,11 @@ namespace state {
 		npuissance = this->getpuissance() * (nvie/this->getvie());
 		unite->setvie(nvie);
 		unite->setpuissance(npuissance);
-		
+	}
+	void Recon::move(Position position) {
+		this->position = position;
+	}
+	bool Recon::PossedeDrapeau() {
+		return false;
 	}
 }

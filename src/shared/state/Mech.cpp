@@ -66,4 +66,10 @@ namespace state {
 		unite->setvie(nvie);
 		unite->setpuissance(np);
 	}
+	void Mech::move(Position position) {
+		this->position = position;
+	}
+	bool Mech::PossedeDrapeau() {
+		return false;
+	}
 }

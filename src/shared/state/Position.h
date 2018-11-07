@@ -17,7 +17,6 @@ namespace state {
     Position (int x, int y);
     int getX () const;
     int getY () const;
-    void move (int x, int y);
     bool operator== (Position const& pos);
     ~Position ();
     // Setters and Getters

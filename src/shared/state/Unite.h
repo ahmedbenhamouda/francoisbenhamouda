@@ -40,6 +40,8 @@ namespace state {
     virtual void setvie (int v);
     virtual void setpuissance (int p);
     void attacker (Unite* unite);
+    void move (Position position);
+    bool PossedeDrapeau ();
     virtual ~Unite ();
     // Setters and Getters
   };

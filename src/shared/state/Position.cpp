@@ -16,10 +16,6 @@ namespace state {
 	int Position::getY() const {
 		return y;
 	}
-	void Position::move(int x, int y) {
-		this->x = x;
-		this->y = y;
-	}
 	bool Position::operator==(Position const& pos) {
 		if (pos.getX() == this->getX() && pos.getY() == this->getY()){
 			return true;

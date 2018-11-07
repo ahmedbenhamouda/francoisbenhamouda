@@ -39,6 +39,8 @@ namespace state {
     void attacker (Unite* unite);
     void setpuissance (int p);
     ~Mech ();
+    void move (Position position);
+    bool PossedeDrapeau ();
     // Setters and Getters
   };
 
