@@ -38,6 +38,7 @@ namespace state {
     TerrainTypeId getGround (Position position);
     void moveUnite (Position pos_init, Position pos_final);
     ~Terrain ();
+    void setUnite (Position position, Unite* unite);
     // Setters and Getters
   };
 

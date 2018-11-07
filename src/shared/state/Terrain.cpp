@@ -21,9 +21,12 @@ namespace state {
 	}
 	void Terrain::moveUnite(Position pos_init, Position pos_final){
 		Unite* unite = this->getUnite(pos_init);
-		unites[pos_final.getY()][pos_final.getX()] = unite;
-		unites[pos_init.getY()][pos_init.getX()] = nullptr;	
+		setUnite(pos_final, unite);
+		setUnite(pos_init, nullptr); 
 	}
 	Terrain::~Terrain() {
+	}
+	void Terrain::setUnite(Position position, Unite* unite){
+		unites[position.getY()][position.getX()] = unite;
 	}
 }
