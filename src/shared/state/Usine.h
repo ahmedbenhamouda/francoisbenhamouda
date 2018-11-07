@@ -18,8 +18,6 @@ namespace state {
   class Usine : public state::Batiment {
     // Attributes
   public:
-    Position position;
-    int color;
     int id_b     = 1;
     // Operations
   public:

@@ -24,6 +24,9 @@ namespace state {
 			return false;
 		}
 	}
+	bool Position::operator-(Position const& pos) {
+		
+	}
 	Position::~Position(){
 	}
 }

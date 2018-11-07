@@ -17,8 +17,6 @@ namespace state {
   class QG : public state::Batiment {
     // Attributes
   public:
-    Position position;
-    int color;
     int id_b     = 0;
     // Operations
   public:
