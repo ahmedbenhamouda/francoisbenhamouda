@@ -52,7 +52,7 @@ void tests() {
     unique_ptr<Unite> U (new Unite(*pos, 0));
     unique_ptr<Unite> U2 (new Infantry(*pos3, 0));
 
-    //teste 1 sur les unites
+    //test 1 sur les unites
 
 
     cout<<"la vie de l'unité est :"<<U2->getvie()<<"."<<endl;
@@ -168,7 +168,7 @@ void engineTest() {
     unique_ptr<Unite> unit3 (new Tank(Position(6, 1), 1));
 
     // Test with Batiment
-    unique_ptr<Batiment> batiment (new QG(Position(2, 5), 2));
+    unique_ptr<Batiment> batiment (new QG(Position(2, 5), 3));
     unique_ptr<Batiment> batiment2 (new Usine(Position(4, 3), 0));
 
     // création d'un objet TerrainTab
@@ -194,15 +194,49 @@ void engineTest() {
 
     unique_ptr<Terrain> terrain(new Terrain(unites, batiments, *terrainTab));
 
+    // création d'une attaque 
+    cout<<"la vie de l'unité du jouer 1 est:"<<unit->getvie()<<"."<<endl;
+    cout<<"la puissance de l'unité du jouer 1 est:"<<unit->getpuissance()<<"."<<endl;
+    /*unit2->attacker(unit.get());
+    cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké est:"<<unit->getvie()<<"."<<endl;
+    cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké est:"<<unit->getpuissance()<<"."<<endl;
+    unit3->attacker(unit.get());
+    
+    unit2->attacker(unit.get());
+    cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké pour la troisème fois est:"<<unit->getvie()<<"."<<endl;
+    cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké pour la troisième fois est:"<<unit->getpuissance()<<"."<<endl;
+*/
+    unique_ptr<Jeu> jeu(new Jeu(terrain.get())); 
+    unique_ptr<Engine> engine(new Engine(jeu.get()));
+    unique_ptr<AttackUnitCommand> cmd2(new AttackUnitCommand(Position(5,2),Position(5,1)));
+    engine->addCommand(cmd2.get());
+    engine->update();
+    cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké pour la deuxième fois est:"<<unit->getvie()<<"."<<endl;
+    cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké pour la deuxième fois est:"<<unit->getpuissance()<<"."<<endl;
+    if (unit->getvie() == 0){
+	unique_ptr<DeleteUnitCommand> cmd1(new DeleteUnitCommand(Position(5,1)));
+        engine->addCommand(cmd1.get());
+        engine->update();
+    }
+    unique_ptr<AttackUnitCommand> cmd3(new AttackUnitCommand(Position(6,1),Position(5,1)));
+    engine->addCommand(cmd3.get());
+    engine->update();
+    cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké pour la troisème fois est:"<<unit->getvie()<<"."<<endl;
+    cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké pour la troisième fois est:"<<unit->getpuissance()<<"."<<endl;
+    /*if (unit->getvie() == 0){
+	unique_ptr<DeleteUnitCommand> cmd1(new DeleteUnitCommand(Position(5,1)));
+        engine->addCommand(cmd1.get());
+        engine->update();
+    }*/
     // Creation d'un objet Jeu
-    unique_ptr<Jeu> jeu(new Jeu(terrain.get()));
+    //unique_ptr<Jeu> jeu(new Jeu(terrain.get()));
 
     // Creation d'un objet Engine
-    unique_ptr<Engine> engine(new Engine(jeu.get()));
-    //unique_ptr<MoveUnitCommand> cmd(new MoveUnitCommand(Position(5,1),Position(4,2)));
-    //engine->addCommand(cmd.get());
-    //engine->update();
-
+/*    unique_ptr<Engine> engine(new Engine(jeu.get()));
+    unique_ptr<MoveUnitCommand> cmd(new MoveUnitCommand(Position(5,1),Position(4,2)));
+    engine->addCommand(cmd.get());
+    engine->update();
+*/
     // creation d'un objet Layers
     /*unique_ptr<Layers> layers(new Layers());
     layers->setUniteSurface (terrain.get());

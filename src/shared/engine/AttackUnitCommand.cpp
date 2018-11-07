@@ -9,9 +9,9 @@ namespace engine {
 	}
 	void AttackUnitCommand::execute(state::Jeu* jeu) {
 		state::Unite* object = jeu->etatJeu->getUnite(objectPos);
-		state::Unite* target = jeu->etatJeu->getUnite(objectPos);
-		//if (std::fabs((object->position)-(target->position)) == 1){
+		state::Unite* target = jeu->etatJeu->getUnite(targetPos);
+		if (std::fabs((object->position)-(target->position)) == 1){
 			object->attacker(target);
-		//}
+		}
 	}
 }
