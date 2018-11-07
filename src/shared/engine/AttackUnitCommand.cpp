@@ -10,6 +10,6 @@ namespace engine {
 	void AttackUnitCommand::execute(state::Jeu* jeu) {
 		state::Unite* object = jeu->etatJeu->getUnite(objectPos);
 		state::Unite* target = jeu->etatJeu->getUnite(objectPos);
-		//object->attacker(target);
+		object->attacker(target);
 	}
 }

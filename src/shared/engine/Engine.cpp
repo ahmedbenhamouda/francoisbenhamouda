@@ -10,8 +10,8 @@ namespace engine {
 		commands.push_back(command);
 	}
 	void Engine::update() {
-		for (int i=0; i<commands.size(); i++) {
-			commands[i]->execute(jeu);
+		for (Command* cmd : commands) {
+			cmd->execute(jeu);
 		}
 	}
 }

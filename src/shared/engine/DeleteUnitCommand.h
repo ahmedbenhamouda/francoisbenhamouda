@@ -5,12 +5,17 @@
 
 namespace state {
   class Jeu;
+};
+namespace engine {
+  class Command;
 }
+
+#include "Command.h"
 
 namespace engine {
 
   /// class DeleteUnitCommand - 
-  class DeleteUnitCommand {
+  class DeleteUnitCommand : public engine::Command {
     // Attributes
   public:
     state::Position objectPos;
