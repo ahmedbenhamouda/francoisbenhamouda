@@ -3,5 +3,6 @@
 #define __RENDER__H
 
 #include "render/Tile.h"
+#include "render/Surface.h"
 #include "render/Layers.h"
 #endif

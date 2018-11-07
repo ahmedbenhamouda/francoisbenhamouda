@@ -3,14 +3,16 @@
 #define RENDER__LAYERS__H
 
 
+namespace render {
+  class Surface;
+};
 namespace state {
   class Jeu;
 };
 class Tileset;
-class Surface;
+#include "Surface.h"
 #include "state/Jeu.h"
 #include "Tileset.h"
-#include "Surface.h"
 
 namespace render {
 
