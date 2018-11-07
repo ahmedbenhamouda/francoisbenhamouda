@@ -12,15 +12,18 @@ namespace render {
 		}
 	}
 	void Surface::initQuads (int count) {
+		quads = sf::VertexArray();
 		quads.setPrimitiveType(sf::Quads);
 		quads.resize(count);
 	}
-	void Surface::setSpriteLocation (int posx, int posy, int map_size, int tile_size) {
+	void Surface::setSpriteLocation (int posx, int posy, int map_size, int tile_size, bool isBatiment) {
 		sf::Vertex* quad = &quads[(posx+posy*map_size)*4];
-		quad[0].position = sf::Vector2f(posx*map_size,posy*map_size);
-		quad[1].position = sf::Vector2f((posx+1)*map_size,posy*map_size);
-		quad[2].position = sf::Vector2f((posx+1)*map_size,(posy+1)*map_size);
-		quad[3].position = sf::Vector2f(posx*map_size,(posy+1)*map_size);
+		// Si c'est un batiment, on rajoute un étage supplémentaire
+		int height = int(isBatiment);
+		quad[0].position = sf::Vector2f(posx*tile_size,(posy-height)*tile_size);
+		quad[1].position = sf::Vector2f((posx+1)*tile_size,(posy-height)*tile_size);
+		quad[2].position = sf::Vector2f((posx+1)*tile_size,(posy+1)*tile_size);
+		quad[3].position = sf::Vector2f(posx*tile_size,(posy+1)*tile_size);
 	}
 	void Surface::setSpriteTexture (int posx, int posy, int map_size, const Tile& tex) {
 		sf::Vertex* quad = &quads[(posx+posy*map_size)*4];

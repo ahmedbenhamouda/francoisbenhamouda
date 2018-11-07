@@ -21,7 +21,6 @@ namespace engine {
 		state::Unite* object = jeu->etatJeu->getUnite(objectPos);
 		if (isLegalMove(object)) {
 			object->move(targetPos);
-			jeu->etatJeu->moveUnite(objectPos,targetPos);
 		}
 	}
 }

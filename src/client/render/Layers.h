@@ -2,6 +2,7 @@
 #ifndef RENDER__LAYERS__H
 #define RENDER__LAYERS__H
 
+#include <SFML/Graphics.hpp>
 
 namespace render {
   class Surface;
@@ -24,14 +25,16 @@ namespace render {
     render::Surface uniteSurface;
     render::Surface batimentSurface;
     render::Surface terrainSurface;
+    state::Terrain* terrain;
     // Operations
   public:
     Layers ();
+    Layers (state::Terrain* terrain);
     ~Layers ();
-    void setUniteSurface (state::Terrain* terrain);
-    void setBatimentSurface (state::Terrain* terrain);
-    void setTerrainSurface (state::Terrain* terrain);
-    void displayLayers ();
+    void setUniteSurface ();
+    void setBatimentSurface ();
+    void setTerrainSurface ();
+    void displayLayers (sf::RenderWindow* window);
     // Setters and Getters
   };
 

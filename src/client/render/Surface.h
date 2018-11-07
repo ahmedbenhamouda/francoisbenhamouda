@@ -34,7 +34,7 @@ namespace render {
     ~Surface ();
     void loadTexture (std::string image_file);
     void initQuads (int count);
-    void setSpriteLocation (int posx, int posy, int map_size, int tile_size);
+    void setSpriteLocation (int posx, int posy, int map_size, int tile_size, bool isBatiment);
     void setSpriteTexture (int posx, int posy, int map_size, const Tile& tex);
     virtual void  draw (sf::RenderTarget& target, sf::RenderStates states) const;
     // Setters and Getters

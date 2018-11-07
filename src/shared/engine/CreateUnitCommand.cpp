@@ -13,6 +13,6 @@ namespace engine {
 		state::Batiment* usine = jeu->etatJeu->getBatiment(objectPos);
 		// TODO : Penser à vérifier si le joueur a l'argent nécessaire
 		state::Unite* unite = usine->creerU(unit_id);
-		jeu->etatJeu->setUnite(objectPos, unite);
+		jeu->etatJeu->addUnite(unite);
 	}
 }
