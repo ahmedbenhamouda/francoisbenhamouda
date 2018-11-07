@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include <memory>
+#include <thread>
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
@@ -14,10 +15,21 @@ void testSFML() {
 
 #include "state.h"
 #include "render.h"
+#include "engine.h"
 
 using namespace std;
 using namespace state;
 using namespace render;
+using namespace engine;
+
+void displayWindow(Terrain* terrain) {
+    // creation d'un objet Layers
+    unique_ptr<Layers> layers(new Layers());
+    layers->setUniteSurface (terrain);
+    layers->setBatimentSurface (terrain);
+    layers->setTerrainSurface (terrain);
+    layers->displayLayers ();
+}
 
 void tests() {
     // création d'objets Position
@@ -182,7 +194,14 @@ void engineTest() {
 
     unique_ptr<Terrain> terrain(new Terrain(unites, batiments, *terrainTab));
 
-    cout<<"x:"<<batiment->position.getX()<<", y:"<<batiment->position.getY()<<endl;
+    // Creation d'un objet Jeu
+    unique_ptr<Jeu> jeu(new Jeu(terrain.get()));
+
+    // Creation d'un objet Engine
+    unique_ptr<Engine> engine(new Engine(jeu.get()));
+    //unique_ptr<MoveUnitCommand> cmd(new MoveUnitCommand(Position(5,1),Position(4,2)));
+    //engine->addCommand(cmd.get());
+    //engine->update();
 
     // creation d'un objet Layers
     /*unique_ptr<Layers> layers(new Layers());
@@ -190,7 +209,8 @@ void engineTest() {
     layers->setBatimentSurface (terrain.get());
     layers->setTerrainSurface (terrain.get());
     layers->displayLayers ();*/
-
+    thread th(displayWindow, terrain.get());
+    th.join();
 }
 
 int main(int argc,char* argv[]) 
