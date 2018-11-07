@@ -9,8 +9,6 @@ namespace engine {
     	DeleteUnitCommand::~DeleteUnitCommand () {
 	}
     	void DeleteUnitCommand::execute (state::Jeu* jeu) {
-		state::Unite* unit = jeu->etatJeu->getUnite(objectPos);
-		delete unit;
-		jeu->etatJeu->setUnite(objectPos, nullptr);
+		jeu->etatJeu->deleteUnite(objectPos);
 	}
 }

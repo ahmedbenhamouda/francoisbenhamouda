@@ -3,6 +3,7 @@
 #include <map>
 #include <memory>
 #include <thread>
+#include <chrono>
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
@@ -22,13 +23,19 @@ using namespace state;
 using namespace render;
 using namespace engine;
 
-void displayWindow(Terrain* terrain) {
-    // creation d'un objet Layers
-    unique_ptr<Layers> layers(new Layers());
-    layers->setUniteSurface (terrain);
-    layers->setBatimentSurface (terrain);
-    layers->setTerrainSurface (terrain);
-    layers->displayLayers ();
+void displayWindow(Layers* layers) {
+	sf::RenderWindow window(sf::VideoMode(256,256), "Advance Wars");
+		window.setVerticalSyncEnabled(false);
+		while(window.isOpen()) {
+			sf::Event event;
+			while(window.pollEvent(event)) {
+				if(event.type == sf::Event::Closed) {
+					window.close();
+				}
+				layers->displayLayers (&window);
+			}
+		}
+	
 }
 
 void tests() {
@@ -145,20 +152,22 @@ void renderTest() {
 	unique_ptr<TerrainTab> terrainTab (new TerrainTab(defaultVector));
     
     // création d'un objet Terrain
-    vector<vector<Unite*>> unites (8, vector<Unite*>(8));
-    unites[unit->position.getY()][unit->position.getX()] = unit.get();
-    unites[unit2->position.getY()][unit2->position.getX()] = unit2.get();
-    vector<vector<Batiment*>> batiments (8, vector<Batiment*>(8));
-    batiments[batiment->position.getY()][batiment->position.getX()] = batiment.get();
+    vector<Unite*> unites;
+    unites.push_back(unit.get());
+    unites.push_back(unit2.get());
+
+    vector<Batiment*> batiments;
+    batiments.push_back(batiment.get());
 
     unique_ptr<Terrain> terrain(new Terrain(unites, batiments, *terrainTab));
 
     // creation d'un objet Layers
-    unique_ptr<Layers> layers(new Layers());
-    layers->setUniteSurface (terrain.get());
-    layers->setBatimentSurface (terrain.get());
-    layers->setTerrainSurface (terrain.get());
-    layers->displayLayers ();
+    unique_ptr<Layers> layers(new Layers(terrain.get()));
+    layers->setUniteSurface ();
+    layers->setBatimentSurface ();
+    layers->setTerrainSurface ();
+    thread th(displayWindow, layers.get());
+    th.join();
 }
 
 void engineTest() {
@@ -168,8 +177,11 @@ void engineTest() {
     unique_ptr<Unite> unit3 (new Tank(Position(6, 1), 1));
 
     // Test with Batiment
+
     unique_ptr<Batiment> batiment (new QG(Position(2, 5), 3));
     unique_ptr<Batiment> batiment2 (new Usine(Position(4, 3), 0));
+
+
 
     // création d'un objet TerrainTab
     vector<vector<TerrainTypeId>> defaultVector {{plaine,plaine,plaine,plaine,plaine,plaine,plaine,plaine},
@@ -183,14 +195,14 @@ void engineTest() {
     unique_ptr<TerrainTab> terrainTab (new TerrainTab(defaultVector));
     
     // création d'un objet Terrain
-    vector<vector<Unite*>> unites (8, vector<Unite*>(8));
-    unites[unit->position.getY()][unit->position.getX()] = unit.get();
-    unites[unit2->position.getY()][unit2->position.getX()] = unit2.get();
-    unites[unit3->position.getY()][unit3->position.getX()] = unit3.get();
+    vector<Unite*> unites;
+    unites.push_back(unit.get());
+    unites.push_back(unit2.get());
+    unites.push_back(unit3.get());
 
-    vector<vector<Batiment*>> batiments (8, vector<Batiment*>(8));
-    batiments[batiment->position.getY()][batiment->position.getX()] = batiment.get();
-    batiments[batiment2->position.getY()][batiment2->position.getX()] = batiment2.get();
+    vector<Batiment*> batiments;
+    batiments.push_back(batiment.get());
+    batiments.push_back(batiment2.get());
 
     unique_ptr<Terrain> terrain(new Terrain(unites, batiments, *terrainTab));
 
@@ -238,12 +250,31 @@ void engineTest() {
     engine->update();
 */
     // creation d'un objet Layers
-    /*unique_ptr<Layers> layers(new Layers());
-    layers->setUniteSurface (terrain.get());
-    layers->setBatimentSurface (terrain.get());
-    layers->setTerrainSurface (terrain.get());
-    layers->displayLayers ();*/
-    thread th(displayWindow, terrain.get());
+    unique_ptr<Layers> layers(new Layers(terrain.get()));
+    layers->setUniteSurface ();
+    layers->setBatimentSurface ();
+    layers->setTerrainSurface ();
+
+    // Creation d'un thread dedie a l'affichage
+    thread th(displayWindow, layers.get());
+
+    cout<<"Initializing the game..."<<endl;
+    this_thread::sleep_for(chrono::seconds(5));
+    cout<<"A (5,1) :"<<terrain->getUnite(Position(5,1))<<endl;
+    cout<<"A (4,2) :"<<terrain->getUnite(Position(4,2))<<endl;
+    cout<<"MoveUnitCommande(Position(5,1), Position(4,2))"<<endl;
+    unique_ptr<MoveUnitCommand> cmd(new MoveUnitCommand(Position(5,1),Position(4,2)));
+    engine->addCommand(cmd.get());
+    engine->update();
+
+    layers->setUniteSurface ();
+    layers->setBatimentSurface ();
+    layers->setTerrainSurface ();
+
+    cout<<"A (5,1) :"<<terrain->getUnite(Position(5,1))<<endl;
+    cout<<"A (4,2) :"<<terrain->getUnite(Position(4,2))<<endl;
+
+    //thread th(displayWindow, layers.get());
     th.join();
 }
 

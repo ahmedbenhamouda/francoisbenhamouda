@@ -5,9 +5,9 @@
 #include <vector>
 
 namespace state {
-  class TerrainTab;
   class Unite;
   class Batiment;
+  class TerrainTab;
   class Position;
   class TerrainTile;
 }
@@ -26,19 +26,21 @@ namespace state {
     // Associations
     // Attributes
   private:
-    std::vector<std::vector<Unite*>> unites;
-    std::vector<std::vector<Batiment*>> batiments;
+    std::vector<Unite*> unites;
+    std::vector<Batiment*> batiments;
     TerrainTab sol;
     // Operations
   public:
-    Terrain (std::vector<std::vector<Unite*>> unites, std::vector<std::vector<Batiment*>> batiments, TerrainTab sol);
+    Terrain (std::vector<Unite*> unites, std::vector<Batiment*> batiments, TerrainTab sol);
     Terrain ();
     Unite* getUnite (Position position);
     Batiment* getBatiment (Position position);
     TerrainTypeId getGround (Position position);
-    void moveUnite (Position pos_init, Position pos_final);
+    void addUnite (Unite* unite);
+    void deleteUnite (Position position);
     ~Terrain ();
-    void setUnite (Position position, Unite* unite);
+    std::vector<Unite*>& getUniteList ();
+    std::vector<Batiment*>& getBatimentList ();
     // Setters and Getters
   };
 
