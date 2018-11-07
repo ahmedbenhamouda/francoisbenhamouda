@@ -19,4 +19,7 @@ namespace state {
 	}
 	Batiment::~Batiment(){
 	}
+	Unite* Batiment::creerU (int id){
+		return nullptr;
+	}
 }

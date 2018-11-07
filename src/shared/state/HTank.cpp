@@ -1,5 +1,4 @@
 #include "HTank.h"
-#include "HTank.h"
 #include <cmath>
 
 namespace state {

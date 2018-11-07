@@ -10,7 +10,7 @@ namespace engine {
 	CreateUnitCommand::~CreateUnitCommand() {
 	}
 	void CreateUnitCommand::execute (state::Jeu* jeu) {
-		state::Usine* usine = jeu->etatJeu->getBatiment(objectPos);
+		state::Batiment* usine = jeu->etatJeu->getBatiment(objectPos);
 		// TODO : Penser à vérifier si le joueur a l'argent nécessaire
 		usine->creerU(unit_id);
 	}

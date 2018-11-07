@@ -1,5 +1,4 @@
 #include "Mech.h"
-#include "Mech.h"
 #include <cmath>
 
 namespace state {

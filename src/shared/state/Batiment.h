@@ -5,9 +5,11 @@
 
 namespace state {
   class Position;
+  class Unite;
 }
 
 #include "Position.h"
+#include "Unite.h"
 
 namespace state {
 
@@ -27,6 +29,7 @@ namespace state {
     virtual int getColor ();
     virtual int getTileId ();
     virtual ~Batiment ();
+    virtual Unite* creerU (int id);
     // Setters and Getters
   };
 

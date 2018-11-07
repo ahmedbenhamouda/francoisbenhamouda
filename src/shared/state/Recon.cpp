@@ -1,5 +1,4 @@
 #include "Recon.h"
-#include "Unite.h"
 #include <cmath>
 
 namespace state {

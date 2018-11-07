@@ -1,5 +1,4 @@
 #include "Infantry.h"
-#include "Infantry.h"
 #include <cmath>
 
 namespace state {

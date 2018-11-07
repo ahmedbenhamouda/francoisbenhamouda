@@ -1,5 +1,4 @@
 #include "Tank.h"
-#include "Unite.h"
 #include <cmath>
 
 namespace state {
