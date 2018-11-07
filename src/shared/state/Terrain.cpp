@@ -19,6 +19,11 @@ namespace state {
 	TerrainTypeId Terrain::getGround(Position position) {
 		return sol.get(position);
 	}
+	void Terrain::moveUnite(Position pos_init, Position pos_final){
+		Unite* unite = this->getUnite(pos_init);
+		unites[pos_final.getY()][pos_final.getX()] = unite;
+		unites[pos_init.getY()][pos_init.getX()] = nullptr;	
+	}
 	Terrain::~Terrain() {
 	}
 }

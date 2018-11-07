@@ -98,10 +98,27 @@ void tests() {
 void renderTest() {
     // Test with Unite
     unique_ptr<Position> pos (new Position(5, 1));
-    unique_ptr<Unite> unit (new Infantry(*pos, 2));
+    unique_ptr<Unite> unit (new HTank(*pos, 2));
+    unique_ptr<Position> pos3 (new Position(5, 2));
+    unique_ptr<Unite> unit2 (new Infantry(*pos3, 1));
+    unique_ptr<Position> pos4 (new Position(6, 2));
+    unique_ptr<Unite> unit3 (new Tank(*pos4, 1));
+    cout<<"la vie de l'unité du jouer 1 est:"<<unit->getvie()<<"."<<endl;
+    cout<<"la puissance de l'unité du jouer 1 est:"<<unit->getpuissance()<<"."<<endl;
+    //unit2->setpuissance(100);
+    unit2->attacker(unit.get());
+    cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké est:"<<unit->getvie()<<"."<<endl;
+    cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké est:"<<unit->getpuissance()<<"."<<endl;
+    unit3->attacker(unit.get());
+    cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké pour la deuxième fois est:"<<unit->getvie()<<"."<<endl;
+    cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké pour la deuxième fois est:"<<unit->getpuissance()<<"."<<endl;
+    unit2->attacker(unit.get());
+    cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké pour la troisème fois est:"<<unit->getvie()<<"."<<endl;
+    cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké pour la troisième fois est:"<<unit->getpuissance()<<"."<<endl;
+
 
     // Test with Batiment
-	unique_ptr<Position> pos2 (new Position(4, 3));
+    unique_ptr<Position> pos2 (new Position(4, 3));
     unique_ptr<Batiment> batiment (new state::Usine<Infantry>(*pos2, 0));
 
     // création d'un objet TerrainTab
@@ -118,7 +135,7 @@ void renderTest() {
     // création d'un objet Terrain
     vector<vector<Unite*>> unites (8, vector<Unite*>(8));
     unites[unit->position.getY()][unit->position.getX()] = unit.get();
-
+    unites[unit2->position.getY()][unit2->position.getX()] = unit2.get();
     vector<vector<Batiment*>> batiments (8, vector<Batiment*>(8));
     batiments[batiment->position.getY()][batiment->position.getX()] = batiment.get();
 

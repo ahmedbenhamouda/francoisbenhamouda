@@ -48,4 +48,22 @@ namespace state {
 	int Infantry::getTileId(){
 		return (4*this->getId()+this->getColor());
 	}
+	void Infantry::setpuissance(int p){
+		this->puissance = p;
+	}
+	void Infantry::setvie(int v){
+		this->vie = v;
+
+	}
+	void Infantry::attacker(Unite* unite){
+		int nvie;
+		int np;
+		nvie = unite->getvie()-this->getpuissance();
+		if (nvie<0) {
+			nvie = 0;
+		}
+		np = int(unite->getpuissance()*float(nvie)/unite->getvie());
+		unite->setvie(nvie);
+		unite->setpuissance(np);
+	}
 }

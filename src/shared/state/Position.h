@@ -15,9 +15,10 @@ namespace state {
   public:
     Position ();
     Position (int x, int y);
-    int getX ();
-    int getY ();
+    int getX () const;
+    int getY () const;
     void move (int x, int y);
+    bool operator== (Position const& pos);
     ~Position ();
     // Setters and Getters
   };

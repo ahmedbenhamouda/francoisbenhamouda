@@ -6,6 +6,7 @@
 
 namespace state {
   class Position;
+  class Unite;
 }
 
 #include "Position.h"
@@ -36,6 +37,9 @@ namespace state {
     virtual int getId ();
     virtual int getColor ();
     virtual int getTileId ();
+    virtual void setvie (int v);
+    virtual void setpuissance (int p);
+    void attacker (Unite* unite);
     virtual ~Unite ();
     // Setters and Getters
   };
