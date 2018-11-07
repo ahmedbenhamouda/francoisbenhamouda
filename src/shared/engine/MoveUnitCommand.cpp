@@ -20,7 +20,8 @@ namespace engine {
 	void MoveUnitCommand::execute(state::Jeu* jeu) {
 		state::Unite* object = jeu->etatJeu->getUnite(objectPos);
 		if (isLegalMove(object)) {
-			//object->move(targetPos);
+			object->move(targetPos);
+			jeu->etatJeu->moveUnite(objectPos,targetPos);
 		}
 	}
 }

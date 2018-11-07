@@ -149,23 +149,68 @@ void renderTest() {
     layers->displayLayers ();
 }
 
+void engineTest() {
+    // Test with Unite
+    unique_ptr<Unite> unit (new HTank(Position(5, 1), 2));
+    unique_ptr<Unite> unit2 (new Infantry(Position(5, 2), 1));
+    unique_ptr<Unite> unit3 (new Tank(Position(6, 1), 1));
+
+    // Test with Batiment
+    unique_ptr<Batiment> batiment (new QG(Position(2, 5), 2));
+    unique_ptr<Batiment> batiment2 (new Usine(Position(4, 3), 0));
+
+    // création d'un objet TerrainTab
+    vector<vector<TerrainTypeId>> defaultVector {{plaine,plaine,plaine,plaine,plaine,plaine,plaine,plaine},
+                                                           {route,route,route,route,plaine,foret,plaine,plaine},
+                                                           {plaine,plaine,plaine,route,plaine,plaine,foret,plaine},
+                                                           {plaine,plaine,plaine,route,plaine,plaine,plaine,plaine},
+                                                           {plaine,foret,plaine,route,route,route,plaine,plaine},
+                                                           {plaine,foret,plaine,route,plaine,route,route,route},
+                                                           {plaine,plaine,route,route,montagne,montagne,plaine,plaine},
+                                                           {plaine,plaine,route,plaine,plaine,plaine,plaine,plaine}};
+    unique_ptr<TerrainTab> terrainTab (new TerrainTab(defaultVector));
+    
+    // création d'un objet Terrain
+    vector<vector<Unite*>> unites (8, vector<Unite*>(8));
+    unites[unit->position.getY()][unit->position.getX()] = unit.get();
+    unites[unit2->position.getY()][unit2->position.getX()] = unit2.get();
+    unites[unit3->position.getY()][unit3->position.getX()] = unit3.get();
+
+    vector<vector<Batiment*>> batiments (8, vector<Batiment*>(8));
+    batiments[batiment->position.getY()][batiment->position.getX()] = batiment.get();
+    batiments[batiment2->position.getY()][batiment2->position.getX()] = batiment2.get();
+
+    unique_ptr<Terrain> terrain(new Terrain(unites, batiments, *terrainTab));
+
+    cout<<"x:"<<batiment->position.getX()<<", y:"<<batiment->position.getY()<<endl;
+
+    // creation d'un objet Layers
+    /*unique_ptr<Layers> layers(new Layers());
+    layers->setUniteSurface (terrain.get());
+    layers->setBatimentSurface (terrain.get());
+    layers->setTerrainSurface (terrain.get());
+    layers->displayLayers ();*/
+
+}
+
 int main(int argc,char* argv[]) 
 {
     //Exemple exemple;
     //exemple.setX(53);
 
     if (argc < 2) {
-        cout << "Missing the \"render\" argument." << endl;
+        cout << "Missing the \"engine\" argument." << endl;
     } else if (argc > 2) {
         cout << "Too many arguments." << endl;
     } else {
         string myString(argv[1]);
-        if (myString != "render") {
+        if (myString != "engine") {
             cout << "Invalid argument." << endl;
         } else {
             // Tests unitaires
             //tests();
-	    renderTest();
+	    //renderTest();
+	    engineTest();
         }
     }
     return 0;
