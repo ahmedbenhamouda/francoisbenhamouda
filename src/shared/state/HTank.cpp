@@ -66,4 +66,10 @@ namespace state {
 		unite->setvie(nvie);
 		unite->setpuissance(np);
 	}
+	void HTank::move(Position position) {
+		this->position = position;
+	}
+	bool HTank::PossedeDrapeau() {
+		return false;
+	}
 }

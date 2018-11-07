@@ -119,7 +119,7 @@ void renderTest() {
 
     // Test with Batiment
     unique_ptr<Position> pos2 (new Position(4, 3));
-    unique_ptr<Batiment> batiment (new state::Usine<Infantry>(*pos2, 0));
+    unique_ptr<Batiment> batiment (new state::Usine(*pos2, 0));
 
     // création d'un objet TerrainTab
     vector<vector<TerrainTypeId>> defaultVector {{plaine,plaine,plaine,plaine,plaine,plaine,plaine,plaine},

@@ -1,5 +1,4 @@
 #include "QG.h"
-#include "QG.h"
 
 
 namespace state {
@@ -13,7 +12,7 @@ namespace state {
 		return false;
 	}
 	bool QG::Drapeau(){
-		return false;
+		return true;
 	}
 	int QG::getId_b(){
 		return this->id_b;

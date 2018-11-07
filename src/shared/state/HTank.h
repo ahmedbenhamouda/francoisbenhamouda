@@ -39,6 +39,8 @@ namespace state {
     void setvie (int v);
     void setpuissance (int p);
     ~HTank ();
+    void move (Position position);
+    bool PossedeDrapeau ();
     // Setters and Getters
   };
 

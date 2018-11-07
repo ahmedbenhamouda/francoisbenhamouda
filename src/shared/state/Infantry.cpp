@@ -66,4 +66,10 @@ namespace state {
 		unite->setvie(nvie);
 		unite->setpuissance(np);
 	}
+	void Infantry::move(Position position) {
+		this->position = position;
+	}
+	bool Infantry::PossedeDrapeau() {
+		return false;
+	}
 }

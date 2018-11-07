@@ -5,8 +5,9 @@
 
 namespace state {
   class Terrain;
-};
-class Usine;
+  class Usine;
+}
+
 #include "Usine.h"
 #include "Terrain.h"
 

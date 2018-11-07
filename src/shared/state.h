@@ -9,6 +9,7 @@
 #include "state/Unite.h"
 #include "state/Batiment.h"
 #include "state/Terrain.h"
+#include "state/Usine.h"
 #include "state/Jeu.h"
 #include "state/Tank.h"
 #include "state/Mech.h"
