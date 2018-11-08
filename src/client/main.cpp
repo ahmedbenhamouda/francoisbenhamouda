@@ -234,7 +234,7 @@ void engineTest() {
     cout<<"Initializing the game..."<<endl;
 
     // Creation d'une unite Infantry
-    this_thread::sleep_for(chrono::seconds(5));
+    this_thread::sleep_for(chrono::seconds(2));
     cout<<"=> CreateUnitCommand(Position(4, 3), color))"<<endl;
     unique_ptr<CreateUnitCommand> cmd0(new CreateUnitCommand(Position(4, 3),0));
     engine->addCommand(cmd0.get());
@@ -242,7 +242,7 @@ void engineTest() {
     layers->setUniteSurface (); // update de l'affichage
 
     // Deplacement de unite Infantry
-    this_thread::sleep_for(chrono::seconds(5));
+    this_thread::sleep_for(chrono::seconds(2));
     cout<<"=> MoveUnitCommande(Position(4,3), Position(6,3))"<<endl;
     unique_ptr<MoveUnitCommand> cmd1(new MoveUnitCommand(Position(4,3),Position(6,3)));
     engine->addCommand(cmd1.get());
@@ -251,7 +251,7 @@ void engineTest() {
 
 
     // Attaque de l'unite HTank
-    this_thread::sleep_for(chrono::seconds(5));
+    this_thread::sleep_for(chrono::seconds(2));
     cout<<"la vie de l'unité du jouer 1 est:"<<unit->getvie()<<"."<<endl;
     cout<<"la puissance de l'unité du jouer 1 est:"<<unit->getpuissance()<<"."<<endl;
     cout<<"=> AttackUnitCommand(Position(5,2), Position(5,1))"<<endl;
