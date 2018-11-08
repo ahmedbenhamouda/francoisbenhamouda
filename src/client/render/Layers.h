@@ -22,14 +22,17 @@ namespace render {
     // Associations
     // Attributes
   public:
-    render::Surface uniteSurface;
-    render::Surface batimentSurface;
-    render::Surface terrainSurface;
     state::Terrain* terrain;
+    Surface uniteSurface;
+    Tileset<state::Unite>* uniteTileset;
+    Surface batimentSurface;
+    Tileset<state::Batiment>* batimentTileset;
+    Surface terrainSurface;
+    Tileset<state::TerrainTile>* terrainTileset;
     // Operations
   public:
     Layers ();
-    Layers (state::Terrain* terrain);
+    Layers (state::Terrain* terrain, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::TerrainTile>* terrainTileset);
     ~Layers ();
     void setUniteSurface ();
     void setBatimentSurface ();

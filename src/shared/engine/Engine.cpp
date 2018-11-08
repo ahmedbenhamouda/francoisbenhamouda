@@ -13,5 +13,6 @@ namespace engine {
 		for (Command* cmd : commands) {
 			cmd->execute(jeu);
 		}
+		commands = std::vector<Command*>();
 	}
 }

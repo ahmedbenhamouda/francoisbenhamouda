@@ -25,6 +25,7 @@ namespace render {
     T t;
     // Operations
   public:
+    Tileset();
     Tileset (std::string filename);
     ~Tileset();
     int getCellWidth() const;
@@ -33,6 +34,10 @@ namespace render {
     Tile& getTile (T* pt);
     // Setters and Getters
   };
+
+template<class T>
+Tileset<T>::Tileset () {
+}
 
 template<class T>
 Tileset<T>::Tileset (std::string filename) : filename(filename) {

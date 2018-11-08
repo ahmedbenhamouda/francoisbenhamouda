@@ -12,7 +12,7 @@ namespace state {
 
 	Unite* Terrain::getUnite(Position position) {
 		for (Unite* unit : unites) {
-			if (unit->position == position) {
+			if (unit and unit->position == position) {
 				return unit;
 			}
 		}
@@ -20,7 +20,7 @@ namespace state {
 	}
 	Batiment* Terrain::getBatiment(Position position) {
 		for (Batiment* bat : batiments) {
-			if (bat->position == position) {
+			if (bat and bat->position == position) {
 				return bat;
 			}
 		}
@@ -40,7 +40,7 @@ namespace state {
 	}
 	void Terrain::deleteUnite(Position pos) {
 		Unite* unite = getUnite(pos);
-		delete unite;
+		//delete unite; TODO : Trouver un moyen de supprimer une unité sans erreur de segmentation ni fuite de mémoire
 	}
 	Terrain::~Terrain() {
 	}

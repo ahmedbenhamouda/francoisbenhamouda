@@ -32,8 +32,8 @@ void displayWindow(Layers* layers) {
 				if(event.type == sf::Event::Closed) {
 					window.close();
 				}
-				layers->displayLayers (&window);
 			}
+			layers->displayLayers (&window);
 		}
 	
 }
@@ -161,8 +161,13 @@ void renderTest() {
 
     unique_ptr<Terrain> terrain(new Terrain(unites, batiments, *terrainTab));
 
+    // Creation d'objets Tileset
+    render::Tileset<state::Unite> uniteTileset("res/units.png");
+    render::Tileset<state::Batiment> batimentTileset("res/batiments.png");
+    render::Tileset<state::TerrainTile> terrainTileset("res/terrain.png"); 
+
     // creation d'un objet Layers
-    unique_ptr<Layers> layers(new Layers(terrain.get()));
+    unique_ptr<Layers> layers(new Layers(terrain.get(), &uniteTileset,  &batimentTileset, &terrainTileset));
     layers->setUniteSurface ();
     layers->setBatimentSurface ();
     layers->setTerrainSurface ();
@@ -171,12 +176,12 @@ void renderTest() {
 }
 
 void engineTest() {
-    // Test with Unite
+    // Creation d'objets Unite
     unique_ptr<Unite> unit (new HTank(Position(5, 1), 2));
     unique_ptr<Unite> unit2 (new Infantry(Position(5, 2), 1));
     unique_ptr<Unite> unit3 (new Tank(Position(6, 1), 1));
 
-    // Test with Batiment
+    // Creation d'objets Batiment
 
     unique_ptr<Batiment> batiment (new QG(Position(2, 5), 3));
     unique_ptr<Batiment> batiment2 (new Usine(Position(4, 3), 0));
@@ -206,73 +211,67 @@ void engineTest() {
 
     unique_ptr<Terrain> terrain(new Terrain(unites, batiments, *terrainTab));
 
-    // création d'une attaque 
-    cout<<"la vie de l'unité du jouer 1 est:"<<unit->getvie()<<"."<<endl;
-    cout<<"la puissance de l'unité du jouer 1 est:"<<unit->getpuissance()<<"."<<endl;
-    /*unit2->attacker(unit.get());
-    cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké est:"<<unit->getvie()<<"."<<endl;
-    cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké est:"<<unit->getpuissance()<<"."<<endl;
-    unit3->attacker(unit.get());
-    
-    unit2->attacker(unit.get());
-    cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké pour la troisème fois est:"<<unit->getvie()<<"."<<endl;
-    cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké pour la troisième fois est:"<<unit->getpuissance()<<"."<<endl;
-*/
-    unique_ptr<Jeu> jeu(new Jeu(terrain.get())); 
-    unique_ptr<Engine> engine(new Engine(jeu.get()));
-    unique_ptr<AttackUnitCommand> cmd2(new AttackUnitCommand(Position(5,2),Position(5,1)));
-    engine->addCommand(cmd2.get());
-    engine->update();
-    cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké pour la deuxième fois est:"<<unit->getvie()<<"."<<endl;
-    cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké pour la deuxième fois est:"<<unit->getpuissance()<<"."<<endl;
-    if (unit->getvie() == 0){
-	unique_ptr<DeleteUnitCommand> cmd1(new DeleteUnitCommand(Position(5,1)));
-        engine->addCommand(cmd1.get());
-        engine->update();
-    }
-    unique_ptr<AttackUnitCommand> cmd3(new AttackUnitCommand(Position(6,1),Position(5,1)));
-    engine->addCommand(cmd3.get());
-    engine->update();
-    cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké pour la troisème fois est:"<<unit->getvie()<<"."<<endl;
-    cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké pour la troisième fois est:"<<unit->getpuissance()<<"."<<endl;
-    /*if (unit->getvie() == 0){
-	unique_ptr<DeleteUnitCommand> cmd1(new DeleteUnitCommand(Position(5,1)));
-        engine->addCommand(cmd1.get());
-        engine->update();
-    }*/
+
     // Creation d'un objet Jeu
-    //unique_ptr<Jeu> jeu(new Jeu(terrain.get()));
+    unique_ptr<Jeu> jeu(new Jeu(terrain.get())); 
 
     // Creation d'un objet Engine
-/*    unique_ptr<Engine> engine(new Engine(jeu.get()));
-    unique_ptr<MoveUnitCommand> cmd(new MoveUnitCommand(Position(5,1),Position(4,2)));
-    engine->addCommand(cmd.get());
-    engine->update();
-*/
+    unique_ptr<Engine> engine(new Engine(jeu.get()));
+
+    // Creation d'objets Tileset
+    render::Tileset<state::Unite> uniteTileset("res/units.png");
+    render::Tileset<state::Batiment> batimentTileset("res/batiments.png");
+    render::Tileset<state::TerrainTile> terrainTileset("res/terrain.png"); 
+
     // creation d'un objet Layers
-    unique_ptr<Layers> layers(new Layers(terrain.get()));
+    unique_ptr<Layers> layers(new Layers(terrain.get(), &uniteTileset,  &batimentTileset, &terrainTileset));
     layers->setUniteSurface ();
     layers->setBatimentSurface ();
     layers->setTerrainSurface ();
 
     // Creation d'un thread dedie a l'affichage
     thread th(displayWindow, layers.get());
-
     cout<<"Initializing the game..."<<endl;
+
+    // Creation d'une unite Infantry
     this_thread::sleep_for(chrono::seconds(5));
-    cout<<"A (5,1) :"<<terrain->getUnite(Position(5,1))<<endl;
-    cout<<"A (4,2) :"<<terrain->getUnite(Position(4,2))<<endl;
-    cout<<"MoveUnitCommande(Position(5,1), Position(4,2))"<<endl;
-    unique_ptr<MoveUnitCommand> cmd(new MoveUnitCommand(Position(5,1),Position(4,2)));
-    engine->addCommand(cmd.get());
+    cout<<"=> CreateUnitCommand(Position(4, 3), color))"<<endl;
+    unique_ptr<CreateUnitCommand> cmd0(new CreateUnitCommand(Position(4, 3),0));
+    engine->addCommand(cmd0.get());
     engine->update();
+    layers->setUniteSurface (); // update de l'affichage
 
-    layers->setUniteSurface ();
-    layers->setBatimentSurface ();
-    layers->setTerrainSurface ();
+    // Deplacement de unite Infantry
+    this_thread::sleep_for(chrono::seconds(5));
+    cout<<"=> MoveUnitCommande(Position(4,3), Position(6,3))"<<endl;
+    unique_ptr<MoveUnitCommand> cmd1(new MoveUnitCommand(Position(4,3),Position(6,3)));
+    engine->addCommand(cmd1.get());
+    engine->update();
+    layers->setUniteSurface (); // update de l'affichage
 
-    cout<<"A (5,1) :"<<terrain->getUnite(Position(5,1))<<endl;
-    cout<<"A (4,2) :"<<terrain->getUnite(Position(4,2))<<endl;
+
+    // Attaque de l'unite HTank
+    this_thread::sleep_for(chrono::seconds(5));
+    cout<<"la vie de l'unité du jouer 1 est:"<<unit->getvie()<<"."<<endl;
+    cout<<"la puissance de l'unité du jouer 1 est:"<<unit->getpuissance()<<"."<<endl;
+    cout<<"=> AttackUnitCommand(Position(5,2), Position(5,1))"<<endl;
+    unique_ptr<AttackUnitCommand> cmd2(new AttackUnitCommand(Position(5,2),Position(5,1)));
+    engine->addCommand(cmd2.get());
+    engine->update();
+    layers->setUniteSurface (); // update de l'affichage
+
+    cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké pour la première fois est:"<<unit->getvie()<<"."<<endl;
+    cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké pour la première fois est:"<<unit->getpuissance()<<"."<<endl;
+
+
+    // TODO : Coder proprement la méthode deleteUnite()
+    // Supression de l'unite Infantry
+    /*this_thread::sleep_for(chrono::seconds(5));
+    cout<<"=> DeleteUnitCommand(Position(5,2))"<<endl;
+    unique_ptr<DeleteUnitCommand> cmd3(new DeleteUnitCommand(Position(5,2)));
+    engine->addCommand(cmd3.get());
+    engine->update();
+    layers->setUniteSurface (); // update de l'affichage*/
 
     //thread th(displayWindow, layers.get());
     th.join();
