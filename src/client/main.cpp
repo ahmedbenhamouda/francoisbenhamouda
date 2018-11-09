@@ -264,16 +264,16 @@ void engineTest() {
     cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké pour la première fois est:"<<unit->getpuissance()<<"."<<endl;
 
 
-    // TODO : Coder proprement la méthode deleteUnite()
+    // TODO : Trouver un moyen de ne pas utiliser de unique_ptr a cause de deleteUnite()
     // Supression de l'unite Infantry
-    /*this_thread::sleep_for(chrono::seconds(5));
+    this_thread::sleep_for(chrono::seconds(2));
     cout<<"=> DeleteUnitCommand(Position(5,2))"<<endl;
+    unit2.release();
     unique_ptr<DeleteUnitCommand> cmd3(new DeleteUnitCommand(Position(5,2)));
     engine->addCommand(cmd3.get());
     engine->update();
-    layers->setUniteSurface (); // update de l'affichage*/
+    layers->setUniteSurface (); // update de l'affichage
 
-    //thread th(displayWindow, layers.get());
     th.join();
 }
 

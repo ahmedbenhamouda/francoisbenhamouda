@@ -1,4 +1,5 @@
 #include "Terrain.h"
+#include <algorithm>
 
 namespace state {
 	Terrain::Terrain(std::vector<Unite*> unites, std::vector<Batiment*> batiments, TerrainTab sol) {
@@ -20,7 +21,7 @@ namespace state {
 	}
 	Batiment* Terrain::getBatiment(Position position) {
 		for (Batiment* bat : batiments) {
-			if (bat and bat->position == position) {
+			if (bat->position == position) {
 				return bat;
 			}
 		}
@@ -40,7 +41,8 @@ namespace state {
 	}
 	void Terrain::deleteUnite(Position pos) {
 		Unite* unite = getUnite(pos);
-		//delete unite; TODO : Trouver un moyen de supprimer une unité sans erreur de segmentation ni fuite de mémoire
+		delete unite; //TODO : Trouver un moyen de supprimer une unité sans erreur de segmentation ni fuite de mémoire
+		unites.erase(std::remove(unites.begin(), unites.end(), unite));
 	}
 	Terrain::~Terrain() {
 	}
