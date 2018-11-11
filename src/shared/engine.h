@@ -9,4 +9,5 @@
 #include "engine/CreateUnitCommand.h"
 #include "engine/DeleteUnitCommand.h"
 #include "engine/CaptureFlagCommand.h"
+#include "engine/SelectUnitCommand.h"
 #endif

@@ -44,6 +44,12 @@ namespace state {
 		delete unite; //TODO : Trouver un moyen de supprimer une unité sans erreur de segmentation ni fuite de mémoire
 		unites.erase(std::remove(unites.begin(), unites.end(), unite));
 	}
+	void Terrain::setUniteMoves(std::vector<Position> moves) {
+		uniteMoves = moves;
+	}
+	std::vector<Position> Terrain::getUniteMoves () {
+		return uniteMoves;
+	}
 	Terrain::~Terrain() {
 	}
 }

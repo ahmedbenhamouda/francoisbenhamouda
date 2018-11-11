@@ -2,9 +2,10 @@
 #ifndef __STATE__H
 #define __STATE__H
 
-#include "state/TerrainTypeId.h"
 #include "state/Position.h"
+#include "state/TerrainTypeId.h"
 #include "state/TerrainTab.h"
+#include "state/MiscTile.h"
 #include "state/TerrainTile.h"
 #include "state/Unite.h"
 #include "state/Batiment.h"

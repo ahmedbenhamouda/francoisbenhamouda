@@ -29,14 +29,17 @@ namespace render {
     Tileset<state::Batiment>* batimentTileset;
     Surface terrainSurface;
     Tileset<state::TerrainTile>* terrainTileset;
+    Surface miscSurface;
+    Tileset<state::MiscTile>* miscTileset;
     // Operations
   public:
     Layers ();
-    Layers (state::Terrain* terrain, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::TerrainTile>* terrainTileset);
+    Layers (state::Terrain* terrain, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::TerrainTile>* terrainTileset, Tileset<state::MiscTile>* miscTileset);
     ~Layers ();
     void setUniteSurface ();
     void setBatimentSurface ();
     void setTerrainSurface ();
+    void setMiscSurface ();
     void displayLayers (sf::RenderWindow* window);
     // Setters and Getters
   };

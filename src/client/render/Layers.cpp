@@ -5,14 +5,16 @@
 namespace render {
 	Layers::Layers() {
 	}
-	Layers::Layers(state::Terrain* terrain, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::TerrainTile>* terrainTileset) {
+	Layers::Layers (state::Terrain* terrain, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::TerrainTile>* terrainTileset, Tileset<state::MiscTile>* miscTileset) {
 		this->terrain = terrain;
 		this->uniteTileset = uniteTileset;
 		this->batimentTileset = batimentTileset;
 		this->terrainTileset = terrainTileset;
+		this->miscTileset = miscTileset;
 		uniteSurface.loadTexture(uniteTileset->getImageFile());
 		batimentSurface.loadTexture(batimentTileset->getImageFile());
 		terrainSurface.loadTexture(terrainTileset->getImageFile());
+		miscSurface.loadTexture(miscTileset->getImageFile());
 	}
 	Layers::~Layers() {
 	}
@@ -48,11 +50,22 @@ namespace render {
 			}
 		}
 	}
+	void Layers::setMiscSurface () {
+		miscSurface.initQuads(256);
+		for (state::Position pos : terrain->getUniteMoves()) {
+			int posx = pos.getX();
+			int posy = pos.getY();
+			std::unique_ptr<state::MiscTile> mt(new state::MiscTile(0,pos));
+			miscSurface.setSpriteLocation(posx,posy,8,32,false);
+    			miscSurface.setSpriteTexture(posx,posy,8,miscTileset->getTile(mt.get()));
+		}
+	}
 	void Layers::displayLayers(sf::RenderWindow* window) {
 		window->clear();
 		window->draw(terrainSurface);
 		window->draw(batimentSurface);
 		window->draw(uniteSurface);
+		window->draw(miscSurface);
 		window->display();
 
 	}

@@ -10,6 +10,7 @@ namespace engine {
 		commands.push_back(command);
 	}
 	void Engine::update() {
+		jeu->etatJeu->setUniteMoves(std::vector<state::Position>());
 		for (Command* cmd : commands) {
 			cmd->execute(jeu);
 		}

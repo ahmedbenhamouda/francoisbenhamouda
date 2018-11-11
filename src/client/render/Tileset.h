@@ -95,6 +95,12 @@ Tileset<T>::Tileset (std::string filename) : filename(filename) {
             Tile hTankJaune(80,48,16,16);
             tiles = {infantryRouge,infantryBleu,infantryVert,infantryJaune,reconRouge,reconBleu,reconVert,reconJaune,mechRouge,mechBleu,mechVert,mechJaune,tankRouge,tankBleu,tankVert,tankJaune,hTankRouge,hTankBleu,hTankVert,hTankJaune};
     }
+    if (filename=="res/misc.png") {
+            //misc
+            Tile carre(0,0,16,16);
+
+            tiles = {carre};
+    }
 }
 
 template<class T>

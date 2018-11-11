@@ -5,16 +5,18 @@
 #include <vector>
 
 namespace state {
+  class Position;
   class Unite;
   class Batiment;
   class TerrainTab;
-  class Position;
+  class MiscTile;
   class TerrainTile;
 }
 
-#include "TerrainTab.h"
 #include "Position.h"
+#include "TerrainTab.h"
 #include "TerrainTypeId.h"
+#include "MiscTile.h"
 #include "TerrainTile.h"
 #include "Unite.h"
 #include "Batiment.h"
@@ -25,6 +27,8 @@ namespace state {
   class Terrain {
     // Associations
     // Attributes
+  public:
+    std::vector<Position> uniteMoves;
   private:
     std::vector<Unite*> unites;
     std::vector<Batiment*> batiments;
@@ -41,6 +45,8 @@ namespace state {
     ~Terrain ();
     std::vector<Unite*>& getUniteList ();
     std::vector<Batiment*>& getBatimentList ();
+    void setUniteMoves (std::vector<Position> moves);
+    std::vector<Position> getUniteMoves ();
     // Setters and Getters
   };
 

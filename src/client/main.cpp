@@ -33,6 +33,8 @@ void displayWindow(Layers* layers) {
 					window.close();
 				}
 			}
+			layers->setUniteSurface ();
+			layers->setMiscSurface ();
 			layers->displayLayers (&window);
 		}
 	
@@ -114,7 +116,7 @@ void tests() {
     //delete newTerrain;*/
 }
 
-void renderTest() {
+/*void renderTest() {
     // Test with Unite
     unique_ptr<Position> pos (new Position(5, 1));
     unique_ptr<Unite> unit (new HTank(*pos, 2));
@@ -173,7 +175,7 @@ void renderTest() {
     layers->setTerrainSurface ();
     thread th(displayWindow, layers.get());
     th.join();
-}
+}*/
 
 void engineTest() {
     // Creation d'objets Unite
@@ -211,6 +213,8 @@ void engineTest() {
 
     unique_ptr<Terrain> terrain(new Terrain(unites, batiments, *terrainTab));
 
+    //terrain->setUniteMoves(unit3->getLegalMoves());
+
 
     // Creation d'un objet Jeu
     unique_ptr<Jeu> jeu(new Jeu(terrain.get())); 
@@ -219,15 +223,17 @@ void engineTest() {
     unique_ptr<Engine> engine(new Engine(jeu.get()));
 
     // Creation d'objets Tileset
-    render::Tileset<state::Unite> uniteTileset("res/units.png");
-    render::Tileset<state::Batiment> batimentTileset("res/batiments.png");
-    render::Tileset<state::TerrainTile> terrainTileset("res/terrain.png"); 
+    render::Tileset<Unite> uniteTileset("res/units.png");
+    render::Tileset<Batiment> batimentTileset("res/batiments.png");
+    render::Tileset<TerrainTile> terrainTileset("res/terrain.png");
+    render::Tileset<MiscTile> miscTileset("res/misc.png"); 
 
     // creation d'un objet Layers
-    unique_ptr<Layers> layers(new Layers(terrain.get(), &uniteTileset,  &batimentTileset, &terrainTileset));
+    unique_ptr<Layers> layers(new Layers(terrain.get(), &uniteTileset,  &batimentTileset, &terrainTileset, &miscTileset));
     layers->setUniteSurface ();
     layers->setBatimentSurface ();
     layers->setTerrainSurface ();
+    layers->setMiscSurface ();
 
     // Creation d'un thread dedie a l'affichage
     thread th(displayWindow, layers.get());
@@ -239,15 +245,20 @@ void engineTest() {
     unique_ptr<CreateUnitCommand> cmd0(new CreateUnitCommand(Position(4, 3),0));
     engine->addCommand(cmd0.get());
     engine->update();
-    layers->setUniteSurface (); // update de l'affichage
+
+    // Selection de unite Infantry
+    this_thread::sleep_for(chrono::seconds(2));
+    cout<<"=> SelectUnitCommand(Position(4,3))"<<endl;
+    unique_ptr<SelectUnitCommand> cmd1(new SelectUnitCommand(Position(4,3)));
+    engine->addCommand(cmd1.get());
+    engine->update();
 
     // Deplacement de unite Infantry
     this_thread::sleep_for(chrono::seconds(2));
     cout<<"=> MoveUnitCommande(Position(4,3), Position(6,3))"<<endl;
-    unique_ptr<MoveUnitCommand> cmd1(new MoveUnitCommand(Position(4,3),Position(6,3)));
-    engine->addCommand(cmd1.get());
+    unique_ptr<MoveUnitCommand> cmd2(new MoveUnitCommand(Position(4,3),Position(6,3)));
+    engine->addCommand(cmd2.get());
     engine->update();
-    layers->setUniteSurface (); // update de l'affichage
 
 
     // Attaque de l'unite HTank
@@ -255,10 +266,9 @@ void engineTest() {
     cout<<"la vie de l'unité du jouer 1 est:"<<unit->getvie()<<"."<<endl;
     cout<<"la puissance de l'unité du jouer 1 est:"<<unit->getpuissance()<<"."<<endl;
     cout<<"=> AttackUnitCommand(Position(5,2), Position(5,1))"<<endl;
-    unique_ptr<AttackUnitCommand> cmd2(new AttackUnitCommand(Position(5,2),Position(5,1)));
-    engine->addCommand(cmd2.get());
+    unique_ptr<AttackUnitCommand> cmd3(new AttackUnitCommand(Position(5,2),Position(5,1)));
+    engine->addCommand(cmd3.get());
     engine->update();
-    layers->setUniteSurface (); // update de l'affichage
 
     cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké pour la première fois est:"<<unit->getvie()<<"."<<endl;
     cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké pour la première fois est:"<<unit->getpuissance()<<"."<<endl;
@@ -269,10 +279,9 @@ void engineTest() {
     this_thread::sleep_for(chrono::seconds(2));
     cout<<"=> DeleteUnitCommand(Position(5,2))"<<endl;
     unit2.release();
-    unique_ptr<DeleteUnitCommand> cmd3(new DeleteUnitCommand(Position(5,2)));
-    engine->addCommand(cmd3.get());
+    unique_ptr<DeleteUnitCommand> cmd4(new DeleteUnitCommand(Position(5,2)));
+    engine->addCommand(cmd4.get());
     engine->update();
-    layers->setUniteSurface (); // update de l'affichage
 
     th.join();
 }
