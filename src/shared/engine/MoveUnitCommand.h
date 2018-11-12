@@ -18,12 +18,11 @@ namespace engine {
   class MoveUnitCommand : public engine::Command {
     // Attributes
   public:
-    state::Position objectPos;
     state::Position targetPos;
     // Operations
   public:
     MoveUnitCommand ();
-    MoveUnitCommand (state::Position objectPos, state::Position targetPos);
+    MoveUnitCommand (state::Position targetPos);
     ~MoveUnitCommand ();
     bool isLegalMove (state::Unite* unite);
     void execute (state::Jeu* jeu);

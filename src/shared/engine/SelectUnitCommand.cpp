@@ -9,6 +9,7 @@ namespace engine {
 	void SelectUnitCommand::execute(state::Jeu* jeu) {
 		state::Unite* unite = jeu->etatJeu->getUnite(objectPos);
 		jeu->etatJeu->setUniteMoves(unite->getLegalMove());
+		jeu->selectedUnit = unite;
 	}
 	SelectUnitCommand::~SelectUnitCommand() {
 	}

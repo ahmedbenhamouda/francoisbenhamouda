@@ -4,14 +4,18 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace render {
-  class Surface;
-};
 namespace state {
   class Jeu;
 };
+namespace engine {
+  class Engine;
+};
+namespace render {
+  class Surface;
+};
 class Tileset;
 #include "Surface.h"
+#include "engine/Engine.h"
 #include "state/Jeu.h"
 #include "Tileset.h"
 
@@ -22,7 +26,8 @@ namespace render {
     // Associations
     // Attributes
   public:
-    state::Terrain* terrain;
+    state::Jeu* jeu;
+    engine::Engine* engine;
     Surface uniteSurface;
     Tileset<state::Unite>* uniteTileset;
     Surface batimentSurface;
@@ -34,13 +39,14 @@ namespace render {
     // Operations
   public:
     Layers ();
-    Layers (state::Terrain* terrain, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::TerrainTile>* terrainTileset, Tileset<state::MiscTile>* miscTileset);
+    Layers (state::Jeu* jeu, engine::Engine* engine, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::TerrainTile>* terrainTileset, Tileset<state::MiscTile>* miscTileset);
     ~Layers ();
     void setUniteSurface ();
     void setBatimentSurface ();
     void setTerrainSurface ();
     void setMiscSurface ();
     void displayLayers (sf::RenderWindow* window);
+    void sendCommand (state::Position position);
     // Setters and Getters
   };
 

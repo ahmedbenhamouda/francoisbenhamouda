@@ -32,6 +32,11 @@ void displayWindow(Layers* layers) {
 				if(event.type == sf::Event::Closed) {
 					window.close();
 				}
+				if(event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
+					int px = event.mouseButton.x/32;
+					int py = event.mouseButton.y/32;
+					layers->sendCommand (Position(px,py));
+				}
 			}
 			layers->setUniteSurface ();
 			layers->setMiscSurface ();
@@ -177,6 +182,10 @@ void tests() {
     th.join();
 }*/
 
+
+
+
+
 void engineTest() {
     // Creation d'objets Unite
     unique_ptr<Unite> unit (new HTank(Position(5, 1), 2));
@@ -229,7 +238,7 @@ void engineTest() {
     render::Tileset<MiscTile> miscTileset("res/misc.png"); 
 
     // creation d'un objet Layers
-    unique_ptr<Layers> layers(new Layers(terrain.get(), &uniteTileset,  &batimentTileset, &terrainTileset, &miscTileset));
+    unique_ptr<Layers> layers(new Layers(jeu.get(), engine.get(), &uniteTileset,  &batimentTileset, &terrainTileset, &miscTileset));
     layers->setUniteSurface ();
     layers->setBatimentSurface ();
     layers->setTerrainSurface ();
@@ -246,7 +255,7 @@ void engineTest() {
     engine->addCommand(cmd0.get());
     engine->update();
 
-    // Selection de unite Infantry
+    /* // Selection de unite Infantry
     this_thread::sleep_for(chrono::seconds(2));
     cout<<"=> SelectUnitCommand(Position(4,3))"<<endl;
     unique_ptr<SelectUnitCommand> cmd1(new SelectUnitCommand(Position(4,3)));
@@ -255,19 +264,25 @@ void engineTest() {
 
     // Deplacement de unite Infantry
     this_thread::sleep_for(chrono::seconds(2));
-    cout<<"=> MoveUnitCommande(Position(4,3), Position(6,3))"<<endl;
-    unique_ptr<MoveUnitCommand> cmd2(new MoveUnitCommand(Position(4,3),Position(6,3)));
+    cout<<"=> MoveUnitCommande(Position(6,4))"<<endl;
+    unique_ptr<MoveUnitCommand> cmd2(new MoveUnitCommand(Position(6,4)));
     engine->addCommand(cmd2.get());
     engine->update();
 
+    // Selection de unite Infantry
+    this_thread::sleep_for(chrono::seconds(2));
+    cout<<"=> SelectUnitCommand(Position(5,2))"<<endl;
+    unique_ptr<SelectUnitCommand> cmd3(new SelectUnitCommand(Position(5,2)));
+    engine->addCommand(cmd3.get());
+    engine->update();
 
     // Attaque de l'unite HTank
     this_thread::sleep_for(chrono::seconds(2));
     cout<<"la vie de l'unité du jouer 1 est:"<<unit->getvie()<<"."<<endl;
     cout<<"la puissance de l'unité du jouer 1 est:"<<unit->getpuissance()<<"."<<endl;
-    cout<<"=> AttackUnitCommand(Position(5,2), Position(5,1))"<<endl;
-    unique_ptr<AttackUnitCommand> cmd3(new AttackUnitCommand(Position(5,2),Position(5,1)));
-    engine->addCommand(cmd3.get());
+    cout<<"=> AttackUnitCommand(Position(5,1))"<<endl;
+    unique_ptr<AttackUnitCommand> cmd4(new AttackUnitCommand(Position(5,1)));
+    engine->addCommand(cmd4.get());
     engine->update();
 
     cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké pour la première fois est:"<<unit->getvie()<<"."<<endl;
@@ -277,11 +292,11 @@ void engineTest() {
     // TODO : Trouver un moyen de ne pas utiliser de unique_ptr a cause de deleteUnite()
     // Supression de l'unite Infantry
     this_thread::sleep_for(chrono::seconds(2));
-    cout<<"=> DeleteUnitCommand(Position(5,2))"<<endl;
+    cout<<"=> DeleteUnitCommand(Position(5,1))"<<endl;
     unit2.release();
-    unique_ptr<DeleteUnitCommand> cmd4(new DeleteUnitCommand(Position(5,2)));
-    engine->addCommand(cmd4.get());
-    engine->update();
+    unique_ptr<DeleteUnitCommand> cmd5(new DeleteUnitCommand(Position(5,1)));
+    engine->addCommand(cmd5.get());
+    engine->update();*/
 
     th.join();
 }

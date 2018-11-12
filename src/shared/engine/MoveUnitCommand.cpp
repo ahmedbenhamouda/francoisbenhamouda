@@ -1,8 +1,9 @@
 #include "MoveUnitCommand.h"
+#include <thread>
+#include <chrono>
 
 namespace engine {
-	MoveUnitCommand::MoveUnitCommand (state::Position objectPos, state::Position targetPos) {
-		this->objectPos = objectPos;
+	MoveUnitCommand::MoveUnitCommand (state::Position targetPos) {
 		this->targetPos = targetPos;
 	}
 	MoveUnitCommand::~MoveUnitCommand() {
@@ -18,9 +19,24 @@ namespace engine {
 		return false;
 	}
 	void MoveUnitCommand::execute(state::Jeu* jeu) {
-		state::Unite* object = jeu->etatJeu->getUnite(objectPos);
-		if (isLegalMove(object)) {
-			object->move(targetPos);
+		state::Unite* object = jeu->selectedUnit;
+		if (object) {
+			if (not(isLegalMove(object)) or jeu->etatJeu->getUnite(targetPos)) {
+				return;
+			}
 		}
+		while (not (object-> position == targetPos)) {
+			int px = object->position.getX();
+			int py = object->position.getY();
+			int dx = px < targetPos.getX()?1:-1;
+			int dy = py < targetPos.getY()?1:-1;
+			if (px != targetPos.getX() and not(jeu->etatJeu->getUnite(state::Position(px+dx,py)))) {
+				object->move(state::Position(px+dx,py));
+			} else {
+				object->move(state::Position(px,py+dy));
+			}
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		}
+		jeu->selectedUnit = nullptr;
 	}
 }

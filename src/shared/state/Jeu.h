@@ -5,6 +5,7 @@
 
 namespace state {
   class Terrain;
+  class Unite;
 }
 
 #include "Terrain.h"
@@ -19,6 +20,7 @@ namespace state {
     Terrain* etatJeu;
     int tour;
     bool fin;
+    Unite* selectedUnit;
     // Operations
   public:
     Jeu (Terrain* etatJeu);

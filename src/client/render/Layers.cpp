@@ -1,12 +1,16 @@
 #include "Layers.h"
+#include "engine/AttackUnitCommand.h"
+#include "engine/SelectUnitCommand.h"
+#include "engine/MoveUnitCommand.h"
 #include <memory>
 #include <iostream>
 
 namespace render {
 	Layers::Layers() {
 	}
-	Layers::Layers (state::Terrain* terrain, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::TerrainTile>* terrainTileset, Tileset<state::MiscTile>* miscTileset) {
-		this->terrain = terrain;
+	Layers::Layers (state::Jeu* jeu, engine::Engine* engine, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::TerrainTile>* terrainTileset, Tileset<state::MiscTile>* miscTileset) {
+		this->jeu = jeu;
+		this->engine = engine;
 		this->uniteTileset = uniteTileset;
 		this->batimentTileset = batimentTileset;
 		this->terrainTileset = terrainTileset;
@@ -20,7 +24,7 @@ namespace render {
 	}
 	void Layers::setUniteSurface () {		
 		uniteSurface.initQuads(256);
-		for (state::Unite* unite : terrain->getUniteList()) {
+		for (state::Unite* unite : jeu->etatJeu->getUniteList()) {
 			if (unite) {
 				int posx = unite->position.getX();
 				int posy = unite->position.getY();
@@ -31,7 +35,7 @@ namespace render {
 	}
 	void Layers::setBatimentSurface () {
 		batimentSurface.initQuads(256);
-		for (state::Batiment* batiment : terrain->getBatimentList()) {
+		for (state::Batiment* batiment : jeu->etatJeu->getBatimentList()) {
 			if (batiment) {
 				int posx = batiment->position.getX();
 				int posy = batiment->position.getY();
@@ -44,7 +48,7 @@ namespace render {
 		terrainSurface.initQuads(256);		
 		for (int i = 0; i<8; i++) {
 			for (int j = 0; j<8; j++) {
-				std::unique_ptr<state::TerrainTile> tt(new state::TerrainTile(terrain->getGround(state::Position(j,i))));
+				std::unique_ptr<state::TerrainTile> tt(new state::TerrainTile(jeu->etatJeu->getGround(state::Position(j,i))));
 				terrainSurface.setSpriteLocation(j,i,8,32,false);
     				terrainSurface.setSpriteTexture(j,i,8,terrainTileset->getTile(tt.get()));
 			}
@@ -52,7 +56,7 @@ namespace render {
 	}
 	void Layers::setMiscSurface () {
 		miscSurface.initQuads(256);
-		for (state::Position pos : terrain->getUniteMoves()) {
+		for (state::Position pos : jeu->etatJeu->getUniteMoves()) {
 			int posx = pos.getX();
 			int posy = pos.getY();
 			std::unique_ptr<state::MiscTile> mt(new state::MiscTile(0,pos));
@@ -68,5 +72,25 @@ namespace render {
 		window->draw(miscSurface);
 		window->display();
 
+	}
+	void Layers::sendCommand(state::Position position) {
+		if (jeu->etatJeu->getUnite(position)) {
+			if (jeu->selectedUnit) {
+				std::unique_ptr<engine::AttackUnitCommand> cmd(new engine::AttackUnitCommand(position));
+				engine->addCommand(cmd.get());
+				engine->update();
+			} else {
+				std::unique_ptr<engine::SelectUnitCommand> cmd(new engine::SelectUnitCommand(position));
+				engine->addCommand(cmd.get());
+				engine->update();
+			}
+		} else {
+			if (jeu->selectedUnit) {
+				std::unique_ptr<engine::MoveUnitCommand> cmd(new engine::MoveUnitCommand(position));
+				engine->addCommand(cmd.get());
+				engine->update();
+			}
+		}
+			
 	}
 }
