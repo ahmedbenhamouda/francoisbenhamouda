@@ -2,6 +2,7 @@
 #include "engine/AttackUnitCommand.h"
 #include "engine/SelectUnitCommand.h"
 #include "engine/MoveUnitCommand.h"
+#include "engine/CreateUnitCommand.h"
 #include <memory>
 #include <iostream>
 
@@ -74,23 +75,24 @@ namespace render {
 
 	}
 	void Layers::sendCommand(state::Position position) {
+		//std::cout<<"sendCommand"<<std::endl;
 		if (jeu->etatJeu->getUnite(position)) {
 			if (jeu->selectedUnit) {
-				std::unique_ptr<engine::AttackUnitCommand> cmd(new engine::AttackUnitCommand(position));
-				engine->addCommand(cmd.get());
-				engine->update();
+				engine::Command* cmd = new engine::AttackUnitCommand(position);
+				engine->addCommand(cmd);
 			} else {
-				std::unique_ptr<engine::SelectUnitCommand> cmd(new engine::SelectUnitCommand(position));
-				engine->addCommand(cmd.get());
-				engine->update();
+				engine::Command* cmd = new engine::SelectUnitCommand(position);
+				engine->addCommand(cmd);
 			}
+		} else if (jeu->selectedUnit) {
+			engine::Command* cmd = new engine::MoveUnitCommand(position);
+			engine->addCommand(cmd);
 		} else {
-			if (jeu->selectedUnit) {
-				std::unique_ptr<engine::MoveUnitCommand> cmd(new engine::MoveUnitCommand(position));
-				engine->addCommand(cmd.get());
-				engine->update();
+			state::Batiment* bat = jeu->etatJeu->getBatiment(position);		
+			if (bat and bat->getId_b() == 1) {
+				engine::Command* cmd = new engine::CreateUnitCommand(position,0);
+				engine->addCommand(cmd);
 			}
 		}
-			
 	}
 }

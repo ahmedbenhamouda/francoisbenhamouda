@@ -3,6 +3,7 @@
 #include <map>
 #include <memory>
 #include <thread>
+#include <mutex>
 #include <chrono>
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
@@ -23,6 +24,8 @@ using namespace state;
 using namespace render;
 using namespace engine;
 
+mutex m1;
+
 void displayWindow(Layers* layers) {
 	sf::RenderWindow window(sf::VideoMode(256,256), "Advance Wars");
 		window.setVerticalSyncEnabled(false);
@@ -35,7 +38,9 @@ void displayWindow(Layers* layers) {
 				if(event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
 					int px = event.mouseButton.x/32;
 					int py = event.mouseButton.y/32;
+					//m1.lock();
 					layers->sendCommand (Position(px,py));
+					//m1.unlock();
 				}
 			}
 			layers->setUniteSurface ();
@@ -45,7 +50,18 @@ void displayWindow(Layers* layers) {
 	
 }
 
-void tests() {
+void runEngine(Engine* engine) {
+	cout<<engine->commands.size()<<endl;
+	while(1) {
+		//if (engine->commands[0]) {
+			//m1.lock();
+			engine->update();
+			//m1.unlock();
+		//}
+	}
+}
+
+/*void tests() {
     // création d'objets Position
     unique_ptr<Position> pos (new Position(5, 1));
     unique_ptr<Position> pos2 (new Position(2, 4));
@@ -71,7 +87,7 @@ void tests() {
 
     cout<<"la vie de l'unité est :"<<U2->getvie()<<"."<<endl;
     cout<<"La distance max de déplacement de l'unité est :"<<U2->getmvt()<<"."<<endl;
-/*
+
     // création d'un objet Batiment
     unique_ptr<Batiment> B (new Batiment(*pos2, 1));
 
@@ -86,8 +102,8 @@ void tests() {
 
     // creation d'un objet Jeu
     unique_ptr<Jeu> jeu(new Jeu(terrain.get()));
-*/    
-/*    // test sur l'attribut etatJeu de la classe Jeu
+    
+    // test sur l'attribut etatJeu de la classe Jeu
     Terrain* newTerrain = jeu->etatJeu;
     cout<<"Terrain à l'adresse "<<newTerrain<<"."<<endl;
 
@@ -118,8 +134,8 @@ void tests() {
     cout<<"Batiment "<<foundBat<<" trouvé à la position ("<<foundBat->position.getX()<<","<<foundBat->position.getY()<<")."<<endl;
     //delete foundBat;
 
-    //delete newTerrain;*/
-}
+    //delete newTerrain;
+}*/
 
 /*void renderTest() {
     // Test with Unite
@@ -245,36 +261,40 @@ void engineTest() {
     layers->setMiscSurface ();
 
     // Creation d'un thread dedie a l'affichage
-    thread th(displayWindow, layers.get());
-    cout<<"Initializing the game..."<<endl;
+    thread ng(runEngine, engine.get());
+    cout<<"Initializing the engine..."<<endl;
 
-    // Creation d'une unite Infantry
+    // Creation d'un thread dedie a l'affichage
+    thread lyr(displayWindow, layers.get());
+    cout<<"Initializing the graphics..."<<endl;
+
+    /* // Creation d'une unite Infantry
     this_thread::sleep_for(chrono::seconds(2));
     cout<<"=> CreateUnitCommand(Position(4, 3), color))"<<endl;
     unique_ptr<CreateUnitCommand> cmd0(new CreateUnitCommand(Position(4, 3),0));
     engine->addCommand(cmd0.get());
-    engine->update();
+    //engine->update();
 
-    /* // Selection de unite Infantry
+    // Selection de unite Infantry
     this_thread::sleep_for(chrono::seconds(2));
     cout<<"=> SelectUnitCommand(Position(4,3))"<<endl;
     unique_ptr<SelectUnitCommand> cmd1(new SelectUnitCommand(Position(4,3)));
     engine->addCommand(cmd1.get());
-    engine->update();
+    //engine->update();
 
     // Deplacement de unite Infantry
     this_thread::sleep_for(chrono::seconds(2));
     cout<<"=> MoveUnitCommande(Position(6,4))"<<endl;
     unique_ptr<MoveUnitCommand> cmd2(new MoveUnitCommand(Position(6,4)));
     engine->addCommand(cmd2.get());
-    engine->update();
+    //engine->update();
 
     // Selection de unite Infantry
     this_thread::sleep_for(chrono::seconds(2));
     cout<<"=> SelectUnitCommand(Position(5,2))"<<endl;
     unique_ptr<SelectUnitCommand> cmd3(new SelectUnitCommand(Position(5,2)));
     engine->addCommand(cmd3.get());
-    engine->update();
+    //engine->update();
 
     // Attaque de l'unite HTank
     this_thread::sleep_for(chrono::seconds(2));
@@ -283,7 +303,7 @@ void engineTest() {
     cout<<"=> AttackUnitCommand(Position(5,1))"<<endl;
     unique_ptr<AttackUnitCommand> cmd4(new AttackUnitCommand(Position(5,1)));
     engine->addCommand(cmd4.get());
-    engine->update();
+    //engine->update();
 
     cout<<"la nouvelle vie de l'unité du jouer 1 après être attacké pour la première fois est:"<<unit->getvie()<<"."<<endl;
     cout<<"la nouvelle puissance de l'unité du jouer 1 après être attacké pour la première fois est:"<<unit->getpuissance()<<"."<<endl;
@@ -296,9 +316,11 @@ void engineTest() {
     unit2.release();
     unique_ptr<DeleteUnitCommand> cmd5(new DeleteUnitCommand(Position(5,1)));
     engine->addCommand(cmd5.get());
-    engine->update();*/
+    //engine->update(); */
 
-    th.join();
+    lyr.join();
+    //jeu->fin = true;
+    ng.join();
 }
 
 int main(int argc,char* argv[]) 
