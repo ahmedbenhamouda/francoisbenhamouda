@@ -24,7 +24,7 @@ namespace state {
 			return false;
 		}
 	}
-	bool Position::operator-(Position const& pos) {
+	int Position::operator-(Position const& pos) {
 		int res;
 		res = (pos.getX()-this->getX()) + (pos.getY()-this->getY());
 		return (res);

@@ -29,6 +29,7 @@ namespace state {
     // Attributes
   public:
     std::vector<Position> uniteMoves;
+    std::vector<Position> explosions;
   private:
     std::vector<Unite*> unites;
     std::vector<Batiment*> batiments;

@@ -57,12 +57,21 @@ namespace render {
 	}
 	void Layers::setMiscSurface () {
 		miscSurface.initQuads(256);
+		// affichage des explosions
+		for (state::Position pos : jeu->etatJeu->explosions) {
+			int posx = pos.getX();
+			int posy = pos.getY();
+			std::unique_ptr<state::MiscTile> explosion(new state::MiscTile(1,pos));
+			miscSurface.setSpriteLocation(posx,posy,8,32,false);
+	    		miscSurface.setSpriteTexture(posx,posy,8,miscTileset->getTile(explosion.get()));
+		}
+		// affichage des cases de deplacement
 		for (state::Position pos : jeu->etatJeu->getUniteMoves()) {
 			int posx = pos.getX();
 			int posy = pos.getY();
-			std::unique_ptr<state::MiscTile> mt(new state::MiscTile(0,pos));
+			std::unique_ptr<state::MiscTile> carre(new state::MiscTile(0,pos));
 			miscSurface.setSpriteLocation(posx,posy,8,32,false);
-    			miscSurface.setSpriteTexture(posx,posy,8,miscTileset->getTile(mt.get()));
+    			miscSurface.setSpriteTexture(posx,posy,8,miscTileset->getTile(carre.get()));
 		}
 	}
 	void Layers::displayLayers(sf::RenderWindow* window) {

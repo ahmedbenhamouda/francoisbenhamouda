@@ -26,6 +26,8 @@ namespace engine {
 			}
 		}
 		jeu->etatJeu->setUniteMoves(std::vector<state::Position>()); // reset unite moves
+
+		// animation
 		while (not (object-> position == targetPos)) {
 			int px = object->position.getX();
 			int py = object->position.getY();
@@ -36,7 +38,7 @@ namespace engine {
 			} else {
 				object->move(state::Position(px,py+dy));
 			}
-			std::this_thread::sleep_for(std::chrono::milliseconds(200));
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 		jeu->selectedUnit = nullptr;
 	}

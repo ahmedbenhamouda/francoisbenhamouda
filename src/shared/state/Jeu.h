@@ -18,9 +18,9 @@ namespace state {
     // Attributes
   public:
     Terrain* etatJeu;
-    int tour;
+    int tour     = 0;
     bool fin;
-    Unite* selectedUnit;
+    Unite* selectedUnit     = nullptr;
     // Operations
   public:
     Jeu (Terrain* etatJeu);
