@@ -1,4 +1,5 @@
 #include "CreateUnitCommand.h"
+#include <iostream>
 
 namespace engine {
 	CreateUnitCommand::CreateUnitCommand() {
@@ -11,8 +12,21 @@ namespace engine {
 	}
 	void CreateUnitCommand::execute (state::Jeu* jeu) {
 		state::Batiment* usine = jeu->etatJeu->getBatiment(objectPos);
-		// TODO : Penser à vérifier si le joueur a l'argent nécessaire
-		state::Unite* unite = usine->creerU(unit_id);
-		jeu->etatJeu->addUnite(unite);
+		if (usine->getColor() == jeu->joueurs[jeu->tour%2]->color) {
+			state::Unite* unite = usine->creerU(unit_id);
+			// Check if player has enough money
+			int money = jeu->joueurs[jeu->tour%2]->monnaie.getArgent();
+			int price = unite->getprix();
+			if (money < price) {
+				std::cout<<"You don't have enough money."<<std::endl;
+				delete unite;
+				return;
+			}
+			jeu->etatJeu->addUnite(unite);
+			jeu->joueurs[jeu->tour%2]->monnaie.achat(price);
+			std::cout<<"Money remaining : "<<money-price<<std::endl;
+		} else {
+			std::cout<<"This building is not yours."<<std::endl;
+		}
 	}
 }

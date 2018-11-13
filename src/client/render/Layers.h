@@ -46,7 +46,8 @@ namespace render {
     void setTerrainSurface ();
     void setMiscSurface ();
     void displayLayers (sf::RenderWindow* window);
-    void sendCommand (state::Position position);
+    void sendUnitCommand (state::Position position);
+    void sendTurnCommand ();
     // Setters and Getters
   };
 

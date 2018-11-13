@@ -10,8 +10,12 @@ namespace engine {
 	void SelectUnitCommand::execute(state::Jeu* jeu) {
 		//std::cout<<"unit selected"<<std::endl;
 		state::Unite* unite = jeu->etatJeu->getUnite(objectPos);
-		jeu->etatJeu->setUniteMoves(unite->getLegalMove());
-		jeu->selectedUnit = unite;
+		if (unite->getColor() == jeu->joueurs[jeu->tour%2]->color) {
+			jeu->etatJeu->uniteMoves = unite->getLegalMove();
+			jeu->selectedUnit = unite;
+		} else {
+			std::cout<<"This unit is not yours."<<std::endl;
+		}
 		
 	}
 	SelectUnitCommand::~SelectUnitCommand() {

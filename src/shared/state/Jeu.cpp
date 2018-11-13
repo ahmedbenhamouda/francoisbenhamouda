@@ -1,10 +1,9 @@
 #include "Jeu.h"
 
 namespace state {
-	Jeu::Jeu(Terrain* etatInit) {
+	Jeu::Jeu(Terrain* etatInit, std::vector<Joueur*> joueurs) {
 		etatJeu = etatInit;
-		tour = 0;
-		fin = false;
+		this->joueurs = joueurs;
 	}
 	Jeu::~Jeu() {
 	}

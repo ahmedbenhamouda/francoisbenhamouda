@@ -3,6 +3,7 @@
 #include "engine/SelectUnitCommand.h"
 #include "engine/MoveUnitCommand.h"
 #include "engine/CreateUnitCommand.h"
+#include "engine/EndTurnCommand.h"
 #include <memory>
 #include <iostream>
 
@@ -66,7 +67,7 @@ namespace render {
 	    		miscSurface.setSpriteTexture(posx,posy,8,miscTileset->getTile(explosion.get()));
 		}
 		// affichage des cases de deplacement
-		for (state::Position pos : jeu->etatJeu->getUniteMoves()) {
+		for (state::Position pos : jeu->etatJeu->uniteMoves) {
 			int posx = pos.getX();
 			int posy = pos.getY();
 			std::unique_ptr<state::MiscTile> carre(new state::MiscTile(0,pos));
@@ -83,7 +84,7 @@ namespace render {
 		window->display();
 
 	}
-	void Layers::sendCommand(state::Position position) {
+	void Layers::sendUnitCommand(state::Position position) {
 		//std::cout<<"sendCommand"<<std::endl;
 		if (jeu->etatJeu->getUnite(position)) {
 			if (jeu->selectedUnit) {
@@ -103,5 +104,10 @@ namespace render {
 				engine->addCommand(cmd);
 			}
 		}
+	}
+	void Layers::sendTurnCommand() {
+		//std::cout<<"sendCommand"<<std::endl;
+		engine::Command* cmd = new engine::EndTurnCommand();
+		engine->addCommand(cmd);
 	}
 }

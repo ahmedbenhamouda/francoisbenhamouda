@@ -2,8 +2,7 @@
 #include <algorithm>
 
 namespace state {
-	Terrain::Terrain(std::vector<Unite*> unites, std::vector<Batiment*> batiments, TerrainTab sol) {
-		this->unites = unites;
+	Terrain::Terrain(std::vector<Batiment*> batiments, TerrainTab sol) {
 		this->batiments = batiments;
 		this->sol = sol;
 	}
@@ -43,12 +42,6 @@ namespace state {
 		Unite* unite = getUnite(pos);
 		delete unite; //TODO : Trouver un moyen de supprimer une unité sans erreur de segmentation ni fuite de mémoire
 		unites.erase(std::remove(unites.begin(), unites.end(), unite));
-	}
-	void Terrain::setUniteMoves(std::vector<Position> moves) {
-		uniteMoves = moves;
-	}
-	std::vector<Position> Terrain::getUniteMoves () {
-		return uniteMoves;
 	}
 	Terrain::~Terrain() {
 	}

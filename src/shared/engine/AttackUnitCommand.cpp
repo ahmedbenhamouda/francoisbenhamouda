@@ -14,9 +14,25 @@ namespace engine {
 	void AttackUnitCommand::execute(state::Jeu* jeu) {
 		state::Unite* object = jeu->selectedUnit;
 		state::Unite* target = jeu->etatJeu->getUnite(targetPos);
-		jeu->etatJeu->setUniteMoves(std::vector<state::Position>()); // reset unite moves
 		if (object and target) {
 			if (std::fabs((object->position)-(target->position)) == 1){
+				// reset unite moves
+				jeu->etatJeu->uniteMoves = std::vector<state::Position>();
+
+				// Check if unit can attack
+				if (not(jeu->selectedUnit->can_attack)) {
+					std::cout<<"This unit cannot attack anymore."<<std::endl;
+					jeu->selectedUnit = nullptr;
+					return;
+				}
+
+				// Check if no friendly fire
+				if (object->getColor() == target->getColor()) {
+					std::cout<<"Do not betray your comrades."<<std::endl;
+					jeu->selectedUnit = nullptr;
+					return;
+				}
+
 				object->attacker(target);
 				int life = target->getvie();
 				std::cout<<"Enemy's life : "<<life<<std::endl;
@@ -27,11 +43,15 @@ namespace engine {
 				jeu->etatJeu->explosions.push_back(targetPos);
 				std::this_thread::sleep_for(std::chrono::milliseconds(100));
 				jeu->etatJeu->explosions = std::vector<state::Position>();
+
+
+				// end action
+				jeu->selectedUnit->can_attack = false;
+				jeu->selectedUnit = nullptr;
 				
-			} else {
+			} else if (target != object) {
 				std::cout<<"You cannot attack an ennemy who is not next to you."<<std::endl;
 			}
 		}
-		jeu->selectedUnit = nullptr;
 	}
 }

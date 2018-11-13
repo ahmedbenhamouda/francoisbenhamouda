@@ -9,13 +9,13 @@ namespace state {
   class PorteMonnaie {
     // Attributes
   public:
-    int argent;
+    int argent     = 2000;
     // Operations
   public:
     PorteMonnaie ();
-    int getargent ();
-    int achat (int argent);
-    int gaintour (int argent);
+    int getArgent ();
+    void achat (int argent);
+    void gainTour (int argent);
     ~PorteMonnaie ();
     // Setters and Getters
   };

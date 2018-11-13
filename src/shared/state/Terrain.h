@@ -36,7 +36,7 @@ namespace state {
     TerrainTab sol;
     // Operations
   public:
-    Terrain (std::vector<Unite*> unites, std::vector<Batiment*> batiments, TerrainTab sol);
+    Terrain (std::vector<Batiment*> batiments, TerrainTab sol);
     Terrain ();
     Unite* getUnite (Position position);
     Batiment* getBatiment (Position position);
@@ -46,8 +46,6 @@ namespace state {
     ~Terrain ();
     std::vector<Unite*>& getUniteList ();
     std::vector<Batiment*>& getBatimentList ();
-    void setUniteMoves (std::vector<Position> moves);
-    std::vector<Position> getUniteMoves ();
     // Setters and Getters
   };
 

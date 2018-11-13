@@ -2,12 +2,15 @@
 #ifndef STATE__JEU__H
 #define STATE__JEU__H
 
+#include <vector>
 
 namespace state {
   class Terrain;
+  class Joueur;
   class Unite;
 }
 
+#include "Joueur.h"
 #include "Terrain.h"
 
 namespace state {
@@ -19,11 +22,12 @@ namespace state {
   public:
     Terrain* etatJeu;
     int tour     = 0;
-    bool fin;
+    bool fin     = false;
+    std::vector<Joueur*> joueurs;
     Unite* selectedUnit     = nullptr;
     // Operations
   public:
-    Jeu (Terrain* etatJeu);
+    Jeu (Terrain* etatJeu, std::vector<Joueur*> joueurs);
     ~Jeu ();
     // Setters and Getters
   };

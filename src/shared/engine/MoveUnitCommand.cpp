@@ -1,4 +1,5 @@
 #include "MoveUnitCommand.h"
+#include <iostream>
 #include <thread>
 #include <chrono>
 
@@ -25,7 +26,14 @@ namespace engine {
 				return;
 			}
 		}
-		jeu->etatJeu->setUniteMoves(std::vector<state::Position>()); // reset unite moves
+		jeu->etatJeu->uniteMoves = std::vector<state::Position>(); // reset unite moves
+
+		// Check if unit can move
+		if (not(object->can_move)) {
+			std::cout<<"This unit cannot move anymore."<<std::endl;
+			jeu->selectedUnit = nullptr;
+			return;
+		}
 
 		// animation
 		while (not (object-> position == targetPos)) {
@@ -40,6 +48,8 @@ namespace engine {
 			}
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
+		//end action
+		jeu->selectedUnit->can_move = false;
 		jeu->selectedUnit = nullptr;
 	}
 }

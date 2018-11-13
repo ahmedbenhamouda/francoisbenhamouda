@@ -16,13 +16,9 @@ namespace engine {
 
   /// class EndTurnCommand - 
   class EndTurnCommand : public engine::Command {
-    // Attributes
-  public:
-    int Turn;
     // Operations
   public:
     EndTurnCommand ();
-    EndTurnCommand (int Turn);
     ~EndTurnCommand ();
     void execute (state::Jeu* jeu);
     // Setters and Getters

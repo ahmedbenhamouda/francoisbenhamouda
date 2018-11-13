@@ -25,6 +25,8 @@ namespace state {
     int mvt;
     int puissance;
     int id;
+    bool can_move     = true;
+    bool can_attack     = true;
     // Operations
   public:
     Unite ();

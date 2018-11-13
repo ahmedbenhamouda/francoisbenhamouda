@@ -39,7 +39,12 @@ void displayWindow(Layers* layers) {
 					int px = event.mouseButton.x/32;
 					int py = event.mouseButton.y/32;
 					m1.lock();
-					layers->sendCommand (Position(px,py));
+					layers->sendUnitCommand (Position(px,py));
+					m1.unlock();
+				}
+				if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Escape) {
+					m1.lock();
+					layers->sendTurnCommand();
 					m1.unlock();
 				}
 			}
@@ -203,17 +208,19 @@ void runEngine(Engine* engine) {
 
 
 void engineTest() {
-    // Creation d'objets Unite
+    /* // Creation d'objets Unite
     unique_ptr<Unite> unit (new HTank(Position(5, 1), 2));
     unique_ptr<Unite> unit2 (new Infantry(Position(5, 2), 1));
-    unique_ptr<Unite> unit3 (new Tank(Position(6, 1), 1));
+    unique_ptr<Unite> unit3 (new Tank(Position(6, 1), 1)); */
+
+    // Creation d'objets Joueur
+    unique_ptr<Joueur> joueur1(new Joueur(1));
+    unique_ptr<Joueur> joueur2(new Joueur(2));
+    std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
 
     // Creation d'objets Batiment
-
-    unique_ptr<Batiment> batiment (new QG(Position(2, 5), 3));
-    unique_ptr<Batiment> batiment2 (new Usine(Position(4, 3), 0));
-
-
+    unique_ptr<Batiment> batiment (new Usine(Position(2, 5), 1));
+    unique_ptr<Batiment> batiment2 (new Usine(Position(5, 2), 2));
 
     // création d'un objet TerrainTab
     vector<vector<TerrainTypeId>> defaultVector {{plaine,plaine,plaine,plaine,plaine,plaine,plaine,plaine},
@@ -227,22 +234,14 @@ void engineTest() {
     unique_ptr<TerrainTab> terrainTab (new TerrainTab(defaultVector));
     
     // création d'un objet Terrain
-    vector<Unite*> unites;
-    unites.push_back(unit.get());
-    unites.push_back(unit2.get());
-    unites.push_back(unit3.get());
-
     vector<Batiment*> batiments;
     batiments.push_back(batiment.get());
     batiments.push_back(batiment2.get());
 
-    unique_ptr<Terrain> terrain(new Terrain(unites, batiments, *terrainTab));
-
-    //terrain->setUniteMoves(unit3->getLegalMoves());
-
+    unique_ptr<Terrain> terrain(new Terrain(batiments, *terrainTab));
 
     // Creation d'un objet Jeu
-    unique_ptr<Jeu> jeu(new Jeu(terrain.get())); 
+    unique_ptr<Jeu> jeu(new Jeu(terrain.get(), listeJoueurs)); 
 
     // Creation d'un objet Engine
     unique_ptr<Engine> engine(new Engine(jeu.get()));
@@ -267,6 +266,9 @@ void engineTest() {
     // Creation d'un thread dedie a l'affichage
     thread lyr(displayWindow, layers.get());
     cout<<"Initializing the graphics..."<<endl;
+    cout<<"Hit Ctrl-C to close the game."<<endl;
+    cout<<"Press Escape to end your turn."<<endl;
+    std::cout<<"Player 1's turn :"<<std::endl;
 
     /* // Creation d'une unite Infantry
     this_thread::sleep_for(chrono::seconds(2));
@@ -317,8 +319,6 @@ void engineTest() {
     unique_ptr<DeleteUnitCommand> cmd5(new DeleteUnitCommand(Position(5,1)));
     engine->addCommand(cmd5.get());
     //engine->update(); */
-
-    cout<<"Hit Ctrl-C to close the game."<<endl;
 
     lyr.join();
     //jeu->fin = true;
