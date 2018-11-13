@@ -31,7 +31,7 @@ namespace engine {
 			int py = object->position.getY();
 			int dx = px < targetPos.getX()?1:-1;
 			int dy = py < targetPos.getY()?1:-1;
-			if (px != targetPos.getX() and not(jeu->etatJeu->getUnite(state::Position(px+dx,py)))) {
+			if (px != targetPos.getX()) {
 				object->move(state::Position(px+dx,py));
 			} else {
 				object->move(state::Position(px,py+dy));

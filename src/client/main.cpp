@@ -38,9 +38,9 @@ void displayWindow(Layers* layers) {
 				if(event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
 					int px = event.mouseButton.x/32;
 					int py = event.mouseButton.y/32;
-					//m1.lock();
+					m1.lock();
 					layers->sendCommand (Position(px,py));
-					//m1.unlock();
+					m1.unlock();
 				}
 			}
 			layers->setUniteSurface ();
@@ -51,12 +51,12 @@ void displayWindow(Layers* layers) {
 }
 
 void runEngine(Engine* engine) {
-	cout<<engine->commands.size()<<endl;
+	//cout<<engine->commands.size()<<endl;
 	while(1) {
 		//if (engine->commands[0]) {
-			//m1.lock();
+			m1.lock();
 			engine->update();
-			//m1.unlock();
+			m1.unlock();
 		//}
 	}
 }
@@ -317,6 +317,8 @@ void engineTest() {
     unique_ptr<DeleteUnitCommand> cmd5(new DeleteUnitCommand(Position(5,1)));
     engine->addCommand(cmd5.get());
     //engine->update(); */
+
+    cout<<"Hit Ctrl-C to close the game."<<endl;
 
     lyr.join();
     //jeu->fin = true;
