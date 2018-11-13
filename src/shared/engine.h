@@ -10,4 +10,6 @@
 #include "engine/DeleteUnitCommand.h"
 #include "engine/CaptureFlagCommand.h"
 #include "engine/SelectUnitCommand.h"
+#include "engine/SelectBatimentCommand.h"
+#include "engine/EndTurnCommand.h"
 #endif

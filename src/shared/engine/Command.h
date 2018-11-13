@@ -16,7 +16,7 @@ namespace engine {
     // Operations
   public:
     Command ();
-    virtual ~Command ();
+    ~Command ();
     virtual void execute (state::Jeu* jeu) = 0;
     // Setters and Getters
   };
