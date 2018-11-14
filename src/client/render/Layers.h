@@ -32,6 +32,8 @@ namespace render {
     Tileset<state::Unite>* uniteTileset;
     Surface batimentSurface;
     Tileset<state::Batiment>* batimentTileset;
+    Surface flagSurface;
+    Tileset<state::Flag>* flagTileset;
     Surface terrainSurface;
     Tileset<state::TerrainTile>* terrainTileset;
     Surface miscSurface;
@@ -39,10 +41,11 @@ namespace render {
     // Operations
   public:
     Layers ();
-    Layers (state::Jeu* jeu, engine::Engine* engine, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::TerrainTile>* terrainTileset, Tileset<state::MiscTile>* miscTileset);
+    Layers (state::Jeu* jeu, engine::Engine* engine, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::Flag>* flagTileset, Tileset<state::TerrainTile>* terrainTileset, Tileset<state::MiscTile>* miscTileset);
     ~Layers ();
     void setUniteSurface ();
     void setBatimentSurface ();
+    void setFlagSurface ();
     void setTerrainSurface ();
     void setMiscSurface ();
     void displayLayers (sf::RenderWindow* window);

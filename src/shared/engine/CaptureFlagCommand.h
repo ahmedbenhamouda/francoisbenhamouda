@@ -16,13 +16,9 @@ namespace engine {
 
   /// class CaptureFlagCommand - 
   class CaptureFlagCommand : public engine::Command {
-    // Attributes
-  public:
-    state::Position objectPos;
     // Operations
   public:
     CaptureFlagCommand ();
-    CaptureFlagCommand (state::Position objectPos);
     ~CaptureFlagCommand ();
     void execute (state::Jeu* jeu);
     // Setters and Getters

@@ -8,6 +8,7 @@ namespace state {
   class Position;
   class Unite;
   class Batiment;
+  class Flag;
   class TerrainTab;
   class MiscTile;
   class TerrainTile;
@@ -16,6 +17,7 @@ namespace state {
 #include "Position.h"
 #include "TerrainTab.h"
 #include "TerrainTypeId.h"
+#include "Flag.h"
 #include "MiscTile.h"
 #include "TerrainTile.h"
 #include "Unite.h"
@@ -33,19 +35,22 @@ namespace state {
   private:
     std::vector<Unite*> unites;
     std::vector<Batiment*> batiments;
+    std::vector<Flag*> flags;
     TerrainTab sol;
     // Operations
   public:
-    Terrain (std::vector<Batiment*> batiments, TerrainTab sol);
+    Terrain (std::vector<Batiment*> batiments, std::vector<Flag*> flags, TerrainTab sol);
     Terrain ();
     Unite* getUnite (Position position);
     Batiment* getBatiment (Position position);
+    Flag* getFlag (Position position);
     TerrainTypeId getGround (Position position);
     void addUnite (Unite* unite);
     void deleteUnite (Position position);
     ~Terrain ();
     std::vector<Unite*>& getUniteList ();
     std::vector<Batiment*>& getBatimentList ();
+    std::vector<Flag*>& getFlagList ();
     // Setters and Getters
   };
 

@@ -69,7 +69,7 @@ namespace state {
 	void Unite::move(Position position) {
 		this->position = position;
 	}
-	bool Unite::PossedeDrapeau() {
-		return false;
+	Flag* Unite::PossedeDrapeau() {
+		return has_flag;
 	}
 }

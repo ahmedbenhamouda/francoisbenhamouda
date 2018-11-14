@@ -2,8 +2,9 @@
 #include <algorithm>
 
 namespace state {
-	Terrain::Terrain(std::vector<Batiment*> batiments, TerrainTab sol) {
+	Terrain::Terrain(std::vector<Batiment*> batiments, std::vector<Flag*> flags, TerrainTab sol) {
 		this->batiments = batiments;
+		this->flags = flags;
 		this->sol = sol;
 	}
 	// Constructeur par defaut
@@ -26,6 +27,14 @@ namespace state {
 		}
 		return nullptr;
 	}
+	Flag* Terrain::getFlag(Position position) {
+		for (Flag* flag : flags) {
+			if (flag->position == position) {
+				return flag;
+			}
+		}
+		return nullptr;
+	}
 	TerrainTypeId Terrain::getGround(Position position) {
 		return sol.get(position);
 	}
@@ -35,12 +44,15 @@ namespace state {
 	std::vector<Batiment*>& Terrain::getBatimentList() {
 		return batiments;
 	}
+	std::vector<Flag*>& Terrain::getFlagList() {
+		return flags;
+	}
 	void Terrain::addUnite(Unite* unite){
 		unites.push_back(unite);
 	}
 	void Terrain::deleteUnite(Position pos) {
 		Unite* unite = getUnite(pos);
-		delete unite; //TODO : Trouver un moyen de supprimer une unité sans erreur de segmentation ni fuite de mémoire
+		delete unite;
 		unites.erase(std::remove(unites.begin(), unites.end(), unite));
 	}
 	Terrain::~Terrain() {

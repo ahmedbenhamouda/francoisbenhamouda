@@ -5,6 +5,7 @@
 #include "state/Position.h"
 #include "state/TerrainTypeId.h"
 #include "state/TerrainTab.h"
+#include "state/Flag.h"
 #include "state/MiscTile.h"
 #include "state/TerrainTile.h"
 #include "state/Unite.h"

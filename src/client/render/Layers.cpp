@@ -10,15 +10,17 @@
 namespace render {
 	Layers::Layers() {
 	}
-	Layers::Layers (state::Jeu* jeu, engine::Engine* engine, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::TerrainTile>* terrainTileset, Tileset<state::MiscTile>* miscTileset) {
+	Layers::Layers (state::Jeu* jeu, engine::Engine* engine, Tileset<state::Unite>* uniteTileset, Tileset<state::Batiment>* batimentTileset, Tileset<state::Flag>* flagTileset, Tileset<state::TerrainTile>* terrainTileset, Tileset<state::MiscTile>* miscTileset) {
 		this->jeu = jeu;
 		this->engine = engine;
 		this->uniteTileset = uniteTileset;
 		this->batimentTileset = batimentTileset;
+		this->flagTileset = flagTileset;
 		this->terrainTileset = terrainTileset;
 		this->miscTileset = miscTileset;
 		uniteSurface.loadTexture(uniteTileset->getImageFile());
 		batimentSurface.loadTexture(batimentTileset->getImageFile());
+		flagSurface.loadTexture(flagTileset->getImageFile());
 		terrainSurface.loadTexture(terrainTileset->getImageFile());
 		miscSurface.loadTexture(miscTileset->getImageFile());
 	}
@@ -43,6 +45,17 @@ namespace render {
 				int posy = batiment->position.getY();
 				batimentSurface.setSpriteLocation(posx,posy,20,32,true);
     				batimentSurface.setSpriteTexture(posx,posy,20,batimentTileset->getTile(batiment));
+			}
+		}
+	}
+	void Layers::setFlagSurface () {
+		flagSurface.initQuads(1600);
+		for (state::Flag* flag : jeu->etatJeu->getFlagList()) {
+			if (flag and not(flag->is_owned)) {
+				int posx = flag->position.getX();
+				int posy = flag->position.getY();
+				flagSurface.setSpriteLocation(posx,posy,20,32,false);
+    				flagSurface.setSpriteTexture(posx,posy,20,flagTileset->getTile(flag));
 			}
 		}
 	}
@@ -79,6 +92,7 @@ namespace render {
 		window->clear();
 		window->draw(terrainSurface);
 		window->draw(batimentSurface);
+		window->draw(flagSurface);
 		window->draw(uniteSurface);
 		window->draw(miscSurface);
 		window->display();

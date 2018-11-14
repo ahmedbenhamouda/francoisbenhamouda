@@ -6,10 +6,12 @@
 
 namespace state {
   class Position;
+  class Flag;
   class Unite;
 }
 
 #include "Position.h"
+#include "Flag.h"
 
 namespace state {
 
@@ -27,6 +29,7 @@ namespace state {
     int id;
     bool can_move     = true;
     bool can_attack     = true;
+    Flag* has_flag     = nullptr;
     // Operations
   public:
     Unite ();
@@ -43,7 +46,7 @@ namespace state {
     virtual void setpuissance (int p);
     void attacker (Unite* unite);
     void move (Position position);
-    bool PossedeDrapeau ();
+    Flag* PossedeDrapeau ();
     virtual ~Unite ();
     // Setters and Getters
   };

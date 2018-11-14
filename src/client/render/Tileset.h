@@ -109,6 +109,15 @@ Tileset<T>::Tileset (std::string filename) : filename(filename) {
 
             tiles = {carre,explosion};
     }
+    if (filename=="res/flags.png") {
+            //flags
+            Tile flagRouge(0,0,16,16);
+	    Tile flagBleu(16,0,16,16);
+            Tile flagVert(32,0,16,16);
+	    Tile flagJaune(48,0,16,16);
+
+            tiles = {flagRouge,flagBleu,flagVert,flagJaune};
+    }
 }
 
 template<class T>

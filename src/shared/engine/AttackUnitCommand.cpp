@@ -1,5 +1,6 @@
 #include "AttackUnitCommand.h"
 #include "DeleteUnitCommand.h"
+#include "DropFlagCommand.h"
 #include <iostream>
 #include <cmath>
 #include <thread>
@@ -37,6 +38,7 @@ namespace engine {
 				int life = target->getvie();
 				std::cout<<"Enemy's life : "<<life<<std::endl;
 				if (life == 0) {
+					DropFlagCommand(targetPos).execute(jeu);
 					DeleteUnitCommand(targetPos).execute(jeu);
 				}
 				// animation

@@ -38,6 +38,7 @@ void displayWindow(Layers* layers) {
 				if(event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
 					int px = event.mouseButton.x/32;
 					int py = event.mouseButton.y/32;
+					//cout<<"("<<px<<","<<py<<")"<<endl;
 					m1.lock();
 					layers->sendUnitCommand (Position(px,py));
 					m1.unlock();
@@ -49,6 +50,7 @@ void displayWindow(Layers* layers) {
 				}
 			}
 			layers->setUniteSurface ();
+			layers->setFlagSurface ();
 			layers->setMiscSurface ();
 			layers->displayLayers (&window);
 		}
@@ -234,11 +236,6 @@ void engineTest() {
     unique_ptr<Batiment> batiment11 (new Usine(Position(17, 2), 2));
     unique_ptr<Batiment> batiment12 (new Usine(Position(19, 2), 2));
 
-    // création d'un objet TerrainTab
- 
-    unique_ptr<TerrainTab> terrainTab (new TerrainTab(map1()));
-    
-    // création d'un objet Terrain
     vector<Batiment*> batiments;
     batiments.push_back(batiment.get());
     batiments.push_back(batiment2.get());
@@ -252,7 +249,17 @@ void engineTest() {
     batiments.push_back(batiment10.get());
     batiments.push_back(batiment11.get());
     batiments.push_back(batiment12.get());
-    unique_ptr<Terrain> terrain(new Terrain(batiments, *terrainTab));
+
+    // Creation d'objets Flag
+    unique_ptr<Flag> flag1 (new Flag(Position(1,1),0));
+    unique_ptr<Flag> flag2 (new Flag(Position(18,18),1));
+    std::vector<Flag*> flags {flag1.get(), flag2.get()};
+
+    // création d'un objet TerrainTab
+    unique_ptr<TerrainTab> terrainTab (new TerrainTab(map1()));
+    
+    // création d'un objet Terrain
+    unique_ptr<Terrain> terrain(new Terrain(batiments, flags, *terrainTab));
 
     // Creation d'un objet Jeu
     unique_ptr<Jeu> jeu(new Jeu(terrain.get(), listeJoueurs)); 
@@ -263,13 +270,15 @@ void engineTest() {
     // Creation d'objets Tileset
     render::Tileset<Unite> uniteTileset("res/units.png");
     render::Tileset<Batiment> batimentTileset("res/batiments.png");
+    render::Tileset<Flag> flagTileset("res/flags.png");
     render::Tileset<TerrainTile> terrainTileset("res/terrain.png");
     render::Tileset<MiscTile> miscTileset("res/misc.png"); 
 
     // creation d'un objet Layers
-    unique_ptr<Layers> layers(new Layers(jeu.get(), engine.get(), &uniteTileset,  &batimentTileset, &terrainTileset, &miscTileset));
+    unique_ptr<Layers> layers(new Layers(jeu.get(), engine.get(), &uniteTileset,  &batimentTileset, &flagTileset, &terrainTileset, &miscTileset));
     layers->setUniteSurface ();
     layers->setBatimentSurface ();
+    layers->setFlagSurface ();
     layers->setTerrainSurface ();
     layers->setMiscSurface ();
 
