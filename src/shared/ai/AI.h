@@ -23,19 +23,20 @@ namespace ai {
   class AI {
     // Attributes
   public:
-    int player_id;
+    int color;
     engine::Engine* engine;
     state::Jeu* jeu;
     std::vector<state::Unite*> liste_unites;
-    std::vector<state::Batiment> liste_batiments;
+    std::vector<state::Batiment*> liste_batiments;
     std::vector<state::Flag*> liste_flag_enemies;
     // Operations
   public:
+    void fillLists ();
     void DeplacerUnite ();
-    Unite& CreerUnite ();
+    void CreerUnite ();
     void Attack (state::Position pos);
-    void SelecUnite ();
-    virtual void Run () = 0;
+    void SelectUnite ();
+    virtual void run () = 0;
     // Setters and Getters
   };
 
