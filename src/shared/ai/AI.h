@@ -14,7 +14,6 @@ namespace engine {
   class Command;
 }
 
-#include "engine/Command.h"
 #include "state/Jeu.h"
 
 namespace ai {
@@ -28,14 +27,11 @@ namespace ai {
     state::Jeu* jeu;
     std::vector<state::Unite*> liste_unites;
     std::vector<state::Batiment*> liste_batiments;
-    std::vector<state::Flag*> liste_flag_enemies;
+    std::vector<engine::Command*> liste_commands;
     // Operations
   public:
-    void fillLists ();
-    void DeplacerUnite ();
-    void CreerUnite ();
-    void Attack (state::Position pos);
-    void SelectUnite ();
+    void fillStateLists ();
+    void fillCommandList ();
     virtual void run () = 0;
     // Setters and Getters
   };

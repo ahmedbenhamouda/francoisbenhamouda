@@ -4,6 +4,12 @@
 
 #include <random>
 
+namespace engine {
+  class Engine;
+};
+namespace state {
+  class Jeu;
+};
 namespace ai {
   class AI;
 }
@@ -17,11 +23,14 @@ namespace ai {
     // Attributes
   public:
     std::mt19937 randeng;
-     player_id;
+    int player_id;
+    /// 			
+    engine::Engine* engine;
+    state::Jeu* jeu;
     // Operations
   public:
     RandomAI ();
-    RandomAI (int player_id);
+    RandomAI (int color, engine::Engine* engine, state::Jeu* jeu);
     void run ();
     ~RandomAI ();
     // Setters and Getters
