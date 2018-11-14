@@ -11,11 +11,12 @@ namespace engine {
 	CreateUnitCommand::~CreateUnitCommand() {
 	}
 	void CreateUnitCommand::execute (state::Jeu* jeu) {
+  		int nb_joueurs = jeu->joueurs.size();
 		state::Batiment* usine = jeu->etatJeu->getBatiment(objectPos);
-		if (usine->getColor() == jeu->joueurs[jeu->tour%2]->color) {
+		if (usine->getColor() == jeu->joueurs[jeu->tour%nb_joueurs]->color) {
 			state::Unite* unite = usine->creerU(unit_id);
 			// Check if player has enough money
-			int money = jeu->joueurs[jeu->tour%2]->monnaie.getArgent();
+			int money = jeu->joueurs[jeu->tour%nb_joueurs]->monnaie.getArgent();
 			int price = unite->getprix();
 			if (money < price) {
 				std::cout<<"You don't have enough money."<<std::endl;
@@ -23,7 +24,7 @@ namespace engine {
 				return;
 			}
 			jeu->etatJeu->addUnite(unite);
-			jeu->joueurs[jeu->tour%2]->monnaie.achat(price);
+			jeu->joueurs[jeu->tour%nb_joueurs]->monnaie.achat(price);
 			std::cout<<"Money remaining : "<<money-price<<std::endl;
 		} else {
 			std::cout<<"This building is not yours."<<std::endl;

@@ -8,9 +8,10 @@ namespace engine {
 		this->objectPos = objectPos;
 	}
 	void SelectUnitCommand::execute(state::Jeu* jeu) {
+		int nb_joueurs = jeu->joueurs.size();
 		//std::cout<<"unit selected"<<std::endl;
 		state::Unite* unite = jeu->etatJeu->getUnite(objectPos);
-		if (unite->getColor() == jeu->joueurs[jeu->tour%2]->color) {
+		if (unite->getColor() == jeu->joueurs[jeu->tour%nb_joueurs]->color) {
 			jeu->etatJeu->uniteMoves = unite->getLegalMove();
 			jeu->selectedUnit = unite;
 		} else {

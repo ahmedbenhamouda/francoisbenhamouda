@@ -6,10 +6,15 @@
 namespace state {
 
   enum TerrainTypeId {
-    route     = 0,
-    plaine     = 1,
-    foret     = 2,
-    montagne     = 3
+    plaine     = 0,
+    foret     = 1,
+    montagne     = 2,
+    routeh     = 3,
+    routev     = 4,
+    routedu     = 5,
+    routegu     = 6,
+    routedd     = 7,
+    routegd     = 8
   };
 
 };

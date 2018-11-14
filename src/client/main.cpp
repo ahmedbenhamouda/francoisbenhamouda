@@ -214,13 +214,25 @@ void engineTest() {
     unique_ptr<Unite> unit3 (new Tank(Position(6, 1), 1)); */
 
     // Creation d'objets Joueur
-    unique_ptr<Joueur> joueur1(new Joueur(1));
-    unique_ptr<Joueur> joueur2(new Joueur(2));
-    std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
+    unique_ptr<Joueur> joueur1(new Joueur(0));
+    unique_ptr<Joueur> joueur2(new Joueur(1));
+    unique_ptr<Joueur> joueur3(new Joueur(2));
+    unique_ptr<Joueur> joueur4(new Joueur(3));
+    std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get(), joueur3.get(), joueur4.get()};
 
     // Creation d'objets Batiment
-    unique_ptr<Batiment> batiment (new Usine(Position(2, 5), 1));
-    unique_ptr<Batiment> batiment2 (new Usine(Position(5, 2), 2));
+    unique_ptr<Batiment> batiment (new Usine(Position(2, 2), 0));
+    unique_ptr<Batiment> batiment2 (new Usine(Position(17, 17), 1));
+    unique_ptr<Batiment> batiment3 (new Usine(Position(0, 2), 0));
+    unique_ptr<Batiment> batiment4 (new Usine(Position(19, 17), 1));
+    unique_ptr<Batiment> batiment5 (new QG(Position(1, 1), 0));
+    unique_ptr<Batiment> batiment6 (new QG(Position(18, 18), 1));
+    unique_ptr<Batiment> batiment7 (new Usine(Position(0, 17), 3));
+    unique_ptr<Batiment> batiment8 (new QG(Position(18, 1), 2));
+    unique_ptr<Batiment> batiment9 (new QG(Position(1, 18), 3));    
+    unique_ptr<Batiment> batiment10 (new Usine(Position(2, 17), 3));
+    unique_ptr<Batiment> batiment11 (new Usine(Position(17, 2), 2));
+    unique_ptr<Batiment> batiment12 (new Usine(Position(19, 2), 2));
 
     // création d'un objet TerrainTab
  
@@ -230,7 +242,16 @@ void engineTest() {
     vector<Batiment*> batiments;
     batiments.push_back(batiment.get());
     batiments.push_back(batiment2.get());
-
+    batiments.push_back(batiment3.get());
+    batiments.push_back(batiment4.get());
+    batiments.push_back(batiment5.get());
+    batiments.push_back(batiment6.get());
+    batiments.push_back(batiment7.get());
+    batiments.push_back(batiment8.get());
+    batiments.push_back(batiment9.get());
+    batiments.push_back(batiment10.get());
+    batiments.push_back(batiment11.get());
+    batiments.push_back(batiment12.get());
     unique_ptr<Terrain> terrain(new Terrain(batiments, *terrainTab));
 
     // Creation d'un objet Jeu

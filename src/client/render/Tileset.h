@@ -44,12 +44,17 @@ Tileset<T>::Tileset (std::string filename) : filename(filename) {
     // peuplement de tiles
     if (filename=="res/terrain.png") {
             //terrain
-            Tile route(400,16,16,16);
+            Tile routeh(400,16,16,16);
+            Tile routev(400,0,16,16);
+            Tile routedd(416,0,16,16);
+            Tile routegd(448,0,16,16);
+            Tile routedu(416,32,16,16);
+            Tile routegu(448,32,16,16);
             Tile plaine(16,16,16,16);
             Tile foret(240,16,16,16);
             Tile montagne(48,0,16,16);
 
-            tiles = {route,plaine,foret,montagne};
+            tiles = {plaine,foret,montagne,routeh,routev,routedu,routegu,routedd,routegd};
     }
 
     if (filename=="res/batiments.png") {
