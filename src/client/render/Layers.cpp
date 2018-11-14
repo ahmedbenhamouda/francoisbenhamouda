@@ -99,7 +99,12 @@ namespace render {
 
 	}
 	void Layers::sendUnitCommand(state::Position position) {
-		//std::cout<<"sendCommand"<<std::endl;
+		// Check if player can send commands
+		int nb_joueurs = jeu->joueurs.size();
+		if (jeu->joueurs[jeu->tour%nb_joueurs]->is_AI) {
+			std::cout<<"You cannot play right now."<<std::endl;
+			return;
+		}
 		if (jeu->etatJeu->getUnite(position)) {
 			if (jeu->selectedUnit) {
 				engine::Command* cmd = new engine::AttackUnitCommand(position);
@@ -120,6 +125,12 @@ namespace render {
 		}
 	}
 	void Layers::sendTurnCommand() {
+		// Check if player can send commands
+		int nb_joueurs = jeu->joueurs.size();
+		if (jeu->joueurs[jeu->tour%nb_joueurs]->is_AI) {
+			std::cout<<"You cannot play right now."<<std::endl;
+			return;
+		}
 		//std::cout<<"sendCommand"<<std::endl;
 		engine::Command* cmd = new engine::EndTurnCommand();
 		engine->addCommand(cmd);

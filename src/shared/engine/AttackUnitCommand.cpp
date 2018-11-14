@@ -16,6 +16,11 @@ namespace engine {
 		state::Unite* object = jeu->selectedUnit;
 		state::Unite* target = jeu->etatJeu->getUnite(targetPos);
 		if (object and target) {
+			// Own caracter selected
+			if (object == target) {
+				jeu->etatJeu->uniteMoves = std::vector<state::Position>();
+				jeu->selectedUnit = nullptr;
+			}
 			if (std::fabs((object->position)-(target->position)) == 1){
 				// reset unite moves
 				jeu->etatJeu->uniteMoves = std::vector<state::Position>();

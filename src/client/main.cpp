@@ -209,11 +209,11 @@ void runEngine(Engine* engine) {
 
 
 
-void engineTest() {
-    /* // Creation d'objets Unite
+/*void engineTest() {
+    // Creation d'objets Unite
     unique_ptr<Unite> unit (new HTank(Position(5, 1), 2));
     unique_ptr<Unite> unit2 (new Infantry(Position(5, 2), 1));
-    unique_ptr<Unite> unit3 (new Tank(Position(6, 1), 1)); */
+    unique_ptr<Unite> unit3 (new Tank(Position(6, 1), 1));
 
     // Creation d'objets Joueur
     unique_ptr<Joueur> joueur1(new Joueur(0));
@@ -293,7 +293,7 @@ void engineTest() {
     cout<<"Press Escape to end your turn."<<endl;
     std::cout<<"Player 1's turn :"<<std::endl;
 
-    /* // Creation d'une unite Infantry
+    // Creation d'une unite Infantry
     this_thread::sleep_for(chrono::seconds(2));
     cout<<"=> CreateUnitCommand(Position(4, 3), color))"<<endl;
     unique_ptr<CreateUnitCommand> cmd0(new CreateUnitCommand(Position(4, 3),0));
@@ -341,10 +341,79 @@ void engineTest() {
     unit2.release();
     unique_ptr<DeleteUnitCommand> cmd5(new DeleteUnitCommand(Position(5,1)));
     engine->addCommand(cmd5.get());
-    //engine->update(); */
+    //engine->update(); 
 
     lyr.join();
     //jeu->fin = true;
+    ng.join();
+}*/
+
+void AITest() {
+    // Creation d'objets Joueur
+    unique_ptr<Joueur> joueur1(new Joueur(0,false));
+    unique_ptr<Joueur> joueur2(new Joueur(1,true));
+    std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
+
+    // Creation d'objets Batiment
+    unique_ptr<Batiment> batiment (new Usine(Position(2, 2), 0));
+    unique_ptr<Batiment> batiment2 (new Usine(Position(17, 17), 1));
+    unique_ptr<Batiment> batiment3 (new Usine(Position(0, 2), 0));
+    unique_ptr<Batiment> batiment4 (new Usine(Position(19, 17), 1));
+    unique_ptr<Batiment> batiment5 (new QG(Position(1, 1), 0));
+    unique_ptr<Batiment> batiment6 (new QG(Position(18, 18), 1));
+
+    vector<Batiment*> batiments;
+    batiments.push_back(batiment.get());
+    batiments.push_back(batiment2.get());
+    batiments.push_back(batiment3.get());
+    batiments.push_back(batiment4.get());
+    batiments.push_back(batiment5.get());
+    batiments.push_back(batiment6.get());
+
+    // Creation d'objets Flag
+    unique_ptr<Flag> flag1 (new Flag(Position(1,1),0));
+    unique_ptr<Flag> flag2 (new Flag(Position(18,18),1));
+    std::vector<Flag*> flags {flag1.get(), flag2.get()};
+
+    // création d'un objet TerrainTab
+    unique_ptr<TerrainTab> terrainTab (new TerrainTab(map1()));
+    
+    // création d'un objet Terrain
+    unique_ptr<Terrain> terrain(new Terrain(batiments, flags, *terrainTab));
+
+    // Creation d'un objet Jeu
+    unique_ptr<Jeu> jeu(new Jeu(terrain.get(), listeJoueurs)); 
+
+    // Creation d'un objet Engine
+    unique_ptr<Engine> engine(new Engine(jeu.get()));
+
+    // Creation d'objets Tileset
+    render::Tileset<Unite> uniteTileset("res/units.png");
+    render::Tileset<Batiment> batimentTileset("res/batiments.png");
+    render::Tileset<Flag> flagTileset("res/flags.png");
+    render::Tileset<TerrainTile> terrainTileset("res/terrain.png");
+    render::Tileset<MiscTile> miscTileset("res/misc.png"); 
+
+    // creation d'un objet Layers
+    unique_ptr<Layers> layers(new Layers(jeu.get(), engine.get(), &uniteTileset,  &batimentTileset, &flagTileset, &terrainTileset, &miscTileset));
+    layers->setUniteSurface ();
+    layers->setBatimentSurface ();
+    layers->setFlagSurface ();
+    layers->setTerrainSurface ();
+    layers->setMiscSurface ();
+
+    // Creation d'un thread dedie a l'affichage
+    thread ng(runEngine, engine.get());
+    cout<<"Initializing the engine..."<<endl;
+
+    // Creation d'un thread dedie a l'affichage
+    thread lyr(displayWindow, layers.get());
+    cout<<"Initializing the graphics..."<<endl;
+    cout<<"Hit Ctrl-C to close the game."<<endl;
+    cout<<"Press Escape to end your turn."<<endl;
+    std::cout<<"Player 1's turn :"<<std::endl;
+
+    lyr.join();
     ng.join();
 }
 
@@ -365,7 +434,8 @@ int main(int argc,char* argv[])
             // Tests unitaires
             //tests();
 	    //renderTest();
-	    engineTest();
+	    //engineTest();
+	    AITest();
         }
     }
     return 0;

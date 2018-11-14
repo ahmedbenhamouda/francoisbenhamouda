@@ -18,10 +18,11 @@ namespace state {
   public:
     int color;
     PorteMonnaie monnaie;
+    bool is_AI;
     // Operations
   public:
     Joueur ();
-    Joueur (int color);
+    Joueur (int color, bool is_AI);
     ~Joueur ();
     // Setters and Getters
   };

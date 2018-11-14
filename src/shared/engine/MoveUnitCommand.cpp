@@ -52,7 +52,7 @@ namespace engine {
 		}
 		// Check if the flag has been sent to a HQ
 		state::Batiment* bat = jeu->etatJeu->getBatiment(targetPos);
-		if (bat and bat->getId_b() == 0) {
+		if (bat and bat->getId_b() == 0 and bat->getColor() == object->getColor()) {
 			DropFlagCommand(object->position).execute(jeu);
 		}
 		CaptureFlagCommand().execute(jeu);
