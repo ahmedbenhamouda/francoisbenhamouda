@@ -14,6 +14,8 @@ namespace engine {
   class Command;
 }
 
+#include "engine/Command.h"
+#include "engine/Engine.h"
 #include "state/Jeu.h"
 
 namespace ai {
