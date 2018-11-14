@@ -70,7 +70,4 @@ namespace state {
 	void Infantry::move(Position position) {
 		this->position = position;
 	}
-	bool Infantry::PossedeDrapeau() {
-		return false;
-	}
 }

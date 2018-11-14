@@ -40,7 +40,6 @@ namespace state {
     void setpuissance (int p);
     ~HTank ();
     void move (Position position);
-    bool PossedeDrapeau ();
     // Setters and Getters
   };
 

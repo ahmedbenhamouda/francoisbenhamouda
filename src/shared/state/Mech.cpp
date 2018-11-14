@@ -70,7 +70,4 @@ namespace state {
 	void Mech::move(Position position) {
 		this->position = position;
 	}
-	bool Mech::PossedeDrapeau() {
-		return false;
-	}
 }

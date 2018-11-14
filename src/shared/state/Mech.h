@@ -40,7 +40,6 @@ namespace state {
     void setpuissance (int p);
     ~Mech ();
     void move (Position position);
-    bool PossedeDrapeau ();
     // Setters and Getters
   };
 

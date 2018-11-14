@@ -70,7 +70,4 @@ namespace state {
 	void Recon::move(Position position) {
 		this->position = position;
 	}
-	bool Recon::PossedeDrapeau() {
-		return false;
-	}
 }

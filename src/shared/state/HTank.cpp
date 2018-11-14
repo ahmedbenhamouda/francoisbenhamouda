@@ -70,7 +70,4 @@ namespace state {
 	void HTank::move(Position position) {
 		this->position = position;
 	}
-	bool HTank::PossedeDrapeau() {
-		return false;
-	}
 }

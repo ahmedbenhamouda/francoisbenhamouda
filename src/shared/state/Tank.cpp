@@ -70,7 +70,4 @@ namespace state {
 	void Tank::move(Position position) {
 		this->position = position;
 	}
-	bool Tank::PossedeDrapeau() {
-		return false;
-	}
 }
