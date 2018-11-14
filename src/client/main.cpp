@@ -423,12 +423,12 @@ int main(int argc,char* argv[])
     //exemple.setX(53);
 
     if (argc < 2) {
-        cout << "Missing the \"engine\" argument." << endl;
+        cout << "Missing the \"random_ai\" argument." << endl;
     } else if (argc > 2) {
         cout << "Too many arguments." << endl;
     } else {
         string myString(argv[1]);
-        if (myString != "engine") {
+        if (myString != "random_ai") {
             cout << "Invalid argument." << endl;
         } else {
             // Tests unitaires
