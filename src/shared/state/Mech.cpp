@@ -18,7 +18,7 @@ namespace state {
 			for (int j = y-mvt; j <= y+mvt; j++){
 				int dy = std::fabs(y-j);
 				if (dx+dy <= mvt){
-					if ((i<8 && i>=0) && (j<8 && j>=0)){
+					if ((i<20 && i>=0) && (j<20 && j>=0)){
 						list.push_back (Position(i,j));
 					}
 				}

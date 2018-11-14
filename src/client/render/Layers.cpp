@@ -25,54 +25,54 @@ namespace render {
 	Layers::~Layers() {
 	}
 	void Layers::setUniteSurface () {		
-		uniteSurface.initQuads(256);
+		uniteSurface.initQuads(1600);
 		for (state::Unite* unite : jeu->etatJeu->getUniteList()) {
 			if (unite) {
 				int posx = unite->position.getX();
 				int posy = unite->position.getY();
-				uniteSurface.setSpriteLocation(posx,posy,8,32,false);
-    				uniteSurface.setSpriteTexture(posx,posy,8,uniteTileset->getTile(unite));
+				uniteSurface.setSpriteLocation(posx,posy,20,32,false);
+    				uniteSurface.setSpriteTexture(posx,posy,20,uniteTileset->getTile(unite));
 			}
 		}
 	}
 	void Layers::setBatimentSurface () {
-		batimentSurface.initQuads(256);
+		batimentSurface.initQuads(1600);
 		for (state::Batiment* batiment : jeu->etatJeu->getBatimentList()) {
 			if (batiment) {
 				int posx = batiment->position.getX();
 				int posy = batiment->position.getY();
-				batimentSurface.setSpriteLocation(posx,posy,8,32,true);
-    				batimentSurface.setSpriteTexture(posx,posy,8,batimentTileset->getTile(batiment));
+				batimentSurface.setSpriteLocation(posx,posy,20,32,true);
+    				batimentSurface.setSpriteTexture(posx,posy,20,batimentTileset->getTile(batiment));
 			}
 		}
 	}
 	void Layers::setTerrainSurface () {
-		terrainSurface.initQuads(256);		
-		for (int i = 0; i<8; i++) {
-			for (int j = 0; j<8; j++) {
+		terrainSurface.initQuads(1600);		
+		for (int i = 0; i<20; i++) {
+			for (int j = 0; j<20; j++) {
 				std::unique_ptr<state::TerrainTile> tt(new state::TerrainTile(jeu->etatJeu->getGround(state::Position(j,i))));
-				terrainSurface.setSpriteLocation(j,i,8,32,false);
-    				terrainSurface.setSpriteTexture(j,i,8,terrainTileset->getTile(tt.get()));
+				terrainSurface.setSpriteLocation(j,i,20,32,false);
+    				terrainSurface.setSpriteTexture(j,i,20,terrainTileset->getTile(tt.get()));
 			}
 		}
 	}
 	void Layers::setMiscSurface () {
-		miscSurface.initQuads(256);
+		miscSurface.initQuads(1600);
 		// affichage des explosions
 		for (state::Position pos : jeu->etatJeu->explosions) {
 			int posx = pos.getX();
 			int posy = pos.getY();
 			std::unique_ptr<state::MiscTile> explosion(new state::MiscTile(1,pos));
-			miscSurface.setSpriteLocation(posx,posy,8,32,false);
-	    		miscSurface.setSpriteTexture(posx,posy,8,miscTileset->getTile(explosion.get()));
+			miscSurface.setSpriteLocation(posx,posy,20,32,false);
+	    		miscSurface.setSpriteTexture(posx,posy,20,miscTileset->getTile(explosion.get()));
 		}
 		// affichage des cases de deplacement
 		for (state::Position pos : jeu->etatJeu->uniteMoves) {
 			int posx = pos.getX();
 			int posy = pos.getY();
 			std::unique_ptr<state::MiscTile> carre(new state::MiscTile(0,pos));
-			miscSurface.setSpriteLocation(posx,posy,8,32,false);
-    			miscSurface.setSpriteTexture(posx,posy,8,miscTileset->getTile(carre.get()));
+			miscSurface.setSpriteLocation(posx,posy,20,32,false);
+    			miscSurface.setSpriteTexture(posx,posy,20,miscTileset->getTile(carre.get()));
 		}
 	}
 	void Layers::displayLayers(sf::RenderWindow* window) {
