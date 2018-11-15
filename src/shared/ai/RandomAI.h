@@ -3,12 +3,16 @@
 #define AI__RANDOMAI__H
 
 #include <random>
+#include <vector>
 
 namespace engine {
   class Engine;
 };
 namespace state {
   class Jeu;
+};
+namespace engine {
+  class Command;
 };
 namespace ai {
   class AI;
@@ -23,14 +27,19 @@ namespace ai {
     // Attributes
   public:
     std::mt19937 randeng;
-    int player_id;
+    int color;
     /// 			
     engine::Engine* engine;
     state::Jeu* jeu;
+    std::vector<state::Unite*> liste_unites;
+    std::vector<state::Batiment*> liste_batiments;
+    std::vector<engine::Command*> liste_commands;
     // Operations
   public:
     RandomAI ();
     RandomAI (int color, engine::Engine* engine, state::Jeu* jeu);
+    void fillStateList ();
+    void fillCommandList ();
     void run ();
     ~RandomAI ();
     // Setters and Getters

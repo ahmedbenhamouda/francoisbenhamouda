@@ -48,9 +48,9 @@ namespace state {
     void addUnite (Unite* unite);
     void deleteUnite (Position position);
     ~Terrain ();
-    std::vector<Unite*>& getUniteList ();
-    std::vector<Batiment*>& getBatimentList ();
-    std::vector<Flag*>& getFlagList ();
+    std::vector<Unite*> getUniteList ();
+    std::vector<Batiment*> getBatimentList ();
+    std::vector<Flag*> getFlagList ();
     // Setters and Getters
   };
 

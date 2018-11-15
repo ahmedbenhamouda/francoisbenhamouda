@@ -3,12 +3,14 @@
 
 namespace state {
 	Terrain::Terrain(std::vector<Batiment*> batiments, std::vector<Flag*> flags, TerrainTab sol) {
+		Terrain();
 		this->batiments = batiments;
 		this->flags = flags;
 		this->sol = sol;
 	}
 	// Constructeur par defaut
 	Terrain::Terrain() {
+		unites = std::vector<Unite*>();
 	}
 
 	Unite* Terrain::getUnite(Position position) {
@@ -38,13 +40,13 @@ namespace state {
 	TerrainTypeId Terrain::getGround(Position position) {
 		return sol.get(position);
 	}
-	std::vector<Unite*>& Terrain::getUniteList() {
+	std::vector<Unite*> Terrain::getUniteList() {
 		return unites;
 	}
-	std::vector<Batiment*>& Terrain::getBatimentList() {
+	std::vector<Batiment*> Terrain::getBatimentList() {
 		return batiments;
 	}
-	std::vector<Flag*>& Terrain::getFlagList() {
+	std::vector<Flag*> Terrain::getFlagList() {
 		return flags;
 	}
 	void Terrain::addUnite(Unite* unite){

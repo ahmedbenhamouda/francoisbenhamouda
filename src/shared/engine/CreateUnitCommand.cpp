@@ -1,6 +1,7 @@
 #include "CreateUnitCommand.h"
 #include <iostream>
 
+
 namespace engine {
 	CreateUnitCommand::CreateUnitCommand() {
 	}
@@ -11,6 +12,7 @@ namespace engine {
 	CreateUnitCommand::~CreateUnitCommand() {
 	}
 	void CreateUnitCommand::execute (state::Jeu* jeu) {
+		std::cout<<"Create unit"<<std::endl;
   		int nb_joueurs = jeu->joueurs.size();
 		state::Batiment* usine = jeu->etatJeu->getBatiment(objectPos);
 		if (usine->getColor() == jeu->joueurs[jeu->tour%nb_joueurs]->color) {

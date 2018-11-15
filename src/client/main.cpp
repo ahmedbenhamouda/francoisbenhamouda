@@ -18,11 +18,13 @@ void testSFML() {
 #include "state.h"
 #include "render.h"
 #include "engine.h"
+#include "ai.h"
 
 using namespace std;
 using namespace state;
 using namespace render;
 using namespace engine;
+using namespace ai;
 
 mutex m1;
 
@@ -65,6 +67,15 @@ void runEngine(Engine* engine) {
 			engine->update();
 			m1.unlock();
 		//}
+	}
+}
+
+void AIPlay(AI* ai) {
+	while(1) {
+		this_thread::sleep_for(chrono::seconds(1));
+		//m1.lock();
+		ai->run();
+		//m1.unlock();
 	}
 }
 
@@ -350,8 +361,8 @@ void runEngine(Engine* engine) {
 
 void AITest() {
     // Creation d'objets Joueur
-    unique_ptr<Joueur> joueur1(new Joueur(0,false));
-    unique_ptr<Joueur> joueur2(new Joueur(1,true));
+    unique_ptr<Joueur> joueur1(new Joueur(0,true));
+    unique_ptr<Joueur> joueur2(new Joueur(1,false));
     std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
 
     // Creation d'objets Batiment
@@ -387,6 +398,10 @@ void AITest() {
     // Creation d'un objet Engine
     unique_ptr<Engine> engine(new Engine(jeu.get()));
 
+    // Creation d'une IA
+    unique_ptr<RandomAI> crazyAI(new RandomAI(0,engine.get(),jeu.get()));
+    unique_ptr<RandomAI> geniusAI(new RandomAI(1,engine.get(),jeu.get()));
+
     // Creation d'objets Tileset
     render::Tileset<Unite> uniteTileset("res/units.png");
     render::Tileset<Batiment> batimentTileset("res/batiments.png");
@@ -409,12 +424,20 @@ void AITest() {
     // Creation d'un thread dedie a l'affichage
     thread lyr(displayWindow, layers.get());
     cout<<"Initializing the graphics..."<<endl;
+
+    // Creation de deux threads dedies a l'IA
+    thread ia_th1(AIPlay, crazyAI.get());
+    thread ia_th2(AIPlay, geniusAI.get());
+    cout<<"Initializing the AI..."<<endl;
+
     cout<<"Hit Ctrl-C to close the game."<<endl;
     cout<<"Press Escape to end your turn."<<endl;
     std::cout<<"Player 1's turn :"<<std::endl;
 
     lyr.join();
     ng.join();
+    ia_th1.join();
+    ia_th2.join();
 }
 
 int main(int argc,char* argv[]) 
