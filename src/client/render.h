@@ -5,4 +5,5 @@
 #include "render/Tile.h"
 #include "render/Surface.h"
 #include "render/Layers.h"
+#include "render/UI.h"
 #endif

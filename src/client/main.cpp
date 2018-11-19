@@ -28,8 +28,8 @@ using namespace ai;
 
 mutex m1;
 
-void displayWindow(Layers* layers) {
-	sf::RenderWindow window(sf::VideoMode(640,640), "Advance Wars");
+void displayWindow(Layers* layers, UI* ui) {
+	sf::RenderWindow window(sf::VideoMode(640,740), "Advance Wars");
 		window.setVerticalSyncEnabled(false);
 		while(window.isOpen()) {
 			sf::Event event;
@@ -51,10 +51,17 @@ void displayWindow(Layers* layers) {
 					m1.unlock();
 				}
 			}
+			window.clear();
+			// update layers
 			layers->setUniteSurface ();
 			layers->setFlagSurface ();
 			layers->setMiscSurface ();
 			layers->displayLayers (&window);
+			// update UI
+			ui->setGeneralData();
+			ui->displayUI(&window);
+
+			window.display();
 		}
 	
 }
@@ -73,9 +80,9 @@ void runEngine(Engine* engine) {
 void AIPlay(AI* ai) {
 	while(1) {
 		this_thread::sleep_for(chrono::seconds(1));
-		//m1.lock();
+		m1.lock();
 		ai->run();
-		//m1.unlock();
+		m1.unlock();
 	}
 }
 
@@ -361,8 +368,8 @@ void AIPlay(AI* ai) {
 
 void AITest() {
     // Creation d'objets Joueur
-    unique_ptr<Joueur> joueur1(new Joueur(0,true));
-    unique_ptr<Joueur> joueur2(new Joueur(1,false));
+    unique_ptr<Joueur> joueur1(new Joueur(0,false));
+    unique_ptr<Joueur> joueur2(new Joueur(1,true));
     std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
 
     // Creation d'objets Batiment
@@ -411,22 +418,23 @@ void AITest() {
 
     // creation d'un objet Layers
     unique_ptr<Layers> layers(new Layers(jeu.get(), engine.get(), &uniteTileset,  &batimentTileset, &flagTileset, &terrainTileset, &miscTileset));
-    layers->setUniteSurface ();
-    layers->setBatimentSurface ();
-    layers->setFlagSurface ();
-    layers->setTerrainSurface ();
-    layers->setMiscSurface ();
 
-    // Creation d'un thread dedie a l'affichage
+    layers->setBatimentSurface ();
+    layers->setTerrainSurface ();
+
+    // creation d'un objet UI
+    unique_ptr<UI> ui(new UI(jeu.get()));
+
+    // Creation d'un thread dedie au moteur
     thread ng(runEngine, engine.get());
     cout<<"Initializing the engine..."<<endl;
 
     // Creation d'un thread dedie a l'affichage
-    thread lyr(displayWindow, layers.get());
+    thread lyr(displayWindow, layers.get(), ui.get());
     cout<<"Initializing the graphics..."<<endl;
 
     // Creation de deux threads dedies a l'IA
-    thread ia_th1(AIPlay, crazyAI.get());
+    //thread ia_th1(AIPlay, crazyAI.get());
     thread ia_th2(AIPlay, geniusAI.get());
     cout<<"Initializing the AI..."<<endl;
 
@@ -436,7 +444,7 @@ void AITest() {
 
     lyr.join();
     ng.join();
-    ia_th1.join();
+    //ia_th1.join();
     ia_th2.join();
 }
 

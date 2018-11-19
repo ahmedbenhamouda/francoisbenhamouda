@@ -7,6 +7,9 @@
 namespace state {
   class Jeu;
 };
+namespace render {
+  class UI;
+};
 namespace engine {
   class Engine;
 };
@@ -27,6 +30,7 @@ namespace render {
     // Attributes
   public:
     state::Jeu* jeu;
+    UI* interface;
     engine::Engine* engine;
     Surface uniteSurface;
     Tileset<state::Unite>* uniteTileset;

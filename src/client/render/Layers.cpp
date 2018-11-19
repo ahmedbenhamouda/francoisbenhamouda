@@ -89,14 +89,11 @@ namespace render {
 		}
 	}
 	void Layers::displayLayers(sf::RenderWindow* window) {
-		window->clear();
 		window->draw(terrainSurface);
 		window->draw(batimentSurface);
 		window->draw(flagSurface);
 		window->draw(uniteSurface);
 		window->draw(miscSurface);
-		window->display();
-
 	}
 	void Layers::sendUnitCommand(state::Position position) {
 		// Check if player can send commands
