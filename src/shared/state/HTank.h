@@ -20,9 +20,10 @@ namespace state {
   public:
     int vie     = 250;
     int prix     = 10000;
-    int mvt     = 2;
+    int mvt     = 3;
     int puissance     = 200;
     int id     = 4;
+    int portee     = 1;
     // Operations
   public:
     HTank ();

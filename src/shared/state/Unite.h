@@ -30,6 +30,7 @@ namespace state {
     bool can_move     = true;
     bool can_attack     = true;
     Flag* has_flag     = nullptr;
+    int portee;
     // Operations
   public:
     Unite ();
