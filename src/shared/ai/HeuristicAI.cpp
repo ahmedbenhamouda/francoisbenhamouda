@@ -19,6 +19,8 @@ namespace ai {
 		this->engine = engine;
 		this->jeu = jeu;
 	}
+	std::vector<state::Position> HeuristicAI::enemyCote() { // vide, ne sert à rien pour l'instant
+	}
 	void HeuristicAI::fillStateList(){
 		// reset unite list
 		liste_unites = std::vector<state::Unite*>();
@@ -117,6 +119,8 @@ namespace ai {
 			}
 		}
 	}
+	void HeuristicAI::poidDistance() {
+	}
 	void HeuristicAI::run () {
 		int nb_joueurs = jeu->joueurs.size();
 		if (jeu->joueurs[jeu->tour%nb_joueurs]->color == color) {
@@ -145,5 +149,7 @@ namespace ai {
 			engine->addCommand(liste_commands[max_commands_index[id]]);
 			liste_commands.erase(liste_commands.begin()+max_commands_index[id]);
 		}
+	}
+	HeuristicAI::~HeuristicAI() {
 	}
 }

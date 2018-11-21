@@ -28,4 +28,6 @@ namespace engine {
 	}
 	CaptureFlagCommand::~CaptureFlagCommand() {
 	}
+	state::Position CaptureFlagCommand::getPos() {
+	}
 }

@@ -59,6 +59,7 @@ void displayWindow(Layers* layers, UI* ui) {
 			layers->displayLayers (&window);
 			// update UI
 			ui->setGeneralData();
+			ui->setUnitData();
 			ui->displayUI(&window);
 
 			window.display();

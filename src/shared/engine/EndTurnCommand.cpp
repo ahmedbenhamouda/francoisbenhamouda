@@ -30,4 +30,6 @@ namespace engine {
 	}
 	EndTurnCommand::~EndTurnCommand () {
 	}
+	state::Position EndTurnCommand::getPos() {
+	}
 }

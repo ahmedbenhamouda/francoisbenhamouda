@@ -32,4 +32,6 @@ namespace engine {
 			std::cout<<"This building is not yours."<<std::endl;
 		}
 	}
+	state::Position CreateUnitCommand::getPos() {
+	}
 }
