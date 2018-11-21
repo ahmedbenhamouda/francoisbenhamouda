@@ -23,7 +23,6 @@ namespace state {
     int mvt     = 4;
     int puissance     = 80;
     int id     = 1;
-    int portee     = 1;
     // Operations
   public:
     Recon ();

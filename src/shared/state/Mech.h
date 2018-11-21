@@ -23,7 +23,6 @@ namespace state {
     int mvt     = 3;
     int puissance     = 150;
     int id     = 2;
-    int portee     = 1;
     // Operations
   public:
     Mech ();

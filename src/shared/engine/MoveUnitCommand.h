@@ -19,6 +19,7 @@ namespace engine {
     // Attributes
   public:
     state::Position targetPos;
+    int id     = 3;
     // Operations
   public:
     MoveUnitCommand ();
@@ -26,6 +27,7 @@ namespace engine {
     ~MoveUnitCommand ();
     bool isLegalMove (state::Unite* unite);
     void execute (state::Jeu* jeu);
+    state::Position getPos ();
     // Setters and Getters
   };
 

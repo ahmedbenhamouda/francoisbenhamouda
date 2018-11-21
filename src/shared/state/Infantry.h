@@ -23,7 +23,6 @@ namespace state {
     int mvt     = 3;
     int puissance     = 60;
     int id     = 0;
-    int portee     = 1;
     // Operations
   public:
     Infantry ();

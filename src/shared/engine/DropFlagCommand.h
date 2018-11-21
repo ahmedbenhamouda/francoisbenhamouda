@@ -19,12 +19,14 @@ namespace engine {
     // Attributes
   public:
     state::Position targetPos;
+    int id     = 7;
     // Operations
   public:
     DropFlagCommand ();
     DropFlagCommand (state::Position targetPos);
     ~DropFlagCommand ();
     void execute (state::Jeu* jeu);
+    state::Position getPos ();
     // Setters and Getters
   };
 

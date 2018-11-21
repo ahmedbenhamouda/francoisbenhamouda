@@ -19,12 +19,14 @@ namespace engine {
     // Attributes
   public:
     state::Position objectPos;
+    int id     = 1;
     // Operations
   public:
     DeleteUnitCommand ();
     DeleteUnitCommand (state::Position objectPos);
     ~DeleteUnitCommand ();
     void execute (state::Jeu* jeu);
+    state::Position getPos ();
     // Setters and Getters
   };
 

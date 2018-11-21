@@ -16,11 +16,15 @@ namespace engine {
 
   /// class CaptureFlagCommand - 
   class CaptureFlagCommand : public engine::Command {
+    // Attributes
+  public:
+    int id     = 6;
     // Operations
   public:
     CaptureFlagCommand ();
     ~CaptureFlagCommand ();
     void execute (state::Jeu* jeu);
+    state::Position getPos ();
     // Setters and Getters
   };
 

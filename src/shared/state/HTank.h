@@ -23,7 +23,6 @@ namespace state {
     int mvt     = 3;
     int puissance     = 200;
     int id     = 4;
-    int portee     = 1;
     // Operations
   public:
     HTank ();

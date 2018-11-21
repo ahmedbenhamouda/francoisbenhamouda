@@ -19,12 +19,14 @@ namespace engine {
     // Attributes
   public:
     state::Position targetPos;
+    int id     = 4;
     // Operations
   public:
     AttackUnitCommand ();
     AttackUnitCommand (state::Position targetPos);
     ~AttackUnitCommand ();
     void execute (state::Jeu* jeu);
+    state::Position getPos ();
     // Setters and Getters
   };
 

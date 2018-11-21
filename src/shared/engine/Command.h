@@ -13,11 +13,15 @@ namespace engine {
 
   /// class Command - 
   class Command {
+    // Attributes
+  public:
+    int id;
     // Operations
   public:
     Command ();
     virtual ~Command ();
     virtual void execute (state::Jeu* jeu) = 0;
+    virtual state::Position getPos () = 0;
     // Setters and Getters
   };
 
