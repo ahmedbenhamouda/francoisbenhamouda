@@ -2,10 +2,13 @@
 #include "engine/AttackUnitCommand.h"
 #include "engine/SelectUnitCommand.h"
 #include "engine/MoveUnitCommand.h"
+#include "engine/SelectBatimentCommand.h"
+#include "engine/SelectUnitTypeCommand.h"
 #include "engine/CreateUnitCommand.h"
 #include "engine/EndTurnCommand.h"
 #include <memory>
 #include <iostream>
+#include <cmath>
 
 namespace render {
 	Layers::Layers() {
@@ -87,6 +90,15 @@ namespace render {
 			miscSurface.setSpriteLocation(posx,posy,20,32,false);
     			miscSurface.setSpriteTexture(posx,posy,20,miscTileset->getTile(carre.get()));
 		}
+		// affichage des batiments selectionnees
+		if (jeu->selectedBatiment) {
+			state::Position pos = jeu->selectedBatiment->position;
+			int posx = pos.getX();
+			int posy = pos.getY();
+			std::unique_ptr<state::MiscTile> carre(new state::MiscTile(0,pos));
+			miscSurface.setSpriteLocation(posx,posy,20,32,false);
+    			miscSurface.setSpriteTexture(posx,posy,20,miscTileset->getTile(carre.get()));
+		}
 	}
 	void Layers::displayLayers(sf::RenderWindow* window) {
 		window->draw(terrainSurface);
@@ -104,19 +116,23 @@ namespace render {
 		}
 		if (jeu->etatJeu->getUnite(position)) {
 			if (jeu->selectedUnit) {
+				// Attack an unit
 				engine::Command* cmd = new engine::AttackUnitCommand(position);
 				engine->addCommand(cmd);
 			} else {
+				// Select an unit
 				engine::Command* cmd = new engine::SelectUnitCommand(position);
 				engine->addCommand(cmd);
 			}
 		} else if (jeu->selectedUnit) {
+			// Move a unit
 			engine::Command* cmd = new engine::MoveUnitCommand(position);
 			engine->addCommand(cmd);
 		} else {
+			// Select a building
 			state::Batiment* bat = jeu->etatJeu->getBatiment(position);		
 			if (bat and bat->getId_b() == 1) {
-				engine::Command* cmd = new engine::CreateUnitCommand(position,0);
+				engine::Command* cmd = new engine::SelectBatimentCommand(position);
 				engine->addCommand(cmd);
 			}
 		}
@@ -131,5 +147,38 @@ namespace render {
 		//std::cout<<"sendCommand"<<std::endl;
 		engine::Command* cmd = new engine::EndTurnCommand();
 		engine->addCommand(cmd);
+	}
+	void Layers::sendUICommand(int px, int py) {
+		// Check if player can send commands
+		int nb_joueurs = jeu->joueurs.size();
+		if (jeu->joueurs[jeu->tour%nb_joueurs]->is_AI) {
+			std::cout<<"You cannot play right now."<<std::endl;
+			return;
+		}
+		//std::cout<<"sendCommand"<<std::endl;
+		if (px == 0 and py == 20) {
+			engine::Command* cmd = new engine::SelectUnitTypeCommand(0);
+			engine->addCommand(cmd);
+		}
+		if (px == 2 and py == 20) {
+			engine::Command* cmd = new engine::SelectUnitTypeCommand(1);
+			engine->addCommand(cmd);
+		}
+		if (px == 4 and py == 20) {
+			engine::Command* cmd = new engine::SelectUnitTypeCommand(2);
+			engine->addCommand(cmd);
+		}
+		if (px == 5 and py == 20) {
+			engine::Command* cmd = new engine::SelectUnitTypeCommand(3);
+			engine->addCommand(cmd);
+		}
+		if (px == 7 and py == 20) {
+			engine::Command* cmd = new engine::SelectUnitTypeCommand(4);
+			engine->addCommand(cmd);
+		}
+		if (py == 20 and std::abs(px-18) <=2) {
+			engine::Command* cmd = new engine::CreateUnitCommand();
+			engine->addCommand(cmd);
+		}
 	}
 }

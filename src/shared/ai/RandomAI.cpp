@@ -72,7 +72,7 @@ namespace ai {
 				for (state::Batiment* bat : liste_batiments) {
 					// batiment is usine and no unit stands on it
 					if (bat->getId_b() == 1 and not(jeu->etatJeu->getUnite(bat->position))) {
-						liste_commands.push_back(new engine::CreateUnitCommand(bat->position, 0));
+						//liste_commands.push_back(new engine::CreateUnitCommand(bat->position, 0));
 					}
 				}
 			}

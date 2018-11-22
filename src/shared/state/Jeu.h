@@ -8,6 +8,7 @@ namespace state {
   class Terrain;
   class Joueur;
   class Unite;
+  class Batiment;
 }
 
 #include "Joueur.h"
@@ -25,6 +26,8 @@ namespace state {
     bool fin     = false;
     std::vector<Joueur*> joueurs;
     Unite* selectedUnit     = nullptr;
+    Batiment* selectedBatiment     = nullptr;
+    int unit_type     = 0;
     // Operations
   public:
     Jeu (Terrain* etatJeu, std::vector<Joueur*> joueurs);

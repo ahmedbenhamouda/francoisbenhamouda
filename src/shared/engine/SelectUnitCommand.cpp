@@ -9,7 +9,6 @@ namespace engine {
 	}
 	void SelectUnitCommand::execute(state::Jeu* jeu) {
 		int nb_joueurs = jeu->joueurs.size();
-		//std::cout<<"unit selected"<<std::endl;
 		state::Unite* unite = jeu->etatJeu->getUnite(objectPos);
 		if (unite->getColor() == jeu->joueurs[jeu->tour%nb_joueurs]->color) {
 			jeu->etatJeu->uniteMoves = unite->getLegalMove();

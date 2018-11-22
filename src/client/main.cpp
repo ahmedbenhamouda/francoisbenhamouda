@@ -40,9 +40,13 @@ void displayWindow(Layers* layers, UI* ui) {
 				if(event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
 					int px = event.mouseButton.x/32;
 					int py = event.mouseButton.y/32;
-					//cout<<"("<<px<<","<<py<<")"<<endl;
+					cout<<"("<<px<<","<<py<<")"<<endl;
 					m1.lock();
-					layers->sendUnitCommand (Position(px,py));
+					if (py<20) {
+						layers->sendUnitCommand (Position(px,py));
+					} else {
+						layers->sendUICommand (px,py);
+					}
 					m1.unlock();
 				}
 				if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Escape) {
@@ -60,6 +64,7 @@ void displayWindow(Layers* layers, UI* ui) {
 			// update UI
 			ui->setGeneralData();
 			ui->setUnitData();
+			ui->setBatimentData();
 			ui->displayUI(&window);
 
 			window.display();

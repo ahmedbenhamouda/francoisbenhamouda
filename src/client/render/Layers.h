@@ -55,6 +55,7 @@ namespace render {
     void displayLayers (sf::RenderWindow* window);
     void sendUnitCommand (state::Position position);
     void sendTurnCommand ();
+    void sendUICommand (int px, int py);
     // Setters and Getters
   };
 

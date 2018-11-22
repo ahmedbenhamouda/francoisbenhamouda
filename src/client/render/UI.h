@@ -8,9 +8,13 @@
 namespace sf {
   class Font;
   class Text;
+  class Sprite;
 };
 namespace state {
   class Jeu;
+};
+namespace sf {
+  class Texture;
 }
 
 #include "state/Jeu.h"
@@ -25,8 +29,11 @@ namespace render {
     sf::Font font;
     std::vector<sf::Text> generalText;
     std::vector<sf::Text> uniteText;
-    std::vector<sf::Text> batimentText;
+    std::vector<sf::Sprite> batimentSprites;
     state::Jeu* jeu;
+    sf::Texture selBatTexture;
+    sf::Texture unitCursorTexture;
+    sf::Texture buttonsTexture;
     // Operations
   public:
     UI ();

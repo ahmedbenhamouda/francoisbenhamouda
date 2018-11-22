@@ -10,6 +10,8 @@ namespace engine {
 		// deselect unit
 		jeu->selectedUnit = nullptr;
 		jeu->etatJeu->uniteMoves = std::vector<state::Position>();
+		jeu->selectedBatiment = nullptr;
+		jeu->unit_type = 0;
 
 		jeu->tour++;
 		std::cout<<std::endl<<"Player "<<1+jeu->tour%nb_joueurs<<"'s turn :"<<std::endl;

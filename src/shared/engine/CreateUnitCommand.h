@@ -18,13 +18,10 @@ namespace engine {
   class CreateUnitCommand : public engine::Command {
     // Attributes
   public:
-    state::Position objectPos;
-    int unit_id;
     int id     = 0;
     // Operations
   public:
     CreateUnitCommand ();
-    CreateUnitCommand (state::Position objectPos, int unit_id);
     ~CreateUnitCommand ();
     void execute (state::Jeu* jeu);
     state::Position getPos ();

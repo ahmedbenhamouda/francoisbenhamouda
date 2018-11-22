@@ -13,4 +13,5 @@
 #include "engine/SelectBatimentCommand.h"
 #include "engine/EndTurnCommand.h"
 #include "engine/DropFlagCommand.h"
+#include "engine/SelectUnitTypeCommand.h"
 #endif
