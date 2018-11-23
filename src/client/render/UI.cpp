@@ -91,7 +91,7 @@ namespace render {
 			// Get unite power
 			int puissance = jeu->selectedUnit->getpuissance();
 			std::stringstream power;
-			power<<"Puissance : "<<vie<<".";
+			power<<"Puissance : "<<puissance<<".";
 			sf::Text getPower(power.str(),font,16);
 			uniteText.push_back(getPower);
 		} else {

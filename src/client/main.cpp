@@ -407,8 +407,8 @@ void AITest() {
     unique_ptr<Engine> engine(new Engine(jeu.get()));
 
     // Creation d'une IA
-    unique_ptr<RandomAI> crazyAI(new RandomAI(0,engine.get(),jeu.get()));
-    unique_ptr<RandomAI> geniusAI(new RandomAI(1,engine.get(),jeu.get()));
+    //unique_ptr<RandomAI> crazyAI(new RandomAI(0,engine.get(),jeu.get()));
+    unique_ptr<HeuristicAI> geniusAI(new HeuristicAI(1,engine.get(),jeu.get()));
 
     // Creation d'objets Tileset
     render::Tileset<Unite> uniteTileset("res/units.png");
@@ -455,12 +455,12 @@ int main(int argc,char* argv[])
     //exemple.setX(53);
 
     if (argc < 2) {
-        cout << "Missing the \"random_ai\" argument." << endl;
+        cout << "Missing the \"heuristic_ai\" argument." << endl;
     } else if (argc > 2) {
         cout << "Too many arguments." << endl;
     } else {
         string myString(argv[1]);
-        if (myString != "random_ai") {
+        if (myString != "heuristic_ai") {
             cout << "Invalid argument." << endl;
         } else {
             // Tests unitaires
