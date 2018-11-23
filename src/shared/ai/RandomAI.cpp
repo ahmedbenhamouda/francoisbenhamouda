@@ -4,6 +4,8 @@
 #include "RandomAI.h"
 #include "engine/CreateUnitCommand.h"
 #include "engine/SelectUnitCommand.h"
+#include "engine/SelectBatimentCommand.h"
+#include "engine/SelectUnitTypeCommand.h"
 #include "engine/MoveUnitCommand.h"
 #include "engine/AttackUnitCommand.h"
 #include "engine/EndTurnCommand.h"
@@ -43,7 +45,27 @@ namespace ai {
 		}
 		liste_commands = std::vector<engine::Command*>();
 
-		if (jeu->selectedUnit) {
+		int nb_joueurs = jeu->joueurs.size();
+		state::Joueur* currentPlayer = jeu->joueurs[jeu->tour%nb_joueurs];
+
+		if (jeu->selectedBatiment) {
+			liste_commands.push_back(new engine::SelectUnitTypeCommand(0));
+			// Select all possible units to create
+			if (currentPlayer->monnaie.getArgent()>=3500) {
+				liste_commands.push_back(new engine::SelectUnitTypeCommand(1));
+			}
+			if (currentPlayer->monnaie.getArgent()>=4500) {
+				liste_commands.push_back(new engine::SelectUnitTypeCommand(2));
+			}
+			if (currentPlayer->monnaie.getArgent()>=7000) {
+				liste_commands.push_back(new engine::SelectUnitTypeCommand(3));
+			}
+			if (currentPlayer->monnaie.getArgent()>=10000) {
+				liste_commands.push_back(new engine::SelectUnitTypeCommand(4));
+			}
+			// add unit
+			liste_commands.push_back(new engine::CreateUnitCommand());
+		} else if (jeu->selectedUnit) {
 			// Check all possible movements
 			std::vector<state::Position> moves = jeu->selectedUnit->getLegalMove();
 			for (state::Position mv : moves) {
@@ -65,14 +87,11 @@ namespace ai {
 			}
 		} else {
 			// Check for createUnit
-			int nb_joueurs = jeu->joueurs.size();
-			state::Joueur* currentPlayer = jeu->joueurs[jeu->tour%nb_joueurs];
-			// Check if player has enough money
 			if (currentPlayer->monnaie.getArgent()>=1000) {
 				for (state::Batiment* bat : liste_batiments) {
 					// batiment is usine and no unit stands on it
 					if (bat->getId_b() == 1 and not(jeu->etatJeu->getUnite(bat->position))) {
-						//liste_commands.push_back(new engine::CreateUnitCommand(bat->position, 0));
+						liste_commands.push_back(new engine::SelectBatimentCommand(bat->position));
 					}
 				}
 			}
@@ -84,8 +103,10 @@ namespace ai {
 					liste_commands.push_back(new engine::SelectUnitCommand(unite->position));
 				}
 			}
+
+			// End turn
+			liste_commands.push_back(new engine::EndTurnCommand());
 		}
-		liste_commands.push_back(new engine::EndTurnCommand());
 	}
 	void RandomAI::run () {
 		int nb_joueurs = jeu->joueurs.size();

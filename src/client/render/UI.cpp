@@ -119,18 +119,18 @@ namespace render {
 		if (jeu->selectedBatiment) {
 			sf::Sprite selBatSprite;
 			selBatSprite.setTexture(selBatTexture);
-			selBatSprite.setPosition(0.f,640.f);
+			selBatSprite.setPosition(32.f,656.f);
 			batimentSprites.push_back(selBatSprite);
 
 			sf::Sprite unitCursorSprite;
 			unitCursorSprite.setTexture(unitCursorTexture);
-			unitCursorSprite.setPosition(5.f+float(50*jeu->unit_type),680.f);
+			unitCursorSprite.setPosition(16.f+float(64*jeu->unit_type),640.f);
 			batimentSprites.push_back(unitCursorSprite);
 
 			sf::Sprite okSprite;
 			okSprite.setTexture(buttonsTexture);
 			okSprite.setTextureRect(sf::IntRect(0, 0, 66, 23));
-			okSprite.setPosition(550.f,650.f);
+			okSprite.setPosition(543.f,676.f);
 			batimentSprites.push_back(okSprite);
 		}
 	}

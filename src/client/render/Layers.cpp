@@ -156,27 +156,27 @@ namespace render {
 			return;
 		}
 		//std::cout<<"sendCommand"<<std::endl;
-		if (px == 0 and py == 20) {
+		if (px == 1 and py == 20) {
 			engine::Command* cmd = new engine::SelectUnitTypeCommand(0);
 			engine->addCommand(cmd);
 		}
-		if (px == 2 and py == 20) {
+		if (px == 3 and py == 20) {
 			engine::Command* cmd = new engine::SelectUnitTypeCommand(1);
 			engine->addCommand(cmd);
 		}
-		if (px == 4 and py == 20) {
+		if (px == 5 and py == 20) {
 			engine::Command* cmd = new engine::SelectUnitTypeCommand(2);
 			engine->addCommand(cmd);
 		}
-		if (px == 5 and py == 20) {
+		if (px == 7 and py == 20) {
 			engine::Command* cmd = new engine::SelectUnitTypeCommand(3);
 			engine->addCommand(cmd);
 		}
-		if (px == 7 and py == 20) {
+		if (px == 9 and py == 20) {
 			engine::Command* cmd = new engine::SelectUnitTypeCommand(4);
 			engine->addCommand(cmd);
 		}
-		if (py == 20 and std::abs(px-18) <=2) {
+		if ((px == 17 or px == 18) and py == 20) {
 			engine::Command* cmd = new engine::CreateUnitCommand();
 			engine->addCommand(cmd);
 		}

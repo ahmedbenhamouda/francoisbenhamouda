@@ -30,7 +30,6 @@ mutex m1;
 
 void displayWindow(Layers* layers, UI* ui) {
 	sf::RenderWindow window(sf::VideoMode(640,740), "Advance Wars");
-		window.setVerticalSyncEnabled(false);
 		while(window.isOpen()) {
 			sf::Event event;
 			while(window.pollEvent(event)) {
@@ -40,7 +39,7 @@ void displayWindow(Layers* layers, UI* ui) {
 				if(event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
 					int px = event.mouseButton.x/32;
 					int py = event.mouseButton.y/32;
-					cout<<"("<<px<<","<<py<<")"<<endl;
+					//cout<<"("<<px<<","<<py<<")"<<endl;
 					m1.lock();
 					if (py<20) {
 						layers->sendUnitCommand (Position(px,py));

@@ -78,16 +78,16 @@ Tileset<T>::Tileset (std::string filename) : filename(filename) {
             Tile infantryBleu(0,16,16,16);
             Tile infantryVert(0,32,16,16);
             Tile infantryJaune(0,48,16,16);
+	    //Mech
+            Tile mechRouge(16,0,16,16);
+            Tile mechBleu(16,16,16,16);
+            Tile mechVert(16,32,16,16);
+            Tile mechJaune(16,48,16,16);
             //Recon
             Tile reconRouge(32,0,16,16);
             Tile reconBleu(32,16,16,16);
             Tile reconVert(32,32,16,16);
             Tile reconJaune(32,48,16,16);
-            //Mech
-            Tile mechRouge(16,0,16,16);
-            Tile mechBleu(16,16,16,16);
-            Tile mechVert(16,32,16,16);
-            Tile mechJaune(16,48,16,16);
             //Tank
             Tile tankRouge(64,0,16,16);
             Tile tankBleu(64,16,16,16);
@@ -98,7 +98,7 @@ Tileset<T>::Tileset (std::string filename) : filename(filename) {
             Tile hTankBleu(80,16,16,16);
             Tile hTankVert(80,32,16,16);
             Tile hTankJaune(80,48,16,16);
-            tiles = {infantryRouge,infantryBleu,infantryVert,infantryJaune,reconRouge,reconBleu,reconVert,reconJaune,mechRouge,mechBleu,mechVert,mechJaune,tankRouge,tankBleu,tankVert,tankJaune,hTankRouge,hTankBleu,hTankVert,hTankJaune};
+            tiles = {infantryRouge,infantryBleu,infantryVert,infantryJaune,mechRouge,mechBleu,mechVert,mechJaune,reconRouge,reconBleu,reconVert,reconJaune,tankRouge,tankBleu,tankVert,tankJaune,hTankRouge,hTankBleu,hTankVert,hTankJaune};
     }
     if (filename=="res/misc.png") {
             //carre
