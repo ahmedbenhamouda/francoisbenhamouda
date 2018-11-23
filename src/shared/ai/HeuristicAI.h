@@ -35,6 +35,7 @@ namespace ai {
     std::vector<state::Batiment*> liste_batiments;
     std::vector<engine::Command*> liste_commands;
     std::vector<int> liste_poids;
+    std::vector<state::Flag*> liste_flags_ennemie;
     // Operations
   public:
     HeuristicAI ();
@@ -45,7 +46,7 @@ namespace ai {
     void poidCommande ();
     ~HeuristicAI ();
     void poidDistance ();
-    std::vector<state::Position> enemyCote ();
+    std::vector<state::Position> enemyCote (state::Position pos);
     // Setters and Getters
   };
 

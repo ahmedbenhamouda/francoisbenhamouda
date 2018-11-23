@@ -31,5 +31,6 @@ namespace engine {
 	EndTurnCommand::~EndTurnCommand () {
 	}
 	state::Position EndTurnCommand::getPos() {
+		return state::Position(-1,-1);
 	}
 }

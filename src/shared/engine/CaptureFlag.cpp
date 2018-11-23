@@ -29,5 +29,6 @@ namespace engine {
 	CaptureFlagCommand::~CaptureFlagCommand() {
 	}
 	state::Position CaptureFlagCommand::getPos() {
+		return state::Position(-1,-1);
 	}
 }

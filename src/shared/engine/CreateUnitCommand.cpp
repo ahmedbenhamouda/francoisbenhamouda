@@ -33,5 +33,6 @@ namespace engine {
 		}
 	}
 	state::Position CreateUnitCommand::getPos() {
+		return this->objectPos;
 	}
 }

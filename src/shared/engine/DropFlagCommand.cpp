@@ -19,5 +19,6 @@ namespace engine {
 	DropFlagCommand::~DropFlagCommand() {
 	}
 	state::Position DropFlagCommand::getPos() {
+		return this->targetPos;
 	}
 }

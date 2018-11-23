@@ -19,7 +19,20 @@ namespace ai {
 		this->engine = engine;
 		this->jeu = jeu;
 	}
-	std::vector<state::Position> HeuristicAI::enemyCote() { // vide, ne sert à rien pour l'instant
+	std::vector<state::Position> HeuristicAI::enemyCote(state::Position pos) {
+		int px = pos.getX();
+		int py = pos.getY();
+		std::vector<state::Position> liste;
+		for (int i=0;i<2;i++) {
+			for (int j=0;j<2;j++) {
+				state::Unite* ennemi = jeu->etatJeu->getUnite(state::Position(px+1-2*j,py+1-2*i));
+				// check if an ennemy is around
+				if (ennemi and ennemi->getColor() != jeu->selectedUnit->getColor()) {
+					liste.push_back(state::Position(px+1-2*j,py+1-2*i));
+				}
+			}
+		}
+		return liste;
 	}
 	void HeuristicAI::fillStateList(){
 		// reset unite list
@@ -55,7 +68,7 @@ namespace ai {
 				}
 			}
 			// Check if any attack is possible
-			std::vector<state::Position> enemyNearby = enemyCote();
+			std::vector<state::Position> enemyNearby = enemyCote(jeu->selectedUnit->position);
 			for (state::Position enemyPos : enemyNearby) {
 				liste_commands.push_back(new engine::AttackUnitCommand(enemyPos));
 			}
@@ -87,7 +100,7 @@ namespace ai {
 			// Check for selectUnit
 			for (state::Unite* unite : liste_unites) {
 				// Check if unit can move or immediately attack
-				std::vector<state::Position> enemyNearby = enemyCote();
+				std::vector<state::Position> enemyNearby = enemyCote(unite->position);
 				if (unite->can_move or (unite->can_attack and enemyNearby.size()>0)) {
 					liste_commands.push_back(new engine::SelectUnitCommand(unite->position));
 				}
@@ -103,13 +116,13 @@ namespace ai {
 		for (size_t i =0; i<liste_poids.size(); i++) {
 			switch (liste_commands[i]->id) {
 				case 0 : //creerUnite
-					liste_poids[i] = 4;
+					liste_poids[i] = 6;
 					break;
 				case 2 : //selectUnite
 					liste_poids[i] = 2;
 					break;
 				case 4 : //attackUnite
-					liste_poids[i] = 5;
+					liste_poids[i] = 7;
 					break;
 				case 8 : //endTurn
 					liste_poids[i] = 1;
@@ -120,6 +133,42 @@ namespace ai {
 		}
 	}
 	void HeuristicAI::poidDistance() {
+		int imp = (jeu->selectedUnit->position - liste_flags_ennemie[0]->position);
+		state::Position pos ;
+		
+		if (jeu->selectedUnit->has_flag){
+			for (int k=0; k<liste_batiments.size();k++){
+				if  (liste_batiments[k]->getId_b() == 0){
+					pos = liste_batiments[k]->position;
+				}
+			}	
+		}
+		else{	
+			pos = liste_flags_ennemie[0]->position;		
+			if (liste_flags_ennemie.size() > 1){
+				for (int i=1;i<liste_flags_ennemie.size();i++){
+					if (imp > (jeu->selectedUnit->position - liste_flags_ennemie[i]->position)){
+						imp = jeu->selectedUnit->position - liste_flags_ennemie[i]->position;
+						pos = liste_flags_ennemie[i]->position;
+					}
+				}	
+			}	
+		}
+		for (size_t i =0; i<liste_poids.size(); i++) {
+			if (liste_commands[i]->id == 3) {	
+				state::Position poscom = liste_commands[i]->getPos();	
+				if (enemyCote(poscom).size()>0 and (jeu->selectedUnit->position - pos)>(pos - poscom)){
+					liste_poids[i] = 5;
+				}
+				else if ((jeu->selectedUnit->position - pos) > (pos - poscom)){	
+					liste_poids[i] = 4;
+				}
+				else {
+					liste_poids[i] = 3;
+				}
+				
+			}
+		}
 	}
 	void HeuristicAI::run () {
 		int nb_joueurs = jeu->joueurs.size();

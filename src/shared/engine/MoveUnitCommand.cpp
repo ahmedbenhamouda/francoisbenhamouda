@@ -62,5 +62,6 @@ namespace engine {
 		jeu->selectedUnit = nullptr;
 	}
 	state::Position MoveUnitCommand::getPos() {
+		return this->targetPos;
 	}
 }

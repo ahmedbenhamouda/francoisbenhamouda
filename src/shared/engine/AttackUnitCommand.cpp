@@ -62,5 +62,6 @@ namespace engine {
 		}
 	}
 	state::Position AttackUnitCommand::getPos() {
+		return this->targetPos;
 	}
 }

@@ -14,5 +14,6 @@ namespace engine {
 		jeu->etatJeu->deleteUnite(objectPos);
 	}
 	state::Position DeleteUnitCommand::getPos() {
+		return this->objectPos;
 	}
 }
