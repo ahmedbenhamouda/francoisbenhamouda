@@ -21,4 +21,7 @@ namespace engine {
 	state::Position DropFlagCommand::getPos() {
 		return this->targetPos;
 	}
+	int DropFlagCommand::getId() {
+		return this->id;
+	}
 }

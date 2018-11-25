@@ -28,6 +28,7 @@ namespace engine {
     bool isLegalMove (state::Unite* unite);
     void execute (state::Jeu* jeu);
     state::Position getPos ();
+    int getId ();
     // Setters and Getters
   };
 

@@ -31,4 +31,7 @@ namespace engine {
 	state::Position CaptureFlagCommand::getPos() {
 		return state::Position(-1,-1);
 	}
+	int CaptureFlagCommand::getId() {
+		return this->id;
+	}
 }

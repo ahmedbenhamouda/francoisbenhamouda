@@ -24,4 +24,7 @@ namespace engine {
 	state::Position SelectUnitCommand::getPos() {
 		return this->objectPos;
 	}
+	int SelectUnitCommand::getId() {
+		return this->id;
+	}
 }

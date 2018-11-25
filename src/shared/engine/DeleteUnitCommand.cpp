@@ -16,4 +16,7 @@ namespace engine {
 	state::Position DeleteUnitCommand::getPos() {
 		return this->objectPos;
 	}
+	int DeleteUnitCommand::getId() {
+		return this->id;
+	}
 }

@@ -64,4 +64,7 @@ namespace engine {
 	state::Position MoveUnitCommand::getPos() {
 		return this->targetPos;
 	}
+	int MoveUnitCommand::getId() {
+		return this->id;
+	}
 }

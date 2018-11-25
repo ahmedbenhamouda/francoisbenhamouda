@@ -33,4 +33,7 @@ namespace engine {
 	state::Position EndTurnCommand::getPos() {
 		return state::Position(-1,-1);
 	}
+	int EndTurnCommand::getId() {
+		return this->id;
+	}
 }

@@ -9,6 +9,8 @@
 #include "engine/AttackUnitCommand.h"
 #include "engine/EndTurnCommand.h"
 
+/**Note : Quand un drapeau s'est fait capturer, une erreur de segmentation est survenue.**/
+
 namespace ai {
 	HeuristicAI::HeuristicAI () {
 		randeng = std::mt19937(std::chrono::high_resolution_clock::now().time_since_epoch().count());
@@ -22,13 +24,18 @@ namespace ai {
 	std::vector<state::Position> HeuristicAI::enemyCote(state::Position pos) {
 		int px = pos.getX();
 		int py = pos.getY();
+		std::vector<state::Position> check_position {state::Position(px+1,py),state::Position(px-1,py),state::Position(px,py+1),state::Position(px,py-1)};
 		std::vector<state::Position> liste;
-		for (int i=0;i<2;i++) {
-			for (int j=0;j<2;j++) {
-				state::Unite* ennemi = jeu->etatJeu->getUnite(state::Position(px+1-2*j,py+1-2*i));
+		for (state::Position pos_check : check_position) {
+			// Check if selected position is not out of bounds
+			int check_x = pos_check.getX();
+			int check_y = pos_check.getY();
+			if ((check_x<20 && check_x>=0) && (check_y<20 && check_y>=0)){
+				state::Unite* unit = jeu->etatJeu->getUnite(pos);
+				state::Unite* ennemi = jeu->etatJeu->getUnite(pos_check);
 				// check if an ennemy is around
-				if (ennemi and ennemi->getColor() != jeu->selectedUnit->getColor()) {
-					liste.push_back(state::Position(px+1-2*j,py+1-2*i));
+				if (unit and ennemi and ennemi->getColor() != unit->getColor()) {
+					liste.push_back(pos_check);
 				}
 			}
 		}
@@ -67,7 +74,6 @@ namespace ai {
 		}
 		liste_commands = std::vector<engine::Command*>();
 
-		// TODO : check segmentation fault by here 
 		if (jeu->selectedUnit) {
 			// Check all possible movements
 			std::vector<state::Position> moves = jeu->selectedUnit->getLegalMove();
@@ -77,9 +83,11 @@ namespace ai {
 				}
 			}
 			// Check if any attack is possible
-			std::vector<state::Position> enemyNearby = enemyCote(jeu->selectedUnit->position);
-			for (state::Position enemyPos : enemyNearby) {
-				liste_commands.push_back(new engine::AttackUnitCommand(enemyPos));
+			if (jeu->selectedUnit->can_attack) {
+				std::vector<state::Position> enemyNearby = enemyCote(jeu->selectedUnit->position);
+				for (state::Position enemyPos : enemyNearby) {
+					liste_commands.push_back(new engine::AttackUnitCommand(enemyPos));
+				}
 			}
 		} else {
 			// Check for createUnit
@@ -111,14 +119,16 @@ namespace ai {
 
 		// Get all weights for non-move commands
 		for (size_t i =0; i<liste_poids.size(); i++) {
-			switch (liste_commands[i]->id) {
-				case 0 : //creerUnite
+			if (liste_commands[i]->getId() == 0) { //creerUnite
 					liste_poids[i] = 6;
-				case 2 : //selectUnite
+			}
+			if (liste_commands[i]->getId() == 2) { //selectUnite
 					liste_poids[i] = 2;
-				case 4 : //attackUnite
+			}
+			if (liste_commands[i]->getId() == 4) { //attackUnite
 					liste_poids[i] = 7;
-				case 8 : //endTurn
+			}
+			if (liste_commands[i]->getId() == 8) { //endTurn
 					liste_poids[i] = 1;
 			}
 		}
@@ -126,6 +136,7 @@ namespace ai {
 	void HeuristicAI::poidDistance() {
 		state::Position pos(0,0);
 		
+		// If unit has a flag, it has to go home
 		if (jeu->selectedUnit->has_flag){
 			for (size_t k=0; k<liste_batiments.size();k++){
 				if  (liste_batiments[k]->getId_b() == 0){
@@ -144,16 +155,20 @@ namespace ai {
 				}	
 			}	
 		}
+
+		// evaluate the distance between each command and the objective
 		for (size_t i =0; i<liste_poids.size(); i++) {
-			if (liste_commands[i]->id == 3) {	
-				state::Position poscom = liste_commands[i]->getPos();	
-				if (enemyCote(poscom).size()>0 and (jeu->selectedUnit->position - pos)>(pos - poscom)){
-					liste_poids[i] = 5;
-				}
-				else if ((jeu->selectedUnit->position - pos) > (pos - poscom)){	
-					liste_poids[i] = 4;
-				}
-				else {
+			if (liste_commands[i]->getId() == 3) {	
+				state::Position poscom = liste_commands[i]->getPos();
+				if ((jeu->selectedUnit->position - pos) > (poscom - pos)){
+					if (pos == poscom) { // engage combat
+						liste_poids[i] = 6;
+					} else if (enemyCote(poscom).size()>0){ // engage combat
+						liste_poids[i] = 5;
+					} else { // just move
+						liste_poids[i] = 4;
+					}
+				} else {
 					liste_poids[i] = 3;
 				}
 				
@@ -173,21 +188,14 @@ namespace ai {
 
 			// evaluate maximum weight command
 			int max_val = *std::max_element(liste_poids.begin(), liste_poids.end());
-			std::cout<<"Nombre de commandes : "<<liste_commands.size()<<std::endl;
-			std::cout<<"Pour chaque commande :"<<std::endl;
 			
-			
-
 			// select only the maximum weight commands
 			std::vector<int> max_commands_index;
 			for (size_t i=0; i<liste_poids.size(); i++) {
-				std::cout<<" - poids : "<<liste_poids[i]<<std::endl;
 				if (liste_poids[i] == max_val) {
 					max_commands_index.push_back(i);
 				}
 			}
-
-			std::cout<<"max : "<<max_val<<std::endl;
 
 			// random number generation
 			std::uniform_int_distribution<int> index(0,max_commands_index.size()-1);

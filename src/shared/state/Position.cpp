@@ -1,4 +1,5 @@
 #include "Position.h"
+#include <cmath>
 
 namespace state {
 	// Constructeur par defaut
@@ -26,7 +27,7 @@ namespace state {
 	}
 	int Position::operator-(Position const& pos) {
 		int res;
-		res = (pos.getX()-this->getX()) + (pos.getY()-this->getY());
+		res = std::abs((pos.getX()-this->getX()) + (pos.getY()-this->getY()));
 		return (res);
 	}
 	Position::~Position(){
