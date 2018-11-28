@@ -374,12 +374,12 @@ void AITest() {
     std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
 
     // Creation d'objets Batiment
-    unique_ptr<Batiment> batiment (new Usine(Position(2, 2), 0));
-    unique_ptr<Batiment> batiment2 (new Usine(Position(17, 17), 1));
-    unique_ptr<Batiment> batiment3 (new Usine(Position(0, 2), 0));
-    unique_ptr<Batiment> batiment4 (new Usine(Position(19, 17), 1));
-    unique_ptr<Batiment> batiment5 (new QG(Position(1, 1), 0));
-    unique_ptr<Batiment> batiment6 (new QG(Position(18, 18), 1));
+    unique_ptr<Batiment> batiment (new Usine(Position(9, 7), 0));
+    unique_ptr<Batiment> batiment2 (new Usine(Position(12, 12), 1));
+    unique_ptr<Batiment> batiment3 (new Usine(Position(7, 7), 0));
+    unique_ptr<Batiment> batiment4 (new Usine(Position(10, 12), 1));
+    unique_ptr<Batiment> batiment5 (new QG(Position(8, 8), 0));
+    unique_ptr<Batiment> batiment6 (new QG(Position(11, 11), 1));
 
     vector<Batiment*> batiments;
     batiments.push_back(batiment.get());
@@ -390,8 +390,8 @@ void AITest() {
     batiments.push_back(batiment6.get());
 
     // Creation d'objets Flag
-    unique_ptr<Flag> flag1 (new Flag(Position(1,1),0));
-    unique_ptr<Flag> flag2 (new Flag(Position(18,18),1));
+    unique_ptr<Flag> flag1 (new Flag(Position(8,8),0));
+    unique_ptr<Flag> flag2 (new Flag(Position(11,11),1));
     std::vector<Flag*> flags {flag1.get(), flag2.get()};
 
     // création d'un objet TerrainTab

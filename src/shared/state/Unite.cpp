@@ -47,7 +47,11 @@ namespace state {
 		return this->id;
 	}
 	int Unite::getTileId(){
-		return (4*this->getId()+this->getColor());
+		int mod=0;
+		if (this->has_flag) {
+			mod=20;
+		}
+		return (4*this->getId()+this->getColor()+mod);
 	}
 	void Unite::setpuissance(int p){
 		this->puissance = p;

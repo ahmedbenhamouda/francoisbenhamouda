@@ -44,10 +44,13 @@ namespace ai {
 	void HeuristicAI::fillStateList(){
 		// reset unite list
 		liste_unites = std::vector<state::Unite*>();
+		liste_ennemies = std::vector<state::Unite*>();
 
 		for (state::Unite* unit : jeu->etatJeu->getUniteList()){
 			if (color == unit->getColor()){
 				liste_unites.push_back(unit);		
+			}else{
+				liste_ennemies.push_back(unit);
 			}
 		}
 		// reset batiment list
@@ -64,6 +67,8 @@ namespace ai {
 		for (state::Flag* flag : jeu->etatJeu->getFlagList()){
 			if (color != flag->color and not(flag->is_owned)){
 				liste_flags_ennemie.push_back(flag);					
+			} else if (color == flag->color){
+				flag_allies = flag;
 			}
 		}
 	}
@@ -135,33 +140,57 @@ namespace ai {
 	}
 	void HeuristicAI::poidDistance() {
 		state::Position pos(0,0);
+		// Default position : QG
+		for (size_t k=0; k<liste_batiments.size();k++){
+			if  (liste_batiments[k]->getId_b() == 0){
+				pos = liste_batiments[k]->position;
+			}
+		}
 		
-		// If unit has a flag, it has to go home
-		if (jeu->selectedUnit->has_flag){
-			for (size_t k=0; k<liste_batiments.size();k++){
-				if  (liste_batiments[k]->getId_b() == 0){
-					pos = liste_batiments[k]->position;
+		// Flag captured by ennemy
+		if (flag_allies->is_owned) {
+			for (state::Unite* unite : liste_ennemies) {
+			// TODO : Check if this condition doesn't generate any segfault
+				if (unite->has_flag == flag_allies) {
+					pos = unite->position;
 				}
-			}	
-		}else{	
-			int imp = (jeu->selectedUnit->position - liste_flags_ennemie[0]->position);
-			pos = liste_flags_ennemie[0]->position;		
-			if (liste_flags_ennemie.size() > 1){
-				for (size_t i=1;i<liste_flags_ennemie.size();i++){
-					if (imp > (jeu->selectedUnit->position - liste_flags_ennemie[i]->position)){
-						imp = jeu->selectedUnit->position - liste_flags_ennemie[i]->position;
-						pos = liste_flags_ennemie[i]->position;
+			}
+		} else {
+			// Flag is not in QG
+			state::Batiment* bat = jeu->etatJeu->getBatiment(flag_allies->position);
+			if (not(bat) or bat->getId_b() != 0) {
+				pos = flag_allies->position;
+			} else if (not(jeu->selectedUnit->has_flag)) {
+				// Look for the closest enemy flag
+				if (liste_flags_ennemie.size() > 0){
+					int imp = (jeu->selectedUnit->position - liste_flags_ennemie[0]->position);
+					pos = liste_flags_ennemie[0]->position;	
+			
+					if (liste_flags_ennemie.size() > 1){
+						for (size_t i=1;i<liste_flags_ennemie.size();i++){
+							if (imp > (jeu->selectedUnit->position - liste_flags_ennemie[i]->position)){
+								imp = jeu->selectedUnit->position - liste_flags_ennemie[i]->position;
+								pos = liste_flags_ennemie[i]->position;
+							}
+						}	
 					}
-				}	
-			}	
+				} else {
+					 // Look for enemy carrying a flag
+					 for (state::Unite* unite : liste_ennemies) {
+						if (unite->has_flag) {
+							pos = unite->position;
+						}
+					}
+				}
+			}
 		}
 
-		// evaluate the distance between each command and the objective
+		// evaluate the distance between each command and the goal
 		for (size_t i =0; i<liste_poids.size(); i++) {
 			if (liste_commands[i]->getId() == 3) {	
 				state::Position poscom = liste_commands[i]->getPos();
 				if ((jeu->selectedUnit->position - pos) > (poscom - pos)){
-					if (pos == poscom) { // engage combat
+					if (pos == poscom) { // going to the goal
 						liste_poids[i] = 6;
 					} else if (enemyCote(poscom).size()>0){ // engage combat
 						liste_poids[i] = 5;

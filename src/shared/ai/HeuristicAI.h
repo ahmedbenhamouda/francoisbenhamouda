@@ -36,6 +36,8 @@ namespace ai {
     std::vector<engine::Command*> liste_commands;
     std::vector<int> liste_poids;
     std::vector<state::Flag*> liste_flags_ennemie;
+    state::Flag* flag_allies;
+    std::vector<state::Unite*> liste_ennemies;
     // Operations
   public:
     HeuristicAI ();
