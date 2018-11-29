@@ -139,18 +139,24 @@ namespace ai {
 		}
 	}
 	void HeuristicAI::poidDistance() {
-		state::Position pos(0,0);
+		state::Position pos;
 		// Default position : QG
-		for (size_t k=0; k<liste_batiments.size();k++){
+		/*for (size_t k=0; k<liste_batiments.size();k++){
 			if  (liste_batiments[k]->getId_b() == 0){
 				pos = liste_batiments[k]->position;
 			}
+		}*/
+		// Current unit has flag, then has to go home
+		if (jeu->selectedUnit->has_flag) {
+			for (size_t k=0; k<liste_batiments.size();k++){
+				if  (liste_batiments[k]->getId_b() == 0){
+					pos = liste_batiments[k]->position;
+				}
+			}
 		}
-		
 		// Flag captured by ennemy
-		if (flag_allies->is_owned) {
+		else if (flag_allies->is_owned) {
 			for (state::Unite* unite : liste_ennemies) {
-			// TODO : Check if this condition doesn't generate any segfault
 				if (unite->has_flag == flag_allies) {
 					pos = unite->position;
 				}
@@ -160,7 +166,7 @@ namespace ai {
 			state::Batiment* bat = jeu->etatJeu->getBatiment(flag_allies->position);
 			if (not(bat) or bat->getId_b() != 0) {
 				pos = flag_allies->position;
-			} else if (not(jeu->selectedUnit->has_flag)) {
+			} else {
 				// Look for the closest enemy flag
 				if (liste_flags_ennemie.size() > 0){
 					int imp = (jeu->selectedUnit->position - liste_flags_ennemie[0]->position);
@@ -175,8 +181,8 @@ namespace ai {
 						}	
 					}
 				} else {
-					 // Look for enemy carrying a flag
-					 for (state::Unite* unite : liste_ennemies) {
+					 // Look for anyone carrying a flag (escort ally or attack enemy)
+					 for (state::Unite* unite : jeu->etatJeu->getUniteList()) {
 						if (unite->has_flag) {
 							pos = unite->position;
 						}

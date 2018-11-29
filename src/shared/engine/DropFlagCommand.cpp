@@ -13,6 +13,7 @@ namespace engine {
 			state::Flag* flag = unite->has_flag;
 			flag->position = unite->position;
 			flag->is_owned = false;
+			unite->has_flag = nullptr;
 			std::cout<<"The flag has been dropped."<<std::endl;
 		}
 	}

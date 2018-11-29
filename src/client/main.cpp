@@ -374,12 +374,12 @@ void AITest() {
     std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
 
     // Creation d'objets Batiment
-    unique_ptr<Batiment> batiment (new Usine(Position(9, 7), 0));
-    unique_ptr<Batiment> batiment2 (new Usine(Position(12, 12), 1));
-    unique_ptr<Batiment> batiment3 (new Usine(Position(7, 7), 0));
-    unique_ptr<Batiment> batiment4 (new Usine(Position(10, 12), 1));
-    unique_ptr<Batiment> batiment5 (new QG(Position(8, 8), 0));
-    unique_ptr<Batiment> batiment6 (new QG(Position(11, 11), 1));
+    unique_ptr<Batiment> batiment (new Usine(Position(8, 6), 0));
+    unique_ptr<Batiment> batiment2 (new Usine(Position(13, 13), 1));
+    unique_ptr<Batiment> batiment3 (new Usine(Position(6, 6), 0));
+    unique_ptr<Batiment> batiment4 (new Usine(Position(11, 13), 1));
+    unique_ptr<Batiment> batiment5 (new QG(Position(7, 7), 0));
+    unique_ptr<Batiment> batiment6 (new QG(Position(12, 12), 1));
 
     vector<Batiment*> batiments;
     batiments.push_back(batiment.get());
