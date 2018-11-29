@@ -5,11 +5,11 @@
 #include "HeuristicAI.h"
 #include "engine/CreateUnitCommand.h"
 #include "engine/SelectUnitCommand.h"
+#include "engine/SelectBatimentCommand.h"
+#include "engine/SelectUnitTypeCommand.h"
 #include "engine/MoveUnitCommand.h"
 #include "engine/AttackUnitCommand.h"
 #include "engine/EndTurnCommand.h"
-
-/**Note : Quand un drapeau s'est fait capturer, une erreur de segmentation est survenue.**/
 
 namespace ai {
 	HeuristicAI::HeuristicAI () {
@@ -79,7 +79,27 @@ namespace ai {
 		}
 		liste_commands = std::vector<engine::Command*>();
 
-		if (jeu->selectedUnit) {
+		int nb_joueurs = jeu->joueurs.size();
+		state::Joueur* currentPlayer = jeu->joueurs[jeu->tour%nb_joueurs];
+
+		if (jeu->selectedBatiment) {
+			liste_commands.push_back(new engine::SelectUnitTypeCommand(0));
+			// Select all possible units to create
+			if (currentPlayer->monnaie.getArgent()>=3500) {
+				liste_commands.push_back(new engine::SelectUnitTypeCommand(1));
+			}
+			if (currentPlayer->monnaie.getArgent()>=4500) {
+				liste_commands.push_back(new engine::SelectUnitTypeCommand(2));
+			}
+			if (currentPlayer->monnaie.getArgent()>=7000) {
+				liste_commands.push_back(new engine::SelectUnitTypeCommand(3));
+			}
+			if (currentPlayer->monnaie.getArgent()>=10000) {
+				liste_commands.push_back(new engine::SelectUnitTypeCommand(4));
+			}
+			// add unit
+			liste_commands.push_back(new engine::CreateUnitCommand());
+		} else if (jeu->selectedUnit) {
 			// Check all possible movements
 			std::vector<state::Position> moves = jeu->selectedUnit->getLegalMove();
 			for (state::Position mv : moves) {
@@ -96,14 +116,12 @@ namespace ai {
 			}
 		} else {
 			// Check for createUnit
-			int nb_joueurs = jeu->joueurs.size();
-			state::Joueur* currentPlayer = jeu->joueurs[jeu->tour%nb_joueurs];
 			// Check if player has enough money
 			if (currentPlayer->monnaie.getArgent()>=1000) {
 				for (state::Batiment* bat : liste_batiments) {
 					// batiment is usine and no unit stands on it
 					if (bat->getId_b() == 1 and not(jeu->etatJeu->getUnite(bat->position))) {
-						liste_commands.push_back(new engine::CreateUnitCommand(bat->position, 0));
+						liste_commands.push_back(new engine::SelectBatimentCommand(bat->position));
 					}
 				}
 			}
@@ -133,8 +151,14 @@ namespace ai {
 			if (liste_commands[i]->getId() == 4) { //attackUnite
 					liste_poids[i] = 7;
 			}
+			if (liste_commands[i]->getId() == 5) { //selectBatiment
+					liste_poids[i] = 6;
+			}
 			if (liste_commands[i]->getId() == 8) { //endTurn
 					liste_poids[i] = 1;
+			}
+			if (liste_commands[i]->getId() == 9) { //selectUnitType
+					liste_poids[i] = 6;
 			}
 		}
 	}

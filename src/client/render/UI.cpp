@@ -5,13 +5,25 @@
 #include <iostream>
 
 namespace render {
-	UI::UI() {		
-    		batimentText = std::vector<sf::Text>();
+	UI::UI() {
 	}
 	UI::UI(state::Jeu* jeu) {
+		// load font
 		if (!font.loadFromFile("res/arial.ttf")) {
-			throw std::runtime_error("No such file");
+			throw std::runtime_error("Failed to load font : No such file");
 		}
+
+		// load textures
+		if (!selBatTexture.loadFromFile("res/select_unit.png")) {
+			throw std::runtime_error("Failed to load texture : No such file");
+		}
+		if (!unitCursorTexture.loadFromFile("res/unit_cursor.png")) {
+			throw std::runtime_error("Failed to load texture : No such file");
+		}
+		if (!buttonsTexture.loadFromFile("res/buttons.png")) {
+			throw std::runtime_error("Failed to load texture : No such file");
+		}
+
 		this->jeu = jeu;
 	}
 	void UI::setGeneralData() {
@@ -99,18 +111,47 @@ namespace render {
 			uniteText.push_back(colorText);
 		}
 	}
-	void UI::displayUI (sf::RenderWindow* window) {
-		// display general text
-		for (size_t i=0; i<generalText.size(); i++) {
-			generalText[i].setPosition(20.f,650.f+float(20*i));
-			generalText[i].setColor(sf::Color::White);
-			window->draw(generalText[i]);
+
+	void UI::setBatimentData() {
+		// initialize
+		batimentSprites = std::vector<sf::Sprite>();
+
+		if (jeu->selectedBatiment) {
+			sf::Sprite selBatSprite;
+			selBatSprite.setTexture(selBatTexture);
+			selBatSprite.setPosition(32.f,656.f);
+			batimentSprites.push_back(selBatSprite);
+
+			sf::Sprite unitCursorSprite;
+			unitCursorSprite.setTexture(unitCursorTexture);
+			unitCursorSprite.setPosition(16.f+float(64*jeu->unit_type),640.f);
+			batimentSprites.push_back(unitCursorSprite);
+
+			sf::Sprite okSprite;
+			okSprite.setTexture(buttonsTexture);
+			okSprite.setTextureRect(sf::IntRect(0, 0, 66, 23));
+			okSprite.setPosition(543.f,656.f);
+			batimentSprites.push_back(okSprite);
 		}
-		// display unite text
-		for (size_t i=0; i<uniteText.size(); i++) {
-			uniteText[i].setPosition(200.f,650.f+float(20*i));
-			uniteText[i].setColor(sf::Color::White);
-			window->draw(uniteText[i]);
+	}
+	void UI::displayUI (sf::RenderWindow* window) {
+		if (jeu->selectedBatiment) {
+			for (size_t i=0; i<batimentSprites.size(); i++) {
+				window->draw(batimentSprites[i]);
+			}
+		} else {
+			// display general text
+			for (size_t i=0; i<generalText.size(); i++) {
+				generalText[i].setPosition(20.f,650.f+float(20*i));
+				generalText[i].setColor(sf::Color::White);
+				window->draw(generalText[i]);
+			}
+			// display unite text
+			for (size_t i=0; i<uniteText.size(); i++) {
+				uniteText[i].setPosition(200.f,650.f+float(20*i));
+				uniteText[i].setColor(sf::Color::White);
+				window->draw(uniteText[i]);
+			}
 		}
 	}
 	UI::~UI() {

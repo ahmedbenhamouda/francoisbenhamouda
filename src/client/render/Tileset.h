@@ -83,16 +83,6 @@ Tileset<T>::Tileset (std::string filename) : filename(filename) {
             Tile infantryBleuFlag(16,16,16,16);
             Tile infantryVertFlag(16,32,16,16);
             Tile infantryJauneFlag(16,48,16,16);
-            //Recon
-            Tile reconRouge(64,0,16,16);
-            Tile reconBleu(64,16,16,16);
-            Tile reconVert(64,32,16,16);
-            Tile reconJaune(64,48,16,16);
-	    //Recon Flag
-            Tile reconRougeFlag(80,0,16,16);
-            Tile reconBleuFlag(80,16,16,16);
-            Tile reconVertFlag(80,32,16,16);
-            Tile reconJauneFlag(80,48,16,16);
             //Mech
             Tile mechRouge(32,0,16,16);
             Tile mechBleu(32,16,16,16);
@@ -103,6 +93,16 @@ Tileset<T>::Tileset (std::string filename) : filename(filename) {
             Tile mechBleuFlag(48,16,16,16);
             Tile mechVertFlag(48,32,16,16);
             Tile mechJauneFlag(48,48,16,16);
+	    //Recon
+            Tile reconRouge(64,0,16,16);
+            Tile reconBleu(64,16,16,16);
+            Tile reconVert(64,32,16,16);
+            Tile reconJaune(64,48,16,16);
+	    //Recon Flag
+            Tile reconRougeFlag(80,0,16,16);
+            Tile reconBleuFlag(80,16,16,16);
+            Tile reconVertFlag(80,32,16,16);
+            Tile reconJauneFlag(80,48,16,16);
             //Tank
             Tile tankRouge(96,0,16,16);
             Tile tankBleu(96,16,16,16);
@@ -123,7 +123,7 @@ Tileset<T>::Tileset (std::string filename) : filename(filename) {
             Tile hTankBleuFlag(144,16,16,16);
             Tile hTankVertFlag(144,32,16,16);
             Tile hTankJauneFlag(144,48,16,16);
-            tiles = {infantryRouge,infantryBleu,infantryVert,infantryJaune,reconRouge,reconBleu,reconVert,reconJaune,mechRouge,mechBleu,mechVert,mechJaune,tankRouge,tankBleu,tankVert,tankJaune,hTankRouge,hTankBleu,hTankVert,hTankJaune,infantryRougeFlag,infantryBleuFlag,infantryVertFlag,infantryJauneFlag,reconRougeFlag,reconBleuFlag,reconVertFlag,reconJauneFlag,mechRougeFlag,mechBleuFlag,mechVertFlag,mechJauneFlag,tankRougeFlag,tankBleuFlag,tankVertFlag,tankJauneFlag,hTankRougeFlag,hTankBleuFlag,hTankVertFlag,hTankJauneFlag};
+            tiles = {infantryRouge,infantryBleu,infantryVert,infantryJaune,mechRouge,mechBleu,mechVert,mechJaune,reconRouge,reconBleu,reconVert,reconJaune,tankRouge,tankBleu,tankVert,tankJaune,hTankRouge,hTankBleu,hTankVert,hTankJaune,infantryRougeFlag,infantryBleuFlag,infantryVertFlag,infantryJauneFlag,mechRougeFlag,mechBleuFlag,mechVertFlag,mechJauneFlag,reconRougeFlag,reconBleuFlag,reconVertFlag,reconJauneFlag,tankRougeFlag,tankBleuFlag,tankVertFlag,tankJauneFlag,hTankRougeFlag,hTankBleuFlag,hTankVertFlag,hTankJauneFlag};
     }
     if (filename=="res/misc.png") {
             //carre

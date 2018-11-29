@@ -30,7 +30,6 @@ mutex m1;
 
 void displayWindow(Layers* layers, UI* ui) {
 	sf::RenderWindow window(sf::VideoMode(640,740), "Advance Wars");
-		window.setVerticalSyncEnabled(false);
 		while(window.isOpen()) {
 			sf::Event event;
 			while(window.pollEvent(event)) {
@@ -42,7 +41,11 @@ void displayWindow(Layers* layers, UI* ui) {
 					int py = event.mouseButton.y/32;
 					//cout<<"("<<px<<","<<py<<")"<<endl;
 					m1.lock();
-					layers->sendUnitCommand (Position(px,py));
+					if (py<20) {
+						layers->sendUnitCommand (Position(px,py));
+					} else {
+						layers->sendUICommand (px,py);
+					}
 					m1.unlock();
 				}
 				if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Escape) {
@@ -60,11 +63,11 @@ void displayWindow(Layers* layers, UI* ui) {
 			// update UI
 			ui->setGeneralData();
 			ui->setUnitData();
+			ui->setBatimentData();
 			ui->displayUI(&window);
 
 			window.display();
-		}
-	
+		}	
 }
 
 void runEngine(Engine* engine) {
@@ -369,7 +372,7 @@ void AIPlay(AI* ai) {
 
 void AITest() {
     // Creation d'objets Joueur
-    unique_ptr<Joueur> joueur1(new Joueur(0,true));
+    unique_ptr<Joueur> joueur1(new Joueur(0,false));
     unique_ptr<Joueur> joueur2(new Joueur(1,true));
     std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
 

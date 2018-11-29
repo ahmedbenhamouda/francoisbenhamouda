@@ -17,10 +17,10 @@ namespace state {
 			return (new Infantry(this->position, this->color));
 		}
 		else if (id == 1){
-			return (new Recon(this->position, this->color));
+			return (new Mech(this->position, this->color));
 		}
 		else if (id == 2){
-			return (new Mech(this->position, this->color));
+			return (new Recon(this->position, this->color));
 		}
 		else if (id == 3){
 			return (new Tank(this->position, this->color));

@@ -22,7 +22,7 @@ namespace state {
     int prix     = 3500;
     int mvt     = 3;
     int puissance     = 150;
-    int id     = 2;
+    int id     = 1;
     // Operations
   public:
     Mech ();

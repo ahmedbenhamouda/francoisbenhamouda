@@ -22,7 +22,7 @@ namespace state {
     int prix     = 4500;
     int mvt     = 4;
     int puissance     = 80;
-    int id     = 1;
+    int id     = 2;
     // Operations
   public:
     Recon ();
