@@ -372,7 +372,7 @@ void AIPlay(AI* ai) {
 
 void AITest() {
     // Creation d'objets Joueur
-    unique_ptr<Joueur> joueur1(new Joueur(0,false));
+    unique_ptr<Joueur> joueur1(new Joueur(0,true));
     unique_ptr<Joueur> joueur2(new Joueur(1,true));
     std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
 

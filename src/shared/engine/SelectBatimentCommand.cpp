@@ -10,6 +10,9 @@ namespace engine {
 	void SelectBatimentCommand::execute(state::Jeu* jeu) {
 		int nb_joueurs = jeu->joueurs.size();
 		state::Batiment* batiment = jeu->etatJeu->getBatiment(objectPos);
+		if (batiment == jeu->selectedBatiment) {
+			jeu->selectedBatiment = nullptr;
+		}
 		if (batiment->getColor() == jeu->joueurs[jeu->tour%nb_joueurs]->color) {
 			jeu->selectedBatiment = batiment;
 		} else {

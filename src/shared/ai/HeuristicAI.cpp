@@ -143,22 +143,26 @@ namespace ai {
 		// Get all weights for non-move commands
 		for (size_t i =0; i<liste_poids.size(); i++) {
 			if (liste_commands[i]->getId() == 0) { //creerUnite
-					liste_poids[i] = 6;
+				liste_poids[i] = 6;
 			}
 			if (liste_commands[i]->getId() == 2) { //selectUnite
-					liste_poids[i] = 2;
+				liste_poids[i] = 2;
 			}
 			if (liste_commands[i]->getId() == 4) { //attackUnite
-					liste_poids[i] = 7;
+				liste_poids[i] = 7;
 			}
 			if (liste_commands[i]->getId() == 5) { //selectBatiment
-					liste_poids[i] = 6;
+				// The more units you have, the less likely you will choose to create one
+				liste_poids[i] = 1+3/(1+liste_unites.size());
 			}
 			if (liste_commands[i]->getId() == 8) { //endTurn
-					liste_poids[i] = 1;
+				liste_poids[i] = 1;
 			}
 			if (liste_commands[i]->getId() == 9) { //selectUnitType
-					liste_poids[i] = 6;
+				// Note : random choice between select an unit or end the turn
+				// The more units you have, the less likely you will choose to end your turn
+				std::cout<<" Unit type : "<<liste_commands[i]->getPos().getX()<<std::endl;
+				liste_poids[i] = 1+liste_commands[i]->getPos().getX();
 			}
 		}
 	}

@@ -9,6 +9,7 @@ namespace engine {
 		int nb_joueurs = jeu->joueurs.size();
 		// deselect unit
 		jeu->selectedUnit = nullptr;
+		jeu->selectedBatiment = nullptr;
 		jeu->etatJeu->uniteMoves = std::vector<state::Position>();
 
 		jeu->tour++;
