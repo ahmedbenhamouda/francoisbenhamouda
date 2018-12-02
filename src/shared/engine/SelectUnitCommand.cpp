@@ -12,7 +12,6 @@ namespace engine {
 		//std::cout<<"unit selected"<<std::endl;
 		state::Unite* unite = jeu->etatJeu->getUnite(objectPos);
 		if (unite->getColor() == jeu->joueurs[jeu->tour%nb_joueurs]->color) {
-			jeu->etatJeu->uniteMoves = unite->getLegalMove();
 			jeu->selectedUnit = unite;
 		} else {
 			std::cout<<"This unit is not yours."<<std::endl;

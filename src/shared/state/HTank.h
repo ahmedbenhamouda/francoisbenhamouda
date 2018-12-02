@@ -20,7 +20,7 @@ namespace state {
   public:
     int vie     = 250;
     int prix     = 10000;
-    int mvt     = 3;
+    int mvt     = 2;
     int puissance     = 200;
     int id     = 4;
     // Operations

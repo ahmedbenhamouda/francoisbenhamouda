@@ -83,20 +83,20 @@ namespace ai {
 		state::Joueur* currentPlayer = jeu->joueurs[jeu->tour%nb_joueurs];
 
 		if (jeu->selectedBatiment) {
-			liste_commands.push_back(new engine::SelectUnitTypeCommand(0));
 			// Select all possible units to create
-			if (currentPlayer->monnaie.getArgent()>=3500) {
-				liste_commands.push_back(new engine::SelectUnitTypeCommand(1));
-			}
-			if (currentPlayer->monnaie.getArgent()>=4500) {
-				liste_commands.push_back(new engine::SelectUnitTypeCommand(2));
-			}
-			if (currentPlayer->monnaie.getArgent()>=7000) {
+			if (currentPlayer->monnaie.getArgent()>=10000 and jeu->unit_type < 4) {
+				liste_commands.push_back(new engine::SelectUnitTypeCommand(4));
+			} 
+			if (currentPlayer->monnaie.getArgent()>=7000 and jeu->unit_type < 3) {
 				liste_commands.push_back(new engine::SelectUnitTypeCommand(3));
 			}
-			if (currentPlayer->monnaie.getArgent()>=10000) {
-				liste_commands.push_back(new engine::SelectUnitTypeCommand(4));
+			if (currentPlayer->monnaie.getArgent()>=4500 and jeu->unit_type < 2) {
+				liste_commands.push_back(new engine::SelectUnitTypeCommand(2));
 			}
+			if (currentPlayer->monnaie.getArgent()>=3500 and jeu->unit_type < 1) {
+				liste_commands.push_back(new engine::SelectUnitTypeCommand(1));
+			}
+		
 			// add unit
 			liste_commands.push_back(new engine::CreateUnitCommand());
 		} else if (jeu->selectedUnit) {
@@ -143,7 +143,7 @@ namespace ai {
 		// Get all weights for non-move commands
 		for (size_t i =0; i<liste_poids.size(); i++) {
 			if (liste_commands[i]->getId() == 0) { //creerUnite
-				liste_poids[i] = 6;
+				liste_poids[i] = 1;
 			}
 			if (liste_commands[i]->getId() == 2) { //selectUnite
 				liste_poids[i] = 2;
@@ -161,7 +161,6 @@ namespace ai {
 			if (liste_commands[i]->getId() == 9) { //selectUnitType
 				// Note : random choice between select an unit or end the turn
 				// The more units you have, the less likely you will choose to end your turn
-				std::cout<<" Unit type : "<<liste_commands[i]->getPos().getX()<<std::endl;
 				liste_poids[i] = 1+liste_commands[i]->getPos().getX();
 			}
 		}

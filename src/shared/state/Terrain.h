@@ -30,7 +30,6 @@ namespace state {
     // Associations
     // Attributes
   public:
-    std::vector<Position> uniteMoves;
     std::vector<Position> explosions;
   private:
     std::vector<Unite*> unites;

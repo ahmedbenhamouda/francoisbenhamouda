@@ -18,13 +18,9 @@ namespace engine {
 		if (object and target) {
 			// Own caracter selected
 			if (object == target) {
-				jeu->etatJeu->uniteMoves = std::vector<state::Position>();
 				jeu->selectedUnit = nullptr;
 			}
 			if (std::fabs((object->position)-(target->position)) == 1){
-				// reset unite moves
-				jeu->etatJeu->uniteMoves = std::vector<state::Position>();
-
 				// Check if unit can attack
 				if (not(jeu->selectedUnit->can_attack)) {
 					std::cout<<"This unit cannot attack anymore."<<std::endl;
@@ -46,15 +42,17 @@ namespace engine {
 					DropFlagCommand(targetPos).execute(jeu);
 					DeleteUnitCommand(targetPos).execute(jeu);
 				}
+
+				// end action
+				jeu->selectedUnit->can_attack = false;
+				jeu->selectedUnit = nullptr;
+
 				// animation
 				jeu->etatJeu->explosions.push_back(targetPos);
 				std::this_thread::sleep_for(std::chrono::milliseconds(100));
 				jeu->etatJeu->explosions = std::vector<state::Position>();
 
 
-				// end action
-				jeu->selectedUnit->can_attack = false;
-				jeu->selectedUnit = nullptr;
 				
 			} else if (target != object) {
 				std::cout<<"You cannot attack an ennemy who is not next to you."<<std::endl;

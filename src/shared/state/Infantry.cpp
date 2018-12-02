@@ -13,6 +13,10 @@ namespace state {
 		int x = position.getX();
 		int y = position.getY();
 		std::vector<Position> list;
+		if (not(can_move)) {
+			list.push_back(position);
+			return list;
+		}
 		for (int i = x-mvt; i <= x+mvt; i++){
 			int dx = std::abs(x-i);
 			for (int j = y-mvt; j <= y+mvt; j++){

@@ -28,7 +28,6 @@ namespace engine {
 				return;
 			}
 		}
-		jeu->etatJeu->uniteMoves = std::vector<state::Position>(); // reset unite moves
 
 		// Check if unit can move
 		if (not(object->can_move)) {
@@ -36,6 +35,9 @@ namespace engine {
 			jeu->selectedUnit = nullptr;
 			return;
 		}
+
+		//end action
+		jeu->selectedUnit->can_move = false;
 
 		// animation
 		while (not (object-> position == targetPos)) {
@@ -50,6 +52,7 @@ namespace engine {
 			}
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
+
 		// Check if the flag has been sent to a HQ
 		state::Batiment* bat = jeu->etatJeu->getBatiment(targetPos);
 		if (bat and bat->getId_b() == 0 and bat->getColor() == object->getColor()) {
@@ -58,8 +61,8 @@ namespace engine {
 		CaptureFlagCommand().execute(jeu);
 
 		//end action
-		jeu->selectedUnit->can_move = false;
 		jeu->selectedUnit = nullptr;
+
 	}
 	state::Position MoveUnitCommand::getPos() {
 		return this->targetPos;
