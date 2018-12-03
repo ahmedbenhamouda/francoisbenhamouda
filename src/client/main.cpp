@@ -372,17 +372,18 @@ void AIPlay(AI* ai) {
 
 void AITest() {
     // Creation d'objets Joueur
-    unique_ptr<Joueur> joueur1(new Joueur(0,true));
-    unique_ptr<Joueur> joueur2(new Joueur(1,true));
+    unique_ptr<Joueur> joueur1(new Joueur(4,true));
+    unique_ptr<Joueur> joueur2(new Joueur(5,true));
     std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
 
+
     // Creation d'objets Batiment
-    unique_ptr<Batiment> batiment (new Usine(Position(6, 4), 0));
-    unique_ptr<Batiment> batiment2 (new Usine(Position(15, 15), 1));
-    unique_ptr<Batiment> batiment3 (new Usine(Position(4, 4), 0));
-    unique_ptr<Batiment> batiment4 (new Usine(Position(13, 15), 1));
-    unique_ptr<Batiment> batiment5 (new QG(Position(5, 5), 0));
-    unique_ptr<Batiment> batiment6 (new QG(Position(14, 14), 1));
+    unique_ptr<Batiment> batiment (new Usine(Position(6, 4), 5));
+    unique_ptr<Batiment> batiment2 (new Usine(Position(15, 15), 4));
+    unique_ptr<Batiment> batiment3 (new Usine(Position(4, 4), 5));
+    unique_ptr<Batiment> batiment4 (new Usine(Position(13, 15), 4));
+    unique_ptr<Batiment> batiment5 (new QG(Position(5, 5), 5));
+    unique_ptr<Batiment> batiment6 (new QG(Position(14, 14), 4));
 
     vector<Batiment*> batiments;
     batiments.push_back(batiment.get());
@@ -392,9 +393,11 @@ void AITest() {
     batiments.push_back(batiment5.get());
     batiments.push_back(batiment6.get());
 
+
+
     // Creation d'objets Flag
-    unique_ptr<Flag> flag1 (new Flag(Position(5,5),0));
-    unique_ptr<Flag> flag2 (new Flag(Position(14,14),1));
+    unique_ptr<Flag> flag1 (new Flag(Position(5,3),5));
+    unique_ptr<Flag> flag2 (new Flag(Position(14,16),4));
     std::vector<Flag*> flags {flag1.get(), flag2.get()};
 
     // création d'un objet TerrainTab
@@ -410,8 +413,8 @@ void AITest() {
     unique_ptr<Engine> engine(new Engine(jeu.get()));
 
     // Creation d'une IA
-    unique_ptr<HeuristicAI> crazyAI(new HeuristicAI(0,engine.get(),jeu.get()));
-    unique_ptr<HeuristicAI> geniusAI(new HeuristicAI(1,engine.get(),jeu.get()));
+    unique_ptr<HeuristicAI> crazyAI(new HeuristicAI(5,engine.get(),jeu.get()));
+    unique_ptr<HeuristicAI> geniusAI(new HeuristicAI(4,engine.get(),jeu.get()));
 
     // Creation d'objets Tileset
     render::Tileset<Unite> uniteTileset("res/units.png");

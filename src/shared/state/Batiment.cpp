@@ -15,7 +15,7 @@ namespace state {
 		return this->color;
 	}
 	int Batiment::getTileId(){
-		return (4*this->getId_b()+this->getColor());
+		return (8*this->getId_b()+this->getColor());
 	}
 	Batiment::~Batiment(){
 	}

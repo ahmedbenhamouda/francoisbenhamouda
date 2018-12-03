@@ -39,7 +39,7 @@ namespace state {
 		return this->color;
 	}
 	int Usine::getTileId(){
-		return (4*this->getId_b()+this->getColor());
+		return (8*this->getId_b()+this->getColor());
 	}
 	Usine::~Usine(){
 	}
