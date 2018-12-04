@@ -9,7 +9,7 @@ namespace state {
   class PorteMonnaie {
     // Attributes
   public:
-    int argent     = 2000;
+    int argent     = 15000;
     // Operations
   public:
     PorteMonnaie ();

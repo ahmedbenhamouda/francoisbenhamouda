@@ -49,9 +49,9 @@ namespace state {
 	int Unite::getTileId(){
 		int mod=0;
 		if (this->has_flag) {
-			mod=20;
+			mod=40;
 		}
-		return (4*this->getId()+this->getColor()+mod);
+		return (8*this->getId()+this->getColor()+mod);
 	}
 	void Unite::setpuissance(int p){
 		this->puissance = p;

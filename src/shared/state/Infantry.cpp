@@ -55,7 +55,7 @@ namespace state {
 		if (this->has_flag) {
 			mod=40;
 		}
-		return (4*this->getId()+this->getColor()+mod);
+		return (8*this->getId()+this->getColor()+mod);
 	}
 	void Infantry::setpuissance(int p){
 		this->puissance = p;
