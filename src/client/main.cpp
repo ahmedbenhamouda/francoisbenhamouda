@@ -372,18 +372,30 @@ void AIPlay(AI* ai) {
 
 void AITest() {
     // Creation d'objets Joueur
+<<<<<<< HEAD
     unique_ptr<Joueur> joueur1(new Joueur(4,false));
+=======
+    unique_ptr<Joueur> joueur1(new Joueur(0,true));
+>>>>>>> abc7f1252c52279349c0d0d783707ed20f3f3a95
     unique_ptr<Joueur> joueur2(new Joueur(5,true));
-    std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
+    unique_ptr<Joueur> joueur3(new Joueur(6,true));
+    unique_ptr<Joueur> joueur4(new Joueur(7,true));
+    std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get(), joueur3.get(), joueur4.get()};
 
 
     // Creation d'objets Batiment
     unique_ptr<Batiment> batiment (new Usine(Position(6, 4), 5));
-    unique_ptr<Batiment> batiment2 (new Usine(Position(15, 15), 4));
-    unique_ptr<Batiment> batiment3 (new Usine(Position(4, 4), 5));
-    unique_ptr<Batiment> batiment4 (new Usine(Position(13, 15), 4));
+    unique_ptr<Batiment> batiment2 (new Usine(Position(15, 15), 0));
+    unique_ptr<Batiment> batiment3 (new Usine(Position(4, 4), 6));
+    unique_ptr<Batiment> batiment4 (new Usine(Position(13, 15), 7));
     unique_ptr<Batiment> batiment5 (new QG(Position(5, 5), 5));
-    unique_ptr<Batiment> batiment6 (new QG(Position(14, 14), 4));
+    unique_ptr<Batiment> batiment6 (new QG(Position(14, 14), 0));
+    unique_ptr<Batiment> batiment7 (new QG(Position(4, 3), 4));
+    unique_ptr<Batiment> batiment8 (new QG(Position(16, 15), 1));
+    unique_ptr<Batiment> batiment9 (new QG(Position(2, 4), 2));
+    unique_ptr<Batiment> batiment10 (new QG(Position(3, 3), 3));
+    unique_ptr<Batiment> batiment11 (new QG(Position(2, 2), 6));
+    unique_ptr<Batiment> batiment12 (new QG(Position(14, 16), 7));
 
     vector<Batiment*> batiments;
     batiments.push_back(batiment.get());
@@ -392,13 +404,25 @@ void AITest() {
     batiments.push_back(batiment4.get());
     batiments.push_back(batiment5.get());
     batiments.push_back(batiment6.get());
+    batiments.push_back(batiment7.get());
+    batiments.push_back(batiment8.get());
+    batiments.push_back(batiment9.get());
+    batiments.push_back(batiment10.get());
+    batiments.push_back(batiment11.get());
+    batiments.push_back(batiment12.get());
 
 
 
     // Creation d'objets Flag
-    unique_ptr<Flag> flag1 (new Flag(Position(5,3),5));
-    unique_ptr<Flag> flag2 (new Flag(Position(14,16),4));
-    std::vector<Flag*> flags {flag1.get(), flag2.get()};
+    unique_ptr<Flag> flag1 (new Flag(Position(5,5),5));
+    unique_ptr<Flag> flag2 (new Flag(Position(16,16),0));
+    unique_ptr<Flag> flag3 (new Flag(Position(4,3),4));
+    unique_ptr<Flag> flag4 (new Flag(Position(16,15),1));
+    unique_ptr<Flag> flag5 (new Flag(Position(2,4),2));
+    unique_ptr<Flag> flag6 (new Flag(Position(3,3),3));
+    unique_ptr<Flag> flag7 (new Flag(Position(2,2),6));
+    unique_ptr<Flag> flag8 (new Flag(Position(14,16),7));
+    std::vector<Flag*> flags {flag1.get(), flag2.get(),flag3.get(), flag4.get(),flag5.get(), flag6.get(),flag7.get(), flag8.get()};
 
     // création d'un objet TerrainTab
     unique_ptr<TerrainTab> terrainTab (new TerrainTab(map1()));

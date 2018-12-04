@@ -188,10 +188,10 @@ Tileset<T>::Tileset (std::string filename) : filename(filename) {
 	    Tile flagBleu(16,0,16,16);
             Tile flagVert(32,0,16,16);
 	    Tile flagJaune(48,0,16,16);
-            Tile flagViolet(60,0,16,16);
-	    Tile flagBrun(76,0,16,16);
-            Tile flagBleuF(92,0,16,16);
-	    Tile flagRougeF(108,0,16,16);
+            Tile flagViolet(64,0,16,16);
+	    Tile flagBrun(80,0,16,16);
+            Tile flagBleuF(96,0,16,16);
+	    Tile flagRougeF(112,0,16,16);
 
             tiles = {flagRouge,flagBleu,flagVert,flagJaune,flagViolet,flagBrun,flagBleuF,flagRougeF};
     }
