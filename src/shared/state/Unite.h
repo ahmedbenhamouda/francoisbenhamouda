@@ -47,11 +47,12 @@ namespace state {
     virtual int getTileId ();
     virtual void setvie (int v);
     virtual void setpuissance (int p);
-    void attacker (Unite* unite);
-    void move (Position position);
+    virtual void attacker (Unite* unite);
+    virtual void move (Position position);
     Flag* PossedeDrapeau ();
     virtual ~Unite ();
-    bool isLegalMove (Position pos, Terrain* terrain);
+    virtual bool isLegalMove (Position pos, Terrain* terrain);
+    void processMoves (Position posInit, int dx, int dy, std::vector<std::vector<int>>& processed, int moves_left, Terrain* terrain);
     // Setters and Getters
   };
 

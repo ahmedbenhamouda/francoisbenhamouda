@@ -9,22 +9,22 @@ namespace state {
 		this->color = color;
 	}
 	std::vector<Position> Tank::getLegalMove(Terrain* terrain){
-		int mvt = getmvt();
-		int x = position.getX();
-		int y = position.getY();
+		int mvt = getmvt()+1;
 		std::vector<Position> list;
 		if (not(can_move)) {
 			list.push_back(position);
 			return list;
 		}
-		for (int i = x-mvt; i <= x+mvt; i++){
-			int dx = std::fabs(x-i);
-			for (int j = y-mvt; j <= y+mvt; j++){
-				int dy = std::fabs(y-j);
-				if (dx+dy <= mvt){
-					if ((i<20 && i>=0) && (j<20 && j>=0) and isLegalMove(Position(i,j), terrain)){
-						list.push_back (Position(i,j));
-					}
+		std::vector<std::vector<int>> liste_moves(2*mvt+1, std::vector<int>(2*mvt+1, 0));
+		liste_moves[mvt][mvt] = 1;
+		// On crée une position de référence de coordonnées égales au coin supérieur gauche du morceau de map traité
+		Position posRef(position.getX()-mvt, position.getY()-mvt);
+		processMoves(posRef, mvt, mvt, liste_moves, mvt, terrain);
+		
+		for (std::size_t i = 0; i<liste_moves.size(); i++) {
+			for (std::size_t j = 0; j<liste_moves.size(); j++) {
+				if (liste_moves[i][j] == 1) {
+					list.push_back(Position(posRef.getX()+i,posRef.getY()+j));
 				}
 			}
 		}

@@ -91,6 +91,15 @@ namespace render {
 	    			miscSurface.setSpriteTexture(posx,posy,20,miscTileset->getTile(carre.get()));
 			}	
 		}
+		// affichage du batiment sélectionné
+		if (jeu->selectedBatiment) {
+			state::Position pos = jeu->selectedBatiment->position;
+			int posx = pos.getX();
+			int posy = pos.getY();
+			std::unique_ptr<state::MiscTile> carre(new state::MiscTile(0,pos));
+			miscSurface.setSpriteLocation(posx,posy,20,32,false);
+	    		miscSurface.setSpriteTexture(posx,posy,20,miscTileset->getTile(carre.get()));	
+		}
 	}
 	void Layers::displayLayers(sf::RenderWindow* window) {
 		window->draw(terrainSurface);

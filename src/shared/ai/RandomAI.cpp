@@ -69,9 +69,7 @@ namespace ai {
 			// Check all possible movements
 			std::vector<state::Position> moves = jeu->selectedUnit->getLegalMove(jeu->etatJeu);
 			for (state::Position mv : moves) {
-				if (not(jeu->etatJeu->getUnite(mv))) {
-					liste_commands.push_back(new engine::MoveUnitCommand(mv));
-				}
+				liste_commands.push_back(new engine::MoveUnitCommand(mv));
 			}
 			// Check if any attack is possible
 			int px = jeu->selectedUnit->position.getX();

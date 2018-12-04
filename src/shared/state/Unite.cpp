@@ -76,4 +76,29 @@ namespace state {
 	Flag* Unite::PossedeDrapeau() {
 		return has_flag;
 	}
+	// This method is virtual anyway
+	bool Unite::isLegalMove(Position pos, Terrain* terrain) {
+		return true;
+	}
+	void Unite::processMoves(Position posInit, int dx, int dy, std::vector<std::vector<int>>& processed, int moves_left, Terrain* terrain) {
+		if (moves_left > 0) {
+			Position newPos(posInit.getX()+dx, posInit.getY()+dy);
+			int px = newPos.getX();
+			int py = newPos.getY();
+			// Out of bounds
+			if (px < 0 or px >= 20 or py < 0 or py >= 20) {
+				processed[dx][dy] -= 1;
+				return;
+			} 
+			if (processed[dx][dy] == 1 or isLegalMove(newPos,terrain)) {
+				processed[dx][dy] = 1;
+				processMoves(posInit, dx+1, dy, processed, moves_left-1, terrain);
+				processMoves(posInit, dx-1, dy, processed, moves_left-1, terrain);
+				processMoves(posInit, dx, dy+1, processed, moves_left-1, terrain);
+				processMoves(posInit, dx, dy-1, processed, moves_left-1, terrain);
+			} else {
+				processed[dx][dy] = -1;
+			}
+		}
+	}
 }
