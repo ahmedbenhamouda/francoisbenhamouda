@@ -53,6 +53,18 @@ namespace render {
 			case 3 :
 				couleur = "Jaune";
 				break;
+			case 4 :
+				couleur = "Violet";
+				break;
+			case 5 :
+				couleur = "Brun";
+				break;
+			case 6 :
+				couleur = "Bleu Fonce";
+				break;
+			case 7 :
+				couleur = "Rouge Fonce";
+				break;
 		}
 		std::stringstream ss_color;
 		ss_color<<"Couleur : "<<couleur<<".";
