@@ -11,11 +11,10 @@ namespace engine {
 	}
 	MoveUnitCommand::~MoveUnitCommand() {
 	}
-	bool MoveUnitCommand::isLegalMove(state::Unite* unite) {
-		std::vector<state::Position> moves = unite->getLegalMove();
+	bool MoveUnitCommand::isLegalMove(state::Jeu* jeu, state::Unite* unite) {
+		std::vector<state::Position> moves = unite->getLegalMove(jeu->etatJeu);
 		for (state::Position mv : moves) {
 			if (targetPos == mv) {
-			//if (targetPos.getX() == moves[i].getX() and targetPos.getY() == moves[i].getY()) {
 				return true;
 			}
 		}
@@ -24,7 +23,7 @@ namespace engine {
 	void MoveUnitCommand::execute(state::Jeu* jeu) {
 		state::Unite* object = jeu->selectedUnit;
 		if (object) {
-			if (not(isLegalMove(object)) or jeu->etatJeu->getUnite(targetPos)) {
+			if (not(isLegalMove(jeu, object)) or jeu->etatJeu->getUnite(targetPos)) {
 				return;
 			}
 		}

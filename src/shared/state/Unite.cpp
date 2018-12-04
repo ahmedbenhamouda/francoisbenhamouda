@@ -8,7 +8,7 @@ namespace state {
 		this->position = position;
 		this->color = color;
 	}
-	std::vector<Position> Unite::getLegalMove(){
+	std::vector<Position> Unite::getLegalMove(Terrain* terrain){
 		int mvt = getmvt();
 		int x = position.getX();
 		int y = position.getY();

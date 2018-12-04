@@ -372,7 +372,7 @@ void AIPlay(AI* ai) {
 
 void AITest() {
     // Creation d'objets Joueur
-    unique_ptr<Joueur> joueur1(new Joueur(4,true));
+    unique_ptr<Joueur> joueur1(new Joueur(4,false));
     unique_ptr<Joueur> joueur2(new Joueur(5,true));
     std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
 
@@ -413,8 +413,8 @@ void AITest() {
     unique_ptr<Engine> engine(new Engine(jeu.get()));
 
     // Creation d'une IA
-    unique_ptr<HeuristicAI> crazyAI(new HeuristicAI(5,engine.get(),jeu.get()));
-    unique_ptr<HeuristicAI> geniusAI(new HeuristicAI(4,engine.get(),jeu.get()));
+    //unique_ptr<HeuristicAI> crazyAI(new HeuristicAI(4,engine.get(),jeu.get()));
+    unique_ptr<HeuristicAI> geniusAI(new HeuristicAI(5,engine.get(),jeu.get()));
 
     // Creation d'objets Tileset
     render::Tileset<Unite> uniteTileset("res/units.png");
@@ -441,7 +441,7 @@ void AITest() {
     cout<<"Initializing the graphics..."<<endl;
 
     // Creation de deux threads dedies a l'IA
-    thread ia_th1(AIPlay, crazyAI.get());
+    //thread ia_th1(AIPlay, crazyAI.get());
     thread ia_th2(AIPlay, geniusAI.get());
     cout<<"Initializing the AI..."<<endl;
 
@@ -451,7 +451,7 @@ void AITest() {
 
     lyr.join();
     ng.join();
-    ia_th1.join();
+    //ia_th1.join();
     ia_th2.join();
 }
 

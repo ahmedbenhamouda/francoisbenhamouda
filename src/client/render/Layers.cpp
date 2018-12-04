@@ -83,7 +83,7 @@ namespace render {
 		}
 		// affichage des cases de deplacement
 		if (jeu->selectedUnit) {
-			for (state::Position pos : jeu->selectedUnit->getLegalMove()) {
+			for (state::Position pos : jeu->selectedUnit->getLegalMove(jeu->etatJeu)) {
 				int posx = pos.getX();
 				int posy = pos.getY();
 				std::unique_ptr<state::MiscTile> carre(new state::MiscTile(0,pos));

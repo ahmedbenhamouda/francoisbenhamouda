@@ -25,7 +25,7 @@ namespace engine {
     MoveUnitCommand ();
     MoveUnitCommand (state::Position targetPos);
     ~MoveUnitCommand ();
-    bool isLegalMove (state::Unite* unite);
+    bool isLegalMove (state::Jeu* jeu, state::Unite* unite);
     void execute (state::Jeu* jeu);
     state::Position getPos ();
     int getId ();

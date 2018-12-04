@@ -101,7 +101,7 @@ namespace ai {
 			liste_commands.push_back(new engine::CreateUnitCommand());
 		} else if (jeu->selectedUnit) {
 			// Check all possible movements
-			std::vector<state::Position> moves = jeu->selectedUnit->getLegalMove();
+			std::vector<state::Position> moves = jeu->selectedUnit->getLegalMove(jeu->etatJeu);
 			for (state::Position mv : moves) {
 				if (not(jeu->etatJeu->getUnite(mv))) {
 					liste_commands.push_back(new engine::MoveUnitCommand(mv));

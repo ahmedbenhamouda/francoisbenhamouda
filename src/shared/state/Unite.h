@@ -7,10 +7,13 @@
 namespace state {
   class Position;
   class Flag;
+  class Terrain;
   class Unite;
 }
 
 #include "Position.h"
+#include "TerrainTypeId.h"
+#include "Terrain.h"
 #include "Flag.h"
 
 namespace state {
@@ -34,7 +37,7 @@ namespace state {
   public:
     Unite ();
     Unite (Position position, int color);
-    virtual std::vector<Position> getLegalMove ();
+    virtual std::vector<Position> getLegalMove (Terrain* terrain);
     virtual int getvie ();
     virtual int getprix ();
     virtual int getmvt ();
@@ -48,6 +51,7 @@ namespace state {
     void move (Position position);
     Flag* PossedeDrapeau ();
     virtual ~Unite ();
+    bool isLegalMove (Position pos, Terrain* terrain);
     // Setters and Getters
   };
 

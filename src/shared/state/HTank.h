@@ -6,6 +6,7 @@
 
 namespace state {
   class Position;
+  class Terrain;
   class Unite;
 }
 
@@ -27,7 +28,7 @@ namespace state {
   public:
     HTank ();
     HTank (Position position, int color);
-    std::vector<Position> getLegalMove ();
+    std::vector<Position> getLegalMove (Terrain* terrain);
     int getvie ();
     int getprix ();
     int getmvt ();
@@ -40,6 +41,7 @@ namespace state {
     void setpuissance (int p);
     ~HTank ();
     void move (Position position);
+    bool isLegalMove (Position pos, Terrain* terrain);
     // Setters and Getters
   };
 

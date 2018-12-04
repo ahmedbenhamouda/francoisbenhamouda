@@ -8,7 +8,7 @@ namespace state {
 		this->position = position;
 		this->color = color;
 	}
-	std::vector<Position> Infantry::getLegalMove(){
+	std::vector<Position> Infantry::getLegalMove(Terrain* terrain){
 		int mvt = getmvt();
 		int x = position.getX();
 		int y = position.getY();
@@ -22,7 +22,7 @@ namespace state {
 			for (int j = y-mvt; j <= y+mvt; j++){
 				int dy = std::abs(y-j);
 				if (dx+dy <= mvt){
-					if ((i<20 && i>=0) && (j<20 && j>=0)){
+					if ((i<20 && i>=0) && (j<20 && j>=0) and isLegalMove(Position(i,j), terrain)){
 						list.push_back (Position(i,j));
 					}
 				}
@@ -77,5 +77,11 @@ namespace state {
 	}
 	void Infantry::move(Position position) {
 		this->position = position;
+	}
+	bool Infantry::isLegalMove(Position pos, Terrain* terrain) {
+		if (terrain->getUnite(pos)) {
+			return false;
+		}
+		return true;
 	}
 }
