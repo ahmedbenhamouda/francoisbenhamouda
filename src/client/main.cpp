@@ -372,15 +372,9 @@ void AIPlay(AI* ai) {
 
 void AITest() {
     // Creation d'objets Joueur
-<<<<<<< HEAD
     unique_ptr<Joueur> joueur1(new Joueur(4,false));
-=======
-    unique_ptr<Joueur> joueur1(new Joueur(0,true));
->>>>>>> abc7f1252c52279349c0d0d783707ed20f3f3a95
     unique_ptr<Joueur> joueur2(new Joueur(5,true));
-    unique_ptr<Joueur> joueur3(new Joueur(6,true));
-    unique_ptr<Joueur> joueur4(new Joueur(7,true));
-    std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get(), joueur3.get(), joueur4.get()};
+    std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
 
 
     // Creation d'objets Batiment
