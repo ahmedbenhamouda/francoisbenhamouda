@@ -115,7 +115,9 @@ namespace render {
 			std::cout<<"You cannot play right now."<<std::endl;
 			return;
 		}
-		if (jeu->etatJeu->getUnite(position)) {
+		state::Unite* unit = jeu->etatJeu->getUnite(position);
+		state::Batiment* bat = jeu->etatJeu->getBatiment(position);
+		if (unit) {
 			if (jeu->selectedUnit) {
 				// Attack an unit
 				engine::Command* cmd = new engine::AttackUnitCommand(position);
@@ -125,17 +127,14 @@ namespace render {
 				engine::Command* cmd = new engine::SelectUnitCommand(position);
 				engine->addCommand(cmd);
 			}
+		} else if (bat and bat->getId_b() == 1) {
+			// Select a building
+			engine::Command* cmd = new engine::SelectBatimentCommand(position);
+			engine->addCommand(cmd);
 		} else if (jeu->selectedUnit) {
 			// Move a unit
 			engine::Command* cmd = new engine::MoveUnitCommand(position);
 			engine->addCommand(cmd);
-		} else {
-			// Select a building
-			state::Batiment* bat = jeu->etatJeu->getBatiment(position);		
-			if (bat and bat->getId_b() == 1) {
-				engine::Command* cmd = new engine::SelectBatimentCommand(position);
-				engine->addCommand(cmd);
-			}
 		}
 	}
 	void Layers::sendTurnCommand() {
@@ -156,24 +155,23 @@ namespace render {
 			std::cout<<"You cannot play right now."<<std::endl;
 			return;
 		}
-		//std::cout<<"sendCommand"<<std::endl;
-		if (px == 1 and py == 20) {
+		if (px == 1 and (py == 20 or py == 21)) {
 			engine::Command* cmd = new engine::SelectUnitTypeCommand(0);
 			engine->addCommand(cmd);
 		}
-		if (px == 3 and py == 20) {
+		if (px == 3 and (py == 20 or py == 21)) {
 			engine::Command* cmd = new engine::SelectUnitTypeCommand(1);
 			engine->addCommand(cmd);
 		}
-		if (px == 5 and py == 20) {
+		if (px == 5 and (py == 20 or py == 21)) {
 			engine::Command* cmd = new engine::SelectUnitTypeCommand(2);
 			engine->addCommand(cmd);
 		}
-		if (px == 7 and py == 20) {
+		if (px == 7 and (py == 20 or py == 21)) {
 			engine::Command* cmd = new engine::SelectUnitTypeCommand(3);
 			engine->addCommand(cmd);
 		}
-		if (px == 9 and py == 20) {
+		if (px == 9 and (py == 20 or py == 21)) {
 			engine::Command* cmd = new engine::SelectUnitTypeCommand(4);
 			engine->addCommand(cmd);
 		}

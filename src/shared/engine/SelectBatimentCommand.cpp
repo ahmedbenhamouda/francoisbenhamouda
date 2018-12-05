@@ -12,9 +12,9 @@ namespace engine {
 		state::Batiment* batiment = jeu->etatJeu->getBatiment(objectPos);
 		if (batiment == jeu->selectedBatiment) {
 			jeu->selectedBatiment = nullptr;
-		}
-		if (batiment->getColor() == jeu->joueurs[jeu->tour%nb_joueurs]->color) {
+		} else if (batiment->getColor() == jeu->joueurs[jeu->tour%nb_joueurs]->color) {
 			jeu->selectedBatiment = batiment;
+			jeu->selectedUnit = nullptr;
 		} else {
 			std::cout<<"This building is not yours."<<std::endl;
 		}
