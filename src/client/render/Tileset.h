@@ -140,7 +140,7 @@ Tileset<T>::Tileset (std::string filename) : filename(filename) {
             Tile tankBleu(96,16,16,16);
             Tile tankVert(96,32,16,16);
             Tile tankJaune(96,48,16,16);
-            Tile tankViolet(96,64,16,16);
+            Tile tankViolet(94,64,16,16);
             Tile tankBrun(96,80,16,16);
             Tile tankBleuF(96,96,16,16);
             Tile tankRougeF(96,112,16,16);

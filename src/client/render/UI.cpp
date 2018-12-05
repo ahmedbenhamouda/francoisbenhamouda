@@ -90,10 +90,10 @@ namespace render {
 					unit_type = "Infantry";
 					break;
 				case 1:
-					unit_type = "Recon";
+					unit_type = "Mech";
 					break;
 				case 2:
-					unit_type = "Mech";
+					unit_type = "Recon";
 					break;
 				case 3:
 					unit_type = "Tank";

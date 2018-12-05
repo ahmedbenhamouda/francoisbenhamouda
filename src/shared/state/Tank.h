@@ -23,7 +23,7 @@ namespace state {
     int prix     = 7000;
     int mvt     = 3;
     int puissance     = 180;
-    int id     = 2;
+    int id     = 3;
     // Operations
   public:
     Tank ();
