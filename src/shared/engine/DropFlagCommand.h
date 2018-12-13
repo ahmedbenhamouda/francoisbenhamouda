@@ -28,7 +28,7 @@ namespace engine {
     void execute (state::Jeu* jeu);
     state::Position getPos ();
     int getId ();
-    void Undo ();
+    void Undo (state::Jeu* jeu);
     // Setters and Getters
   };
 

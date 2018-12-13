@@ -22,6 +22,7 @@ namespace engine {
   public:
     state::Jeu* jeu;
     std::vector<Command*> commands;
+    Command* latest_command;
     // Operations
   public:
     Engine ();

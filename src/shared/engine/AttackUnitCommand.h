@@ -18,8 +18,13 @@ namespace engine {
   class AttackUnitCommand : public engine::Command {
     // Attributes
   public:
+    state::Position objectPos;
     state::Position targetPos;
     int id     = 4;
+    int target_life;
+    int target_power;
+    int target_color;
+    int target_type;
     // Operations
   public:
     AttackUnitCommand ();
@@ -28,7 +33,7 @@ namespace engine {
     void execute (state::Jeu* jeu);
     state::Position getPos ();
     int getId ();
-    void Undo ();
+    void Undo (state::Jeu* jeu);
     // Setters and Getters
   };
 

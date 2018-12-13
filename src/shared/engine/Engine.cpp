@@ -11,8 +11,21 @@ namespace engine {
 		commands.push_back(command);
 	}
 	void Engine::update() {
+		if (latest_command != commands[commands.size()-1]) {
+			latest_command = commands[commands.size()-1];
+			latest_command->execute(jeu);
+		}
+	}
+	void Engine::RollBack() {
+		if (commands.size()>0) {
+			Command* cmd = commands[commands.size()-1];
+			cmd->Undo(jeu);
+			delete cmd;
+			commands.pop_back();
+		}
+	}
+	void Engine::Clear() {
 		for (Command* cmd : commands) {
-			cmd->execute(jeu);
 			delete cmd;
 		}
 		commands = std::vector<Command*>();

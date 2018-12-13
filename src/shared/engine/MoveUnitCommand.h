@@ -18,6 +18,7 @@ namespace engine {
   class MoveUnitCommand : public engine::Command {
     // Attributes
   public:
+    state::Position objectPos;
     state::Position targetPos;
     int id     = 3;
     // Operations
@@ -29,7 +30,7 @@ namespace engine {
     void execute (state::Jeu* jeu);
     state::Position getPos ();
     int getId ();
-    void Undo ();
+    void Undo (state::Jeu* jeu);
     // Setters and Getters
   };
 

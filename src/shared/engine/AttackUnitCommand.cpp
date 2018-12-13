@@ -80,24 +80,37 @@ namespace engine {
 		jeu->selectedUnit = object;
 		object->can_attack = true;
 		
+		state::Unite* target;
 		// Check if enemy unit was killed
-		if (not(jeu->etatJeu->getUnite(targetPos)) {
-			state::Unite* unite;
-			if (target_type == 0) {
-				unite = new state::Infantry(targetPos, target_color);
-			}
+		if (not(jeu->etatJeu->getUnite(targetPos))) {	
+			// Create new target
 			if (target_type == 1) {
-				unite = new state::Mech(targetPos, target_color);
+				target = new state::Mech(targetPos, target_color);
+			} else if (target_type == 2) {
+				target = new state::Recon(targetPos, target_color);
+			} else if (target_type == 3) {
+				target = new state::Tank(targetPos, target_color);
+			} else if (target_type == 3) {
+				target = new state::HTank(targetPos, target_color);
+			} else {
+				target = new state::Infantry(targetPos, target_color);
 			}
-			if (target_type == 2) {
-				unite = new state::Recon(targetPos, target_color);
+			// Apply information on target 
+			target->setpuissance(target_power);
+			target->setvie(target_life);
+			// Place new unit to Terrain
+			jeu->etatJeu->addUnite(target);
+			// Check if dead unit had any flag
+			state::Flag* flag = jeu->etatJeu->getFlag(targetPos);
+			if (flag) {
+				flag->is_owned = true;
+				target->has_flag = flag;
 			}
-			if (target_type == 3) {
-				unite = new state::Tank(targetPos, target_color);
-			}
-			if (target_type == 3) {
-				unite = new state::HTank(targetPos, target_color);
-			}
+		} else {
+			// Restore target life and power
+			target = jeu->etatJeu->getUnite(targetPos);
+			target->setpuissance(target_power);
+			target->setvie(target_life);
 		}
 		// TODO : la suite
 	} 

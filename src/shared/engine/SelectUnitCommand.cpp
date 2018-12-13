@@ -17,7 +17,9 @@ namespace engine {
 		} else {
 			std::cout<<"This unit is not yours."<<std::endl;
 		}
-		
+	}
+	void SelectUnitCommand::Undo(state::Jeu* jeu) {
+		jeu->selectedUnit = nullptr;
 	}
 	SelectUnitCommand::~SelectUnitCommand() {
 	}

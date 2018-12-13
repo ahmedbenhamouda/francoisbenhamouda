@@ -23,7 +23,7 @@ namespace engine {
     virtual void execute (state::Jeu* jeu) = 0;
     virtual state::Position getPos () = 0;
     virtual int getId () = 0;
-    virtual void Undo () = 0;
+    virtual void Undo (state::Jeu* jeu) = 0;
     // Setters and Getters
   };
 

@@ -7,7 +7,6 @@
 
 namespace engine {
 	MoveUnitCommand::MoveUnitCommand (state::Position targetPos) {
-		this->objectPos = jeu->selectedUnit->position;
 		this->targetPos = targetPos;
 	}
 	MoveUnitCommand::~MoveUnitCommand() {
@@ -24,6 +23,7 @@ namespace engine {
 	void MoveUnitCommand::execute(state::Jeu* jeu) {
 		state::Unite* object = jeu->selectedUnit;
 		if (object) {
+			this->objectPos = jeu->selectedUnit->position;
 			if (not(isLegalMove(jeu, object)) or jeu->etatJeu->getUnite(targetPos)) {
 				return;
 			}
@@ -66,7 +66,7 @@ namespace engine {
 		jeu->selectedUnit = nullptr;
 
 	}
-	void MoveUnitCommand::Undo() {
+	void MoveUnitCommand::Undo(state::Jeu* jeu) {
 		state::Unite* object = jeu->etatJeu->getUnite(targetPos);
 		jeu->selectedUnit = object;
 		
