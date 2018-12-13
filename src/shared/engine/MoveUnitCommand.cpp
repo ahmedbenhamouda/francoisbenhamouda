@@ -7,6 +7,7 @@
 
 namespace engine {
 	MoveUnitCommand::MoveUnitCommand (state::Position targetPos) {
+		this->objectPos = jeu->selectedUnit->position;
 		this->targetPos = targetPos;
 	}
 	MoveUnitCommand::~MoveUnitCommand() {
@@ -52,16 +53,33 @@ namespace engine {
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 
-		// Check if the flag has been sent to a HQ
+		// Check if a flag has been sent to the unit's HQ
 		state::Batiment* bat = jeu->etatJeu->getBatiment(targetPos);
 		if (bat and bat->getId_b() == 0 and bat->getColor() == object->getColor()) {
 			DropFlagCommand(object->position).execute(jeu);
+		} else {
+			// Try to see if there is any flag to capture
+			CaptureFlagCommand().execute(jeu);
 		}
-		CaptureFlagCommand().execute(jeu);
 
 		//end action
 		jeu->selectedUnit = nullptr;
 
+	}
+	void MoveUnitCommand::Undo() {
+		state::Unite* object = jeu->etatJeu->getUnite(targetPos);
+		jeu->selectedUnit = object;
+		
+		// Check if there is any flag to capture
+		CaptureFlagCommand().execute(jeu);
+		
+		// Move the unit to the previous position
+		object->can_move = true;
+		MoveUnitCommand(objectPos).execute(jeu);
+		
+		// reset action
+		object->can_move = true;
+		jeu->selectedUnit = object;
 	}
 	state::Position MoveUnitCommand::getPos() {
 		return this->targetPos;

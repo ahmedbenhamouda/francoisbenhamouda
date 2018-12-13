@@ -8,12 +8,12 @@ namespace engine {
 		state::Unite* unite = jeu->selectedUnit;
 		state::Flag* flag = jeu->etatJeu->getFlag(unite->position);
 		if (flag and not(flag->is_owned)) {
-			// Check if the flag is in your base
+			/*// Check if the flag is in your base
 			state::Batiment* bat = jeu->etatJeu->getBatiment(unite->position);
 			if (bat and bat->getId_b() == 0 and bat->getColor() == unite->getColor()) {
 				std::cout<<"The flag is in your base."<<std::endl;
 				return;
-			}
+			}*/
 			// Check if it is your flag
 			if (flag->color == unite->getColor()) {
 				std::cout<<"Your flag has been retrieved."<<std::endl;

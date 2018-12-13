@@ -28,6 +28,7 @@ namespace engine {
     state::Position getPos ();
     int getId ();
     ~SelectUnitTypeCommand ();
+    void Undo ();
     // Setters and Getters
   };
 

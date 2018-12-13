@@ -29,6 +29,8 @@ namespace engine {
     ~Engine ();
     void addCommand (Command* command);
     void update ();
+    void Clear ();
+    void RollBack ();
     // Setters and Getters
   };
 

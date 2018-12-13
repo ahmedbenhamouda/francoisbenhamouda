@@ -1,14 +1,21 @@
-#include "AttackUnitCommand.h"
-#include "DeleteUnitCommand.h"
-#include "DropFlagCommand.h"
 #include <iostream>
 #include <cmath>
 #include <thread>
 #include <chrono>
+#include "AttackUnitCommand.h"
+#include "DeleteUnitCommand.h"
+#include "DropFlagCommand.h"
+#include "state/Unite.h"
+#include "state/Infantry.h"
+#include "state/Mech.h"
+#include "state/Recon.h"
+#include "state/Tank.h"
+#include "state/HTank.h"
 
 namespace engine {
 	AttackUnitCommand::AttackUnitCommand (state::Position targetPos) {
 		this->targetPos = targetPos;
+		this->target_life = 0;
 	}
 	AttackUnitCommand::~AttackUnitCommand() {
 	}
@@ -34,9 +41,14 @@ namespace engine {
 					jeu->selectedUnit = nullptr;
 					return;
 				}
-
+				// Get the information on the target
+				this->target_life = target->getvie();
+				this->target_color = target->getColor();
+				this->target_power = target->getpuissance();
+				this->target_type = target->getId();
+				
 				object->attacker(target);
-				int life = target->getvie();
+				int life = target_life;
 				std::cout<<"Enemy's life : "<<life<<std::endl;
 				if (life == 0) {
 					DropFlagCommand(targetPos).execute(jeu);
@@ -59,6 +71,36 @@ namespace engine {
 			}
 		}
 	}
+	void AttackUnitCommand::Undo(state::Jeu* jeu) {
+		// Check if any unit was attacked
+		if (target_life == 0) {
+			return;
+		}
+		state::Unite* object = jeu->etatJeu->getUnite(objectPos);
+		jeu->selectedUnit = object;
+		object->can_attack = true;
+		
+		// Check if enemy unit was killed
+		if (not(jeu->etatJeu->getUnite(targetPos)) {
+			state::Unite* unite;
+			if (target_type == 0) {
+				unite = new state::Infantry(targetPos, target_color);
+			}
+			if (target_type == 1) {
+				unite = new state::Mech(targetPos, target_color);
+			}
+			if (target_type == 2) {
+				unite = new state::Recon(targetPos, target_color);
+			}
+			if (target_type == 3) {
+				unite = new state::Tank(targetPos, target_color);
+			}
+			if (target_type == 3) {
+				unite = new state::HTank(targetPos, target_color);
+			}
+		}
+		// TODO : la suite
+	} 
 	state::Position AttackUnitCommand::getPos() {
 		return this->targetPos;
 	}
