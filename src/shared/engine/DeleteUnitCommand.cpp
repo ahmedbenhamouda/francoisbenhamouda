@@ -19,4 +19,6 @@ namespace engine {
 	int DeleteUnitCommand::getId() {
 		return this->id;
 	}
+	void DeleteUnitCommand::Undo(state::Jeu* jeu){
+	}
 }

@@ -18,6 +18,7 @@ namespace engine {
   class CreateUnitCommand : public engine::Command {
     // Attributes
   public:
+    state::Position objectPos;
     int id     = 0;
     // Operations
   public:

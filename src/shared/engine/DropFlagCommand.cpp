@@ -25,4 +25,6 @@ namespace engine {
 	int DropFlagCommand::getId() {
 		return this->id;
 	}
+	void DropFlagCommand::Undo(state::Jeu* jeu){
+	}
 }

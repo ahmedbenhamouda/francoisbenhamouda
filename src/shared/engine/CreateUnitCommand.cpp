@@ -40,4 +40,6 @@ namespace engine {
 	int CreateUnitCommand::getId() {
 		return this->id;
 	}
+	void CreateUnitCommand::Undo(state::Jeu* jeu){
+	}
 }

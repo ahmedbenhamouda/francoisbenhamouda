@@ -33,4 +33,6 @@ namespace engine {
 	int CaptureFlagCommand::getId() {
 		return this->id;
 	}
+	void CaptureFlagCommand::Undo(state::Jeu* jeu){
+	}
 }

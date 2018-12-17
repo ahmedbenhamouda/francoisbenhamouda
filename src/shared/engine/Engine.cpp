@@ -11,9 +11,11 @@ namespace engine {
 		commands.push_back(command);
 	}
 	void Engine::update() {
-		if (latest_command != commands[commands.size()-1]) {
-			latest_command = commands[commands.size()-1];
-			latest_command->execute(jeu);
+		if (commands.size()>0) {
+			if (not(latest_command) or latest_command != commands[commands.size()-1]) {
+				latest_command = commands[commands.size()-1];
+				latest_command->execute(jeu);
+			}
 		}
 	}
 	void Engine::RollBack() {
