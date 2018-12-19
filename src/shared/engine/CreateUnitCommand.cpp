@@ -34,6 +34,8 @@ namespace engine {
 			std::cout<<"This building is not yours."<<std::endl;
 		}
 	}
+	void CreateUnitCommand::Undo (state::Jeu* jeu) {
+	}
 	state::Position CreateUnitCommand::getPos() {
 		return state::Position(-1,-1);
 	}

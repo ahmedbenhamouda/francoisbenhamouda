@@ -13,6 +13,8 @@ namespace engine {
 		std::cout<<"Unit died !"<<std::endl;
 		jeu->etatJeu->deleteUnite(objectPos);
 	}
+	void DeleteUnitCommand::Undo (state::Jeu* jeu) {
+	}
 	state::Position DeleteUnitCommand::getPos() {
 		return this->objectPos;
 	}

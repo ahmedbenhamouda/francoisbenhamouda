@@ -90,7 +90,7 @@ namespace engine {
 				target = new state::Recon(targetPos, target_color);
 			} else if (target_type == 3) {
 				target = new state::Tank(targetPos, target_color);
-			} else if (target_type == 3) {
+			} else if (target_type == 4) {
 				target = new state::HTank(targetPos, target_color);
 			} else {
 				target = new state::Infantry(targetPos, target_color);

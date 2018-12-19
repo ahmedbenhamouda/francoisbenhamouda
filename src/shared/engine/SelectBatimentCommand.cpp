@@ -20,6 +20,8 @@ namespace engine {
 		}
 		
 	}
+	void SelectBatimentCommand::Undo (state::Jeu* jeu) {
+	}
 	SelectBatimentCommand::~SelectBatimentCommand() {
 	}
 	state::Position SelectBatimentCommand::getPos() {

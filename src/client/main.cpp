@@ -71,11 +71,22 @@ void displayWindow(Layers* layers, UI* ui) {
 }
 
 void runEngine(Engine* engine) {
+	bool reverse = false;
 	//cout<<engine->commands.size()<<endl;
 	while(1) {
+		if (engine->jeu->tour == 0) {
+			reverse = false;
+		}
+		if (engine->jeu->tour == 8) {
+			reverse = true;
+		}
 		//if (engine->commands[0]) {
 			m1.lock();
-			engine->update();
+			if (reverse) {
+				engine->RollBack();
+			} else {
+				engine->update();
+			}
 			m1.unlock();
 		//}
 	}
