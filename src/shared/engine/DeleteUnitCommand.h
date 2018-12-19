@@ -20,6 +20,10 @@ namespace engine {
   public:
     state::Position objectPos;
     int id     = 1;
+    int target_type;
+    int target_color;
+    int target_power;
+    int tagert_life;
     // Operations
   public:
     DeleteUnitCommand ();

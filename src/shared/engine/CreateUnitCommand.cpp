@@ -1,4 +1,5 @@
 #include "CreateUnitCommand.h"
+#include "DeleteUnitCommand.h"
 #include <iostream>
 
 
@@ -18,8 +19,8 @@ namespace engine {
 		if (usine->getColor() == jeu->joueurs[jeu->tour%nb_joueurs]->color) {
 			state::Unite* unite = usine->creerU(jeu->unit_type);
 			// Check if player has enough money
-			int money = jeu->joueurs[jeu->tour%nb_joueurs]->monnaie.getArgent();
-			int price = unite->getprix();
+			money = jeu->joueurs[jeu->tour%nb_joueurs]->monnaie.getArgent();
+			price = unite->getprix();
 			if (money < price) {
 				std::cout<<"You don't have enough money."<<std::endl;
 				delete unite;
@@ -35,11 +36,13 @@ namespace engine {
 		}
 	}
 	state::Position CreateUnitCommand::getPos() {
-		return state::Position(-1,-1);
+		return this->objectPos;
 	}
 	int CreateUnitCommand::getId() {
 		return this->id;
 	}
 	void CreateUnitCommand::Undo(state::Jeu* jeu){
+		DeleteUnitCommand(objectPos).execute(jeu);
+		money = money + price;
 	}
 }

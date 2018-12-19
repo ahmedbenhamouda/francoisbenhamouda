@@ -20,6 +20,8 @@ namespace engine {
   public:
     state::Position objectPos;
     int id     = 0;
+    int money;
+    int price;
     // Operations
   public:
     CreateUnitCommand ();

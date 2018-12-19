@@ -1,4 +1,5 @@
 #include "CaptureFlagCommand.h"
+#include "DropFlagCommand.h"
 #include <iostream>
 
 namespace engine {
@@ -6,6 +7,7 @@ namespace engine {
 	}
 	void CaptureFlagCommand::execute (state::Jeu* jeu) {
 		state::Unite* unite = jeu->selectedUnit;
+		targetPos = unite->position;
 		state::Flag* flag = jeu->etatJeu->getFlag(unite->position);
 		if (flag and not(flag->is_owned)) {
 			/*// Check if the flag is in your base
@@ -28,11 +30,12 @@ namespace engine {
 	CaptureFlagCommand::~CaptureFlagCommand() {
 	}
 	state::Position CaptureFlagCommand::getPos() {
-		return state::Position(-1,-1);
+		return this->targetPos;
 	}
 	int CaptureFlagCommand::getId() {
 		return this->id;
 	}
 	void CaptureFlagCommand::Undo(state::Jeu* jeu){
+		DropFlagCommand(targetPos).execute(jeu);
 	}
 }

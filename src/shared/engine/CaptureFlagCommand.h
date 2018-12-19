@@ -18,6 +18,7 @@ namespace engine {
   class CaptureFlagCommand : public engine::Command {
     // Attributes
   public:
+    state::Position targetPos;
     int id     = 6;
     // Operations
   public:

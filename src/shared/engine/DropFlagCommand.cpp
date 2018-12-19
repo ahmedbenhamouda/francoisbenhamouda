@@ -1,4 +1,5 @@
 #include "DropFlagCommand.h"
+#include "CaptureFlagCommand.h"
 #include <iostream>
 
 namespace engine {
@@ -26,5 +27,6 @@ namespace engine {
 		return this->id;
 	}
 	void DropFlagCommand::Undo(state::Jeu* jeu){
+		CaptureFlagCommand().execute(jeu);
 	}
 }
