@@ -30,4 +30,7 @@ namespace engine {
 	int SelectBatimentCommand::getId() {
 		return this->id;
 	}
+	void SelectBatimentCommand::Undo(state::Jeu* jeu){
+		jeu->selectedBatiment = nullptr;
+	}
 }

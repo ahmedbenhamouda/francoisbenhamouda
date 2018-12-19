@@ -12,7 +12,7 @@ namespace engine {
 	}
 	void Engine::update() {
 		if (commands.size()>0) {
-			if (latest_command != commands[commands.size()-1]) {
+			if (not(latest_command) or latest_command != commands[commands.size()-1]) {
 				latest_command = commands[commands.size()-1];
 				latest_command->execute(jeu);
 			}
