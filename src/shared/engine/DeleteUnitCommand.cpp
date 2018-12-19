@@ -16,10 +16,10 @@ namespace engine {
     	DeleteUnitCommand::~DeleteUnitCommand () {
 	}
     	void DeleteUnitCommand::execute (state::Jeu* jeu) {
-		//state::Unite* target = jeu->etatJeu->getUnite(objectPos);
+    		std::cout<<"Delete unit"<<std::endl;
 		//this->target_type = target->getId();	
 		//this->target_color = target->getColor();
-		std::cout<<"Unit died !"<<std::endl;
+		//std::cout<<"Unit died !"<<std::endl;
 		jeu->etatJeu->deleteUnite(objectPos);
 	}
 	state::Position DeleteUnitCommand::getPos() {
@@ -29,6 +29,7 @@ namespace engine {
 		return this->id;
 	}
 	void DeleteUnitCommand::Undo(state::Jeu* jeu){
+		std::cout<<"Cancel delete unit"<<std::endl;
 		state::Unite* target;
 		if (target_type == 1) {
 			target = new state::Mech(objectPos, target_color);

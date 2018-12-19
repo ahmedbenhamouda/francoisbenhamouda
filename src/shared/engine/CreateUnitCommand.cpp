@@ -17,6 +17,7 @@ namespace engine {
 			return;
 		}
 		if (usine->getColor() == jeu->joueurs[jeu->tour%nb_joueurs]->color) {
+			objectPos = usine->position;
 			state::Unite* unite = usine->creerU(jeu->unit_type);
 			// Check if player has enough money
 			money = jeu->joueurs[jeu->tour%nb_joueurs]->monnaie.getArgent();
@@ -30,7 +31,7 @@ namespace engine {
 			jeu->joueurs[jeu->tour%nb_joueurs]->monnaie.achat(price);
 			jeu->selectedBatiment = nullptr;
 			jeu->unit_type = 0;
-			std::cout<<"Money remaining : "<<money-price<<std::endl;
+			//std::cout<<"Money remaining : "<<money-price<<std::endl;
 		} else {
 			std::cout<<"This building is not yours."<<std::endl;
 		}
@@ -42,6 +43,7 @@ namespace engine {
 		return this->id;
 	}
 	void CreateUnitCommand::Undo(state::Jeu* jeu){
+		std::cout<<"Cancel create unit"<<std::endl;
 		DeleteUnitCommand(objectPos).execute(jeu);
 		money = money + price;
 	}

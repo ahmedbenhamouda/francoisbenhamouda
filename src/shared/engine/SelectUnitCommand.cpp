@@ -8,6 +8,7 @@ namespace engine {
 		this->objectPos = objectPos;
 	}
 	void SelectUnitCommand::execute(state::Jeu* jeu) {
+		std::cout<<"Select unit"<<std::endl;
 		int nb_joueurs = jeu->joueurs.size();
 		//std::cout<<"unit selected"<<std::endl;
 		state::Unite* unite = jeu->etatJeu->getUnite(objectPos);
@@ -19,6 +20,7 @@ namespace engine {
 		}
 	}
 	void SelectUnitCommand::Undo(state::Jeu* jeu) {
+		std::cout<<"Cancel select unit"<<std::endl;
 		jeu->selectedUnit = nullptr;
 	}
 	SelectUnitCommand::~SelectUnitCommand() {

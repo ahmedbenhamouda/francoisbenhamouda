@@ -9,6 +9,7 @@ namespace engine {
 		this->targetPos = targetPos;
 	}
 	void DropFlagCommand::execute (state::Jeu* jeu) {
+		std::cout<<"Drop flag"<<std::endl;
 		state::Unite* unite = jeu->etatJeu->getUnite(targetPos);
 		if (unite and unite->has_flag) {
 			state::Flag* flag = unite->has_flag;
@@ -27,6 +28,7 @@ namespace engine {
 		return this->id;
 	}
 	void DropFlagCommand::Undo(state::Jeu* jeu){
+		std::cout<<"Cancel drop flag"<<std::endl;
 		CaptureFlagCommand().execute(jeu);
 	}
 }

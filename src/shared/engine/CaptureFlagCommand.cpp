@@ -6,6 +6,7 @@ namespace engine {
 	CaptureFlagCommand::CaptureFlagCommand() {
 	}
 	void CaptureFlagCommand::execute (state::Jeu* jeu) {
+		std::cout<<"Capture flag"<<std::endl;
 		state::Unite* unite = jeu->selectedUnit;
 		targetPos = unite->position;
 		state::Flag* flag = jeu->etatJeu->getFlag(unite->position);
@@ -36,6 +37,7 @@ namespace engine {
 		return this->id;
 	}
 	void CaptureFlagCommand::Undo(state::Jeu* jeu){
+		std::cout<<"Cancel capture flag"<<std::endl;
 		DropFlagCommand(targetPos).execute(jeu);
 	}
 }

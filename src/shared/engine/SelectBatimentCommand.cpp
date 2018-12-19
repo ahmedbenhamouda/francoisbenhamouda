@@ -8,6 +8,7 @@ namespace engine {
 		this->objectPos = objectPos;
 	}
 	void SelectBatimentCommand::execute(state::Jeu* jeu) {
+		std::cout<<"Select batiment"<<std::endl;
 		int nb_joueurs = jeu->joueurs.size();
 		state::Batiment* batiment = jeu->etatJeu->getBatiment(objectPos);
 		if (batiment == jeu->selectedBatiment) {
@@ -29,6 +30,7 @@ namespace engine {
 		return this->id;
 	}
 	void SelectBatimentCommand::Undo(state::Jeu* jeu){
+		std::cout<<"Cancel select batiment"<<std::endl;
 		jeu->selectedBatiment = nullptr;
 	}
 }

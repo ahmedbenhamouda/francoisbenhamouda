@@ -389,10 +389,10 @@ void AITest() {
 
 
     // Creation d'objets Batiment
-    unique_ptr<Batiment> batiment1 (new Usine(Position(6, 4), 5));
+    unique_ptr<Batiment> batiment1 (new Usine(Position(7, 4), 5));
     unique_ptr<Batiment> batiment2 (new QG(Position(5, 5), 5));
 
-    unique_ptr<Batiment> batiment3 (new Usine(Position(13, 15), 4));
+    unique_ptr<Batiment> batiment3 (new Usine(Position(12, 15), 4));
     unique_ptr<Batiment> batiment4 (new QG(Position(14, 14), 4));
 
     vector<Batiment*> batiments;
@@ -456,7 +456,7 @@ void AITest() {
 
     cout<<"Hit Ctrl-C to close the game."<<endl;
     cout<<"Press Escape to end your turn."<<endl;
-    std::cout<<"Player 1's turn :"<<std::endl;
+    //std::cout<<"Player 1's turn :"<<std::endl;
 
     lyr.join();
     ng.join();

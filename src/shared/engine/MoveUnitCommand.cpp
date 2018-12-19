@@ -21,6 +21,7 @@ namespace engine {
 		return false;
 	}
 	void MoveUnitCommand::execute(state::Jeu* jeu) {
+		std::cout<<"Move unit"<<std::endl;
 		state::Unite* object = jeu->selectedUnit;
 		if (object) {
 			this->objectPos = jeu->selectedUnit->position;
@@ -67,6 +68,7 @@ namespace engine {
 
 	}
 	void MoveUnitCommand::Undo(state::Jeu* jeu) {
+		std::cout<<"Cancel move unit"<<std::endl;
 		state::Unite* object = jeu->etatJeu->getUnite(targetPos);
 		jeu->selectedUnit = object;
 		
@@ -80,6 +82,7 @@ namespace engine {
 		// reset action
 		object->can_move = true;
 		jeu->selectedUnit = object;
+		std::cout<<"Done."<<std::endl;	
 	}
 	state::Position MoveUnitCommand::getPos() {
 		return this->targetPos;

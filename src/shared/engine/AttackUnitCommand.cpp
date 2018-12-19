@@ -20,6 +20,7 @@ namespace engine {
 	AttackUnitCommand::~AttackUnitCommand() {
 	}
 	void AttackUnitCommand::execute(state::Jeu* jeu) {
+		std::cout<<"Attack unit"<<std::endl;
 		state::Unite* object = jeu->selectedUnit;
 		state::Unite* target = jeu->etatJeu->getUnite(targetPos);
 		if (object and target) {
@@ -72,6 +73,7 @@ namespace engine {
 		}
 	}
 	void AttackUnitCommand::Undo(state::Jeu* jeu) {
+		std::cout<<"Cancel attack unit"<<std::endl;
 		// Check if any unit was attacked
 		if (target_life == 0) {
 			return;

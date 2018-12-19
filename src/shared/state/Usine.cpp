@@ -14,7 +14,6 @@ namespace state {
 		this->color = color;
 	}
 	Unite* Usine::creerU(int id){
-		std::cout<<id<<std::endl;
 		if (id == 0){
 			return (new Infantry(this->position, this->color));
 		}

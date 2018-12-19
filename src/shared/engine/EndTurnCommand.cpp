@@ -15,7 +15,7 @@ namespace engine {
 		jeu->selectedBatiment = nullptr;
 
 		jeu->tour++;
-		std::cout<<std::endl<<"Player "<<1+jeu->tour%nb_joueurs<<"'s turn :"<<std::endl;
+		//std::cout<<std::endl<<"Player "<<1+jeu->tour%nb_joueurs<<"'s turn :"<<std::endl;
 		
 		for (state::Unite* unite : jeu->etatJeu->getUniteList()) {
 			// store possible moves before ending the turn
@@ -34,6 +34,7 @@ namespace engine {
 		
 	}
 	void EndTurnCommand::Undo (state::Jeu* jeu) {
+		std::cout<<"Cancel end turn"<<std::endl;
 		// Restore all units' possible moves before ending
 		std::vector<state::Unite*> unite_list = jeu->etatJeu->getUniteList();
 		for (size_t i=0; i<unite_list.size(); i++) {

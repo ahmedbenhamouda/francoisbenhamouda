@@ -20,7 +20,6 @@ namespace engine {
 	}
 	void Engine::RollBack() {
 		if (commands.size()>0) {
-			std::cout<<"Rollback !"<<std::endl;
 			Command* cmd = commands[commands.size()-1];
 			cmd->Undo(jeu);
 			delete cmd;
