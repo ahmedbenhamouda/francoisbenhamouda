@@ -18,8 +18,6 @@ namespace engine {
 			std::cout<<"The flag has been dropped."<<std::endl;
 		}
 	}
-	void DropFlagCommand::Undo (state::Jeu* jeu) {
-	}
 	DropFlagCommand::~DropFlagCommand() {
 	}
 	state::Position DropFlagCommand::getPos() {

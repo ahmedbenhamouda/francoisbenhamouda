@@ -16,13 +16,11 @@ namespace engine {
     	DeleteUnitCommand::~DeleteUnitCommand () {
 	}
     	void DeleteUnitCommand::execute (state::Jeu* jeu) {
-		state::Unite* target = jeu->etatJeu->getUnite(objectPos);
-		this->target_type = target->getId();	
-		this->target_color = target->getColor();
+		//state::Unite* target = jeu->etatJeu->getUnite(objectPos);
+		//this->target_type = target->getId();	
+		//this->target_color = target->getColor();
 		std::cout<<"Unit died !"<<std::endl;
 		jeu->etatJeu->deleteUnite(objectPos);
-	}
-	void DeleteUnitCommand::Undo (state::Jeu* jeu) {
 	}
 	state::Position DeleteUnitCommand::getPos() {
 		return this->objectPos;

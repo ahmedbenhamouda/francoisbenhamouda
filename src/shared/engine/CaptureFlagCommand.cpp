@@ -27,8 +27,6 @@ namespace engine {
 			flag->is_owned = true;
 		}
 	}
-	void CaptureFlagCommand::Undo (state::Jeu* jeu) {
-	}
 	CaptureFlagCommand::~CaptureFlagCommand() {
 	}
 	state::Position CaptureFlagCommand::getPos() {

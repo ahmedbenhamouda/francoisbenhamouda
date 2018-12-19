@@ -77,7 +77,7 @@ void runEngine(Engine* engine) {
 		if (engine->jeu->tour == 0) {
 			reverse = false;
 		}
-		if (engine->jeu->tour == 8) {
+		if (engine->jeu->tour == 4) {
 			reverse = true;
 		}
 		//if (engine->commands[0]) {
