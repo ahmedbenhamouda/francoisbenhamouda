@@ -7,6 +7,7 @@ namespace state {
   class Jeu;
 };
 namespace engine {
+  class Engine;
   class Command;
 }
 
@@ -22,17 +23,15 @@ namespace engine {
     int id     = 1;
     int target_type;
     int target_color;
-    int target_power;
-    int tagert_life;
     // Operations
   public:
     DeleteUnitCommand ();
     DeleteUnitCommand (state::Position objectPos);
     ~DeleteUnitCommand ();
-    void execute (state::Jeu* jeu);
+    void execute (state::Jeu* jeu, Engine* engine);
     state::Position getPos ();
     int getId ();
-    void Undo (state::Jeu* jeu);
+    void Undo (state::Jeu* jeu, Engine* engine);
     // Setters and Getters
   };
 

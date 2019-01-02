@@ -8,8 +8,7 @@ namespace engine {
 	}
 	CreateUnitCommand::~CreateUnitCommand() {
 	}
-	void CreateUnitCommand::execute (state::Jeu* jeu) {
-		std::cout<<"Create unit"<<std::endl;
+	void CreateUnitCommand::execute(state::Jeu* jeu, Engine* engine) {
   		int nb_joueurs = jeu->joueurs.size();
 		state::Batiment* usine = jeu->selectedBatiment;
 		if (not(usine)) {
@@ -42,9 +41,9 @@ namespace engine {
 	int CreateUnitCommand::getId() {
 		return this->id;
 	}
-	void CreateUnitCommand::Undo(state::Jeu* jeu){
-		std::cout<<"Cancel create unit"<<std::endl;
-		DeleteUnitCommand(objectPos).execute(jeu);
-		money = money + price;
+	void CreateUnitCommand::Undo(state::Jeu* jeu, Engine* engine){
+		int nb_joueurs = jeu->joueurs.size();
+		DeleteUnitCommand(objectPos).execute(jeu, engine);
+		jeu->joueurs[jeu->tour%nb_joueurs]->monnaie.gainTour(price);
 	}
 }

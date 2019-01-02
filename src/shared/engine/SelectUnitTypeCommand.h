@@ -7,6 +7,7 @@ namespace state {
   class Jeu;
 };
 namespace engine {
+  class Engine;
   class Command;
 }
 
@@ -24,11 +25,11 @@ namespace engine {
   public:
     SelectUnitTypeCommand ();
     SelectUnitTypeCommand (int unit_id);
-    void execute (state::Jeu* jeu);
+    void execute (state::Jeu* jeu, Engine* engine);
     state::Position getPos ();
     int getId ();
     ~SelectUnitTypeCommand ();
-    void Undo (state::Jeu* jeu);
+    void Undo (state::Jeu* jeu, Engine* engine);
     // Setters and Getters
   };
 
