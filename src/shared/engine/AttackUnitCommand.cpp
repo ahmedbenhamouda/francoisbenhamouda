@@ -2,6 +2,7 @@
 #include <cmath>
 #include <thread>
 #include <chrono>
+#include "Engine.h"
 #include "AttackUnitCommand.h"
 #include "DeleteUnitCommand.h"
 #include "DropFlagCommand.h"
@@ -19,8 +20,7 @@ namespace engine {
 	}
 	AttackUnitCommand::~AttackUnitCommand() {
 	}
-	void AttackUnitCommand::execute(state::Jeu* jeu) {
-		std::cout<<"Attack unit"<<std::endl;
+	void AttackUnitCommand::execute(state::Jeu* jeu, Engine* engine) {
 		state::Unite* object = jeu->selectedUnit;
 		state::Unite* target = jeu->etatJeu->getUnite(targetPos);
 		if (object and target) {
@@ -42,18 +42,21 @@ namespace engine {
 					jeu->selectedUnit = nullptr;
 					return;
 				}
+				// Get the position of the attacker
+				this->objectPos = jeu->selectedUnit->position;
+				
 				// Get the information on the target
 				this->target_life = target->getvie();
-				this->target_color = target->getColor();
 				this->target_power = target->getpuissance();
-				this->target_type = target->getId();
 				
 				object->attacker(target);
-				int life = target_life;
+				int life = target->getvie();
 				std::cout<<"Enemy's life : "<<life<<std::endl;
 				if (life == 0) {
-					DropFlagCommand(targetPos).execute(jeu);
-					DeleteUnitCommand(targetPos).execute(jeu);
+					engine->addCommand(new DropFlagCommand(targetPos));
+					engine->update();
+					engine->addCommand(new DeleteUnitCommand(targetPos));
+					engine->update();
 				}
 
 				// end action
@@ -72,49 +75,19 @@ namespace engine {
 			}
 		}
 	}
-	void AttackUnitCommand::Undo(state::Jeu* jeu) {
-		std::cout<<"Cancel attack unit"<<std::endl;
+	void AttackUnitCommand::Undo(state::Jeu* jeu, Engine* engine) {
+		state::Unite* object = jeu->etatJeu->getUnite(objectPos);
+		
 		// Check if any unit was attacked
-		if (target_life == 0) {
+		if (not(object)) {
 			return;
 		}
-		state::Unite* object = jeu->etatJeu->getUnite(objectPos);
+		
 		jeu->selectedUnit = object;
 		object->can_attack = true;
-		
-		state::Unite* target;
-		// Check if enemy unit was killed
-		if (not(jeu->etatJeu->getUnite(targetPos))) {	
-			// Create new target
-			if (target_type == 1) {
-				target = new state::Mech(targetPos, target_color);
-			} else if (target_type == 2) {
-				target = new state::Recon(targetPos, target_color);
-			} else if (target_type == 3) {
-				target = new state::Tank(targetPos, target_color);
-			} else if (target_type == 4) {
-				target = new state::HTank(targetPos, target_color);
-			} else {
-				target = new state::Infantry(targetPos, target_color);
-			}
-			// Apply information on target 
-			target->setpuissance(target_power);
-			target->setvie(target_life);
-			// Place new unit to Terrain
-			jeu->etatJeu->addUnite(target);
-			// Check if dead unit had any flag
-			state::Flag* flag = jeu->etatJeu->getFlag(targetPos);
-			if (flag) {
-				flag->is_owned = true;
-				target->has_flag = flag;
-			}
-		} else {
-			// Restore target life and power
-			target = jeu->etatJeu->getUnite(targetPos);
-			target->setpuissance(target_power);
-			target->setvie(target_life);
-		}
-		// TODO : la suite
+		state::Unite* target = jeu->etatJeu->getUnite(targetPos);
+		target->setpuissance(target_power);
+		target->setvie(target_life);
 	} 
 	state::Position AttackUnitCommand::getPos() {
 		return this->targetPos;

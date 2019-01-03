@@ -15,10 +15,10 @@ namespace engine {
 	}
     	DeleteUnitCommand::~DeleteUnitCommand () {
 	}
-    	void DeleteUnitCommand::execute (state::Jeu* jeu) {
-    		std::cout<<"Delete unit"<<std::endl;
-		//this->target_type = target->getId();	
-		//this->target_color = target->getColor();
+    	void DeleteUnitCommand::execute(state::Jeu* jeu, Engine* engine) {
+    		state::Unite* target = jeu->etatJeu->getUnite(objectPos);
+		this->target_type = target->getId();	
+		this->target_color = target->getColor();
 		//std::cout<<"Unit died !"<<std::endl;
 		jeu->etatJeu->deleteUnite(objectPos);
 	}
@@ -28,8 +28,7 @@ namespace engine {
 	int DeleteUnitCommand::getId() {
 		return this->id;
 	}
-	void DeleteUnitCommand::Undo(state::Jeu* jeu){
-		std::cout<<"Cancel delete unit"<<std::endl;
+	void DeleteUnitCommand::Undo(state::Jeu* jeu, Engine* engine){
 		state::Unite* target;
 		if (target_type == 1) {
 			target = new state::Mech(objectPos, target_color);
@@ -47,11 +46,12 @@ namespace engine {
 		target->setpuissance(0);		
 		// Place new unit to Terrain
 		jeu->etatJeu->addUnite(target);
+		
 		// Check if dead unit had any flag
-		state::Flag* flag = jeu->etatJeu->getFlag(objectPos);
+		/*state::Flag* flag = jeu->etatJeu->getFlag(objectPos);
 		if (flag) {
 			flag->is_owned = true;
 			target->has_flag = flag;
-		}
+		}*/
 	}
 }

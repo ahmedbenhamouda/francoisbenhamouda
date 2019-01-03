@@ -5,18 +5,20 @@
 namespace engine {
 	CaptureFlagCommand::CaptureFlagCommand() {
 	}
-	void CaptureFlagCommand::execute (state::Jeu* jeu) {
-		std::cout<<"Capture flag"<<std::endl;
-		state::Unite* unite = jeu->selectedUnit;
-		targetPos = unite->position;
-		state::Flag* flag = jeu->etatJeu->getFlag(unite->position);
+	CaptureFlagCommand::CaptureFlagCommand(state::Position targetPos) {
+		this->targetPos = targetPos;
+	}
+	void CaptureFlagCommand::execute(state::Jeu* jeu, Engine* engine) {
+		state::Unite* unite;
+		if (jeu->selectedUnit) {
+			unite = jeu->selectedUnit;
+			targetPos = jeu->selectedUnit->position;
+			
+		} else {
+			unite = jeu->etatJeu->getUnite(targetPos);
+		}
+		state::Flag* flag = jeu->etatJeu->getFlag(targetPos);
 		if (flag and not(flag->is_owned)) {
-			/*// Check if the flag is in your base
-			state::Batiment* bat = jeu->etatJeu->getBatiment(unite->position);
-			if (bat and bat->getId_b() == 0 and bat->getColor() == unite->getColor()) {
-				std::cout<<"The flag is in your base."<<std::endl;
-				return;
-			}*/
 			// Check if it is your flag
 			if (flag->color == unite->getColor()) {
 				std::cout<<"Your flag has been retrieved."<<std::endl;
@@ -24,7 +26,7 @@ namespace engine {
 				std::cout<<"The flag has been captured."<<std::endl;
 			}
 			// Capture the flag
-			jeu->selectedUnit->has_flag = flag;
+			unite->has_flag = flag;
 			flag->is_owned = true;
 		}
 	}
@@ -36,8 +38,7 @@ namespace engine {
 	int CaptureFlagCommand::getId() {
 		return this->id;
 	}
-	void CaptureFlagCommand::Undo(state::Jeu* jeu){
-		std::cout<<"Cancel capture flag"<<std::endl;
-		DropFlagCommand(targetPos).execute(jeu);
+	void CaptureFlagCommand::Undo(state::Jeu* jeu, Engine* engine){
+		DropFlagCommand(targetPos).execute(jeu, engine);
 	}
 }

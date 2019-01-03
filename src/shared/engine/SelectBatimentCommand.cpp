@@ -7,8 +7,7 @@ namespace engine {
 	SelectBatimentCommand::SelectBatimentCommand (state::Position objectPos) {
 		this->objectPos = objectPos;
 	}
-	void SelectBatimentCommand::execute(state::Jeu* jeu) {
-		std::cout<<"Select batiment"<<std::endl;
+	void SelectBatimentCommand::execute(state::Jeu* jeu, Engine* engine) {
 		int nb_joueurs = jeu->joueurs.size();
 		state::Batiment* batiment = jeu->etatJeu->getBatiment(objectPos);
 		if (batiment == jeu->selectedBatiment) {
@@ -29,8 +28,7 @@ namespace engine {
 	int SelectBatimentCommand::getId() {
 		return this->id;
 	}
-	void SelectBatimentCommand::Undo(state::Jeu* jeu){
-		std::cout<<"Cancel select batiment"<<std::endl;
+	void SelectBatimentCommand::Undo(state::Jeu* jeu, Engine* engine){
 		jeu->selectedBatiment = nullptr;
 	}
 }

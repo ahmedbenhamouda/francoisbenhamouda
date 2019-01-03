@@ -4,11 +4,10 @@
 namespace engine {
 	EndTurnCommand::EndTurnCommand () {
 	}
-	void EndTurnCommand::execute (state::Jeu* jeu) {
+	void EndTurnCommand::execute(state::Jeu* jeu, Engine* engine) {
 		// initialize all units' possible moves
 		this->possible_moves = std::vector<std::vector<bool>>();
 
-		std::cout<<"End turn"<<std::endl;
 		int nb_joueurs = jeu->joueurs.size();
 		// deselect unit
 		jeu->selectedUnit = nullptr;
@@ -33,13 +32,21 @@ namespace engine {
 		}
 		
 	}
-	void EndTurnCommand::Undo (state::Jeu* jeu) {
-		std::cout<<"Cancel end turn"<<std::endl;
+	void EndTurnCommand::Undo(state::Jeu* jeu, Engine* engine) {
+		int nb_joueurs = jeu->joueurs.size();
+	
 		// Restore all units' possible moves before ending
 		std::vector<state::Unite*> unite_list = jeu->etatJeu->getUniteList();
 		for (size_t i=0; i<unite_list.size(); i++) {
 			unite_list[i]->can_move = possible_moves[i][0];
 			unite_list[i]->can_move = possible_moves[i][1];
+		}
+		
+		// Remove money to all players
+		if (jeu->tour%nb_joueurs == 0) {
+			for (state::Joueur* player : jeu->joueurs) {
+				player->monnaie.gainTour(-1000);
+			}
 		}
 		
 		// Reset turn

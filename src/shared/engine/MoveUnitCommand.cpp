@@ -1,6 +1,7 @@
 #include "MoveUnitCommand.h"
 #include "CaptureFlagCommand.h"
 #include "DropFlagCommand.h"
+#include "Engine.h"
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -20,9 +21,9 @@ namespace engine {
 		}
 		return false;
 	}
-	void MoveUnitCommand::execute(state::Jeu* jeu) {
-		std::cout<<"Move unit"<<std::endl;
+	void MoveUnitCommand::execute(state::Jeu* jeu, Engine* engine) {
 		state::Unite* object = jeu->selectedUnit;
+		
 		if (object) {
 			this->objectPos = jeu->selectedUnit->position;
 			if (not(isLegalMove(jeu, object)) or jeu->etatJeu->getUnite(targetPos)) {
@@ -57,32 +58,35 @@ namespace engine {
 		// Check if a flag has been sent to the unit's HQ
 		state::Batiment* bat = jeu->etatJeu->getBatiment(targetPos);
 		if (bat and bat->getId_b() == 0 and bat->getColor() == object->getColor()) {
-			DropFlagCommand(object->position).execute(jeu);
+			engine->addCommand(new DropFlagCommand(object->position));
+			engine->update(); 
 		} else {
 			// Try to see if there is any flag to capture
-			CaptureFlagCommand().execute(jeu);
+			state::Flag* flag = jeu->etatJeu->getFlag(targetPos);
+			if (flag and not(flag->is_owned)) {
+				engine->addCommand(new CaptureFlagCommand());
+				engine->update(); 
+			}
 		}
 
 		//end action
 		jeu->selectedUnit = nullptr;
 
 	}
-	void MoveUnitCommand::Undo(state::Jeu* jeu) {
-		std::cout<<"Cancel move unit"<<std::endl;
+	void MoveUnitCommand::Undo(state::Jeu* jeu, Engine* engine) {
 		state::Unite* object = jeu->etatJeu->getUnite(targetPos);
 		jeu->selectedUnit = object;
 		
 		// Check if there is any flag to capture
-		CaptureFlagCommand().execute(jeu);
+		//CaptureFlagCommand().execute(jeu);
 		
 		// Move the unit to the previous position
 		object->can_move = true;
-		MoveUnitCommand(objectPos).execute(jeu);
+		MoveUnitCommand(objectPos).execute(jeu, engine);
 		
 		// reset action
 		object->can_move = true;
 		jeu->selectedUnit = object;
-		std::cout<<"Done."<<std::endl;	
 	}
 	state::Position MoveUnitCommand::getPos() {
 		return this->targetPos;

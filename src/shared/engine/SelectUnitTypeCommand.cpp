@@ -9,12 +9,10 @@ namespace engine {
 	}
 	SelectUnitTypeCommand::~SelectUnitTypeCommand () {
 	}
-	void SelectUnitTypeCommand::execute (state::Jeu* jeu) {
-		std::cout<<"Select unit type"<<std::endl;
+	void SelectUnitTypeCommand::execute(state::Jeu* jeu, Engine* engine) {
 		jeu->unit_type = unit_id;
 	}
-	void SelectUnitTypeCommand::Undo (state::Jeu* jeu) {
-		std::cout<<"Cancel select unit type"<<std::endl;
+	void SelectUnitTypeCommand::Undo(state::Jeu* jeu, Engine* engine) {
 		jeu->unit_type = 0;
 	}
 	state::Position SelectUnitTypeCommand::getPos () {

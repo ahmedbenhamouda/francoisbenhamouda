@@ -7,8 +7,7 @@ namespace engine {
 	SelectUnitCommand::SelectUnitCommand (state::Position objectPos) {
 		this->objectPos = objectPos;
 	}
-	void SelectUnitCommand::execute(state::Jeu* jeu) {
-		std::cout<<"Select unit"<<std::endl;
+	void SelectUnitCommand::execute(state::Jeu* jeu, Engine* engine) {
 		int nb_joueurs = jeu->joueurs.size();
 		//std::cout<<"unit selected"<<std::endl;
 		state::Unite* unite = jeu->etatJeu->getUnite(objectPos);
@@ -19,8 +18,7 @@ namespace engine {
 			std::cout<<"This unit is not yours."<<std::endl;
 		}
 	}
-	void SelectUnitCommand::Undo(state::Jeu* jeu) {
-		std::cout<<"Cancel select unit"<<std::endl;
+	void SelectUnitCommand::Undo(state::Jeu* jeu, Engine* engine) {
 		jeu->selectedUnit = nullptr;
 	}
 	SelectUnitCommand::~SelectUnitCommand() {

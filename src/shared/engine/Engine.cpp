@@ -14,14 +14,14 @@ namespace engine {
 		if (commands.size()>0) {
 			if (not(latest_command) or latest_command != commands[commands.size()-1]) {
 				latest_command = commands[commands.size()-1];
-				latest_command->execute(jeu);
+				latest_command->execute(jeu, this);
 			}
 		}
 	}
 	void Engine::RollBack() {
 		if (commands.size()>0) {
 			Command* cmd = commands[commands.size()-1];
-			cmd->Undo(jeu);
+			cmd->Undo(jeu, this);
 			delete cmd;
 			commands.pop_back();
 		}

@@ -5,6 +5,9 @@
 
 namespace state {
   class Jeu;
+};
+namespace engine {
+  class Engine;
 }
 
 #include "state/Jeu.h"
@@ -20,10 +23,10 @@ namespace engine {
   public:
     Command ();
     virtual ~Command ();
-    virtual void execute (state::Jeu* jeu) = 0;
+    virtual void execute (state::Jeu* jeu, Engine* engine) = 0;
+    virtual void Undo (state::Jeu* jeu, Engine* engine) = 0;
     virtual state::Position getPos () = 0;
     virtual int getId () = 0;
-    virtual void Undo (state::Jeu* jeu) = 0;
     // Setters and Getters
   };
 
