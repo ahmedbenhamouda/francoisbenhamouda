@@ -19,6 +19,7 @@ namespace state {
     int color;
     PorteMonnaie monnaie;
     bool is_AI;
+    int score;
     // Operations
   public:
     Joueur ();

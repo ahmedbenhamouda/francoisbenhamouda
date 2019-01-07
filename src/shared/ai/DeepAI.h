@@ -15,6 +15,7 @@ namespace engine {
   class Command;
 };
 namespace ai {
+  class HeuristicAI;
   class AI;
 }
 
@@ -34,10 +35,12 @@ namespace ai {
     std::vector<state::Unite*> liste_unites;
     std::vector<state::Batiment*> liste_batiments;
     std::vector<engine::Command*> liste_commands;
-    std::vector<int> liste_poids;
+    std::vector<int> liste_score;
     std::vector<state::Flag*> liste_flags_ennemie;
     state::Flag* flag_allies;
     std::vector<state::Unite*> liste_ennemies;
+    int command_iter     = 0;
+    HeuristicAI* cloneAI;
     // Operations
   public:
     DeepAI ();
@@ -45,10 +48,11 @@ namespace ai {
     void fillStateList ();
     void fillCommandList ();
     void run ();
-    void poidCommande ();
     ~DeepAI ();
-    void poidDistance ();
     std::vector<state::Position> enemyCote (state::Position pos);
+    void runHeuristic ();
+    void runMinMax ();
+    void selectFinalCommand ();
     // Setters and Getters
   };
 

@@ -220,18 +220,14 @@ namespace ai {
 		for (size_t i =0; i<liste_poids.size(); i++) {
 			if (liste_commands[i]->getId() == 3) {	
 				state::Position poscom = liste_commands[i]->getPos();
-				if ((jeu->selectedUnit->position - pos) > (poscom - pos)){
-					if (pos == poscom) { // going to the goal
-						liste_poids[i] = 6;
-					} else if (enemyCote(poscom).size()>0){ // engage combat
-						liste_poids[i] = 5;
-					} else { // just move
-						liste_poids[i] = 4;
-					}
-				} else {
-					liste_poids[i] = 3;
+				// Scores how close to the target the next position is
+				int delta_pos = jeu->selectedUnit->position - poscom;
+				liste_poids[i] = jeu->selectedUnit->getmvt() + delta_pos;
+				if (pos == poscom) { // going to the goal
+					liste_poids[i] += 2;
+				} else if (enemyCote(poscom).size()>0){ // engage combat
+					liste_poids[i] += 1;
 				}
-				
 			}
 		}
 	}
