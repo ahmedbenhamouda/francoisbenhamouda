@@ -23,6 +23,7 @@ namespace ai {
 		this->jeu = jeu;
 		cloneAI = new HeuristicAI(color, engine, jeu);
 	}
+	
 	std::vector<state::Position> DeepAI::enemyCote(state::Position pos) {
 		int px = pos.getX();
 		int py = pos.getY();
@@ -138,6 +139,33 @@ namespace ai {
 		}
 	}
 	
+	void DeepAI::runMinMax() {
+		// simulation mode
+		state::Position targetPos;
+		int nb_joueurs = jeu->joueurs.size();
+		jeu->simulation = jeu->tour%nb_joueurs;
+		// Try out each non-EndTurn command
+		if (liste_commands[command_iter]->getId() != 8) {
+			if (liste_commands[command_iter]->getId() == 3) {
+				targetPos = liste_commands[command_iter]->getPos();
+			}
+			// execute commande
+			engine->addCommand(liste_commands[command_iter]);
+			engine->update();
+			
+			// Check if any attack is possible
+			if (enemyCote(targetPos).size()) {
+				// Add a point to the player to encourage attack
+				int nb_joueurs = jeu->joueurs.size();
+				jeu->joueurs[jeu->tour%nb_joueurs]->score += 1; // arbitrary value
+			}
+			
+			// End turn
+			engine->addCommand(new engine::EndTurnCommand());
+			engine->update();
+		}
+	}
+	
 	void DeepAI::run () {
 		int nb_joueurs = jeu->joueurs.size();
 		if (jeu->joueurs[jeu->tour%nb_joueurs]->color == color) {
@@ -153,7 +181,7 @@ namespace ai {
 				} else {
 					runHeuristic();
 				}
-			} else if (jeu->simulation == jeu->tour%nb_joueurs) {
+			} else if (jeu->joueurs[jeu->simulation]->color == color) {
 				// You are currently simulating
 				selectFinalCommand();
 				
