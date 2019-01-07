@@ -54,6 +54,7 @@ namespace ai {
     void runMinMax ();
     void selectFinalCommand ();
     void ListeScore ();
+    void scoreDeplacement (engine::Command* command);
     // Setters and Getters
   };
 

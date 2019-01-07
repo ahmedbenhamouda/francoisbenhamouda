@@ -221,7 +221,7 @@ namespace ai {
 			if (liste_commands[i]->getId() == 3) {	
 				state::Position poscom = liste_commands[i]->getPos();
 				// Scores how close to the target the next position is
-				int delta_pos = jeu->selectedUnit->position - poscom;
+				int delta_pos = (jeu->selectedUnit->position - pos) - (poscom - pos);
 				liste_poids[i] = jeu->selectedUnit->getmvt() + delta_pos;
 				if (pos == poscom) { // going to the goal
 					liste_poids[i] += 2;

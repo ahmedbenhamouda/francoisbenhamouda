@@ -139,6 +139,35 @@ namespace ai {
 		}
 	}
 	
+	void DeepAI::scoreDeplacement(engine::Command* command) {
+		state::Position objectif;
+		int nb_joueurs = jeu->joueurs.size();
+		
+		if (jeu->selectedUnit->has_flag) {
+			// Le QG est l'objectif si l'unite a un drapeau
+			for (size_t k=0; k<liste_batiments.size();k++){
+				if  (liste_batiments[k]->getId_b() == 0){
+					objectif = liste_batiments[k]->position;
+				}
+			}
+		} else {
+			// Le drapeau ennemi le plus proche est l'objectif
+			int shortest_distance = 10000;
+			for (size_t k=0; k<liste_flags_ennemie.size();k++){
+				if  (liste_flags_ennemie[k]->position - jeu->selectedUnit->position < shortest_distance) {
+					shortest_distance = liste_flags_ennemie[k]->position - jeu->selectedUnit->position;
+					objectif = liste_flags_ennemie[k]->position;
+				}
+			}
+		}
+		
+		// Maintenant, on calcule la distance entre l'objectif et la commande
+		state::Position new_pos = command->getPos();
+		int delta_pos = (jeu->selectedUnit->position - objectif) - (new_pos - objectif);
+		jeu->joueurs[jeu->tour%nb_joueurs]->score += jeu->selectedUnit->getmvt() + delta_pos;
+		
+	}
+	
 	void DeepAI::runMinMax() {
 		// simulation mode
 		state::Position targetPos;
@@ -148,17 +177,18 @@ namespace ai {
 		if (liste_commands[command_iter]->getId() != 8) {
 			if (liste_commands[command_iter]->getId() == 3) {
 				targetPos = liste_commands[command_iter]->getPos();
+				scoreDeplacement(liste_commands[command_iter]);
 			}
 			// execute commande
 			engine->addCommand(liste_commands[command_iter]);
 			engine->update();
 			
 			// Check if any attack is possible
-			if (enemyCote(targetPos).size()) {
+			/*if (enemyCote(targetPos).size()) {
 				// Add a point to the player to encourage attack
 				int nb_joueurs = jeu->joueurs.size();
 				jeu->joueurs[jeu->tour%nb_joueurs]->score += 1; // arbitrary value
-			}
+			}*/
 			command_iter++;
 			
 			// End turn
@@ -178,14 +208,16 @@ namespace ai {
 				// No one is simulating right now
 				if (jeu->selectedUnit) {
 					// Use minmax algorithm for move
+					std::cout<<"Simulation mode."<<std::endl;
 					runMinMax();		
 				} else {
 					runHeuristic();
 				}
 			} else if (jeu->joueurs[jeu->simulation]->color == color) {
 				// You are currently simulating
-				if (command_iter >= liste_score.size()) {
+				if ((size_t)command_iter >= liste_score.size()) {
 					selectFinalCommand();
+					std::cout<<"End of simulation."<<std::endl;
 				} else {
 					ListeScore();
 				}	
@@ -212,12 +244,12 @@ namespace ai {
 	void DeepAI::selectFinalCommand(){
 		int plus_haut_score = 0;
 		std::vector<engine::Command*> list_aleatoire;
-		for(int k=0; k<liste_score.size();k++){
+		for(size_t k=0; k<liste_score.size();k++){
 			if (liste_score[k]>= plus_haut_score){
 				plus_haut_score = liste_score[k];
 			} 
 		}
-		for(int i=0; i<liste_score.size();i++){
+		for(size_t i=0; i<liste_score.size();i++){
 			if (liste_score[i] == plus_haut_score){
 				list_aleatoire.push_back(liste_commands[i]);
 			}
