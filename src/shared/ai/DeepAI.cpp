@@ -159,10 +159,10 @@ namespace ai {
 				int nb_joueurs = jeu->joueurs.size();
 				jeu->joueurs[jeu->tour%nb_joueurs]->score += 1; // arbitrary value
 			}
+			command_iter++;
 			
 			// End turn
 			engine->addCommand(new engine::EndTurnCommand());
-			engine->update();
 		}
 	}
 	
@@ -174,6 +174,7 @@ namespace ai {
 			fillCommandList ();
 			
 			if (jeu->simulation == -1) {
+				liste_score = std::vector<int>();
 				// No one is simulating right now
 				if (jeu->selectedUnit) {
 					// Use minmax algorithm for move
@@ -183,8 +184,11 @@ namespace ai {
 				}
 			} else if (jeu->joueurs[jeu->simulation]->color == color) {
 				// You are currently simulating
-				selectFinalCommand();
-				
+				if (command_iter >= liste_score.size()) {
+					selectFinalCommand();
+				} else {
+					ListeScore();
+				}	
 			} else {
 				// Someone else is simulating
 				runHeuristic();
@@ -198,8 +202,7 @@ namespace ai {
 	//lister les score de chaque mouvement
 	void DeepAI::ListeScore(){
 		int nb_joueurs = jeu->joueurs.size();
-		score = jeu->joueurs[jeu->tour%nb_joueurs]->score;
-		liste_score.push_back(score);
+		liste_score.push_back(jeu->joueurs[jeu->tour%nb_joueurs]->score);
 		while(engine->commands.size()) {
 			engine->RollBack();
 		}
@@ -208,18 +211,24 @@ namespace ai {
 	//choisir le meilleur score possible
 	void DeepAI::selectFinalCommand(){
 		int plus_haut_score = 0;
-		std::vectror<int> list_aleatoire;
-		for(k=0; k<liste_score.size();k++){
+		std::vector<engine::Command*> list_aleatoire;
+		for(int k=0; k<liste_score.size();k++){
 			if (liste_score[k]>= plus_haut_score){
 				plus_haut_score = liste_score[k];
 			} 
 		}
-		for(i=0; i<liste_score.size();i++){
+		for(int i=0; i<liste_score.size();i++){
 			if (liste_score[i] == plus_haut_score){
-				list_aleatoire.push_back(liste_score[i]);
+				list_aleatoire.push_back(liste_commands[i]);
 			}
 		}
+		// Selection aleatoire de la meilleure commande
 		std::uniform_int_distribution<int> index(0,list_aleatoire.size()-1);
+		int id = index(randeng);
+		engine->addCommand(list_aleatoire[id]);
+		
+		// Fin de la simulation
+		jeu->simulation = -1;
 	}
 	DeepAI::~DeepAI() {
 	}

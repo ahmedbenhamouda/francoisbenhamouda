@@ -53,6 +53,7 @@ namespace ai {
     void runHeuristic ();
     void runMinMax ();
     void selectFinalCommand ();
+    void ListeScore ();
     // Setters and Getters
   };
 
