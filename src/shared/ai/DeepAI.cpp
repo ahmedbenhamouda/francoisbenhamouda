@@ -195,6 +195,32 @@ namespace ai {
 	void DeepAI::runHeuristic() {
 		cloneAI->run();
 	}
+	//lister les score de chaque mouvement
+	void DeepAI::ListeScore(){
+		int nb_joueurs = jeu->joueurs.size();
+		score = jeu->joueurs[jeu->tour%nb_joueurs]->score;
+		liste_score.push_back(score);
+		while(engine->commands.size()) {
+			engine->RollBack();
+		}
+		jeu->joueurs[jeu->tour%nb_joueurs]->score = 0;	
+	}
+	//choisir le meilleur score possible
+	void DeepAI::selectFinalCommand(){
+		int plus_haut_score = 0;
+		std::vectror<int> list_aleatoire;
+		for(k=0; k<liste_score.size();k++){
+			if (liste_score[k]>= plus_haut_score){
+				plus_haut_score = liste_score[k];
+			} 
+		}
+		for(i=0; i<liste_score.size();i++){
+			if (liste_score[i] == plus_haut_score){
+				list_aleatoire.push_back(liste_score[i]);
+			}
+		}
+		std::uniform_int_distribution<int> index(0,list_aleatoire.size()-1);
+	}
 	DeepAI::~DeepAI() {
 	}
 }
