@@ -55,6 +55,7 @@ namespace ai {
     void selectFinalCommand ();
     void ListeScore ();
     void scoreDeplacement (engine::Command* command);
+    void scoreAttack (engine::Command* command);
     // Setters and Getters
   };
 

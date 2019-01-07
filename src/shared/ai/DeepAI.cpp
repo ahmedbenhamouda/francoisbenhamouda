@@ -115,6 +115,7 @@ namespace ai {
 				for (state::Position enemyPos : enemyNearby) {
 					liste_commands.push_back(new engine::AttackUnitCommand(enemyPos));
 				}
+				
 			}
 		} else {
 			// Check for createUnit
@@ -167,7 +168,14 @@ namespace ai {
 		jeu->joueurs[jeu->tour%nb_joueurs]->score += jeu->selectedUnit->getmvt() + delta_pos;
 		
 	}
-	
+	//Score de l'attaque
+	void DeepAI::scoreAttack(engine::Command* command) {
+		int nb_joueurs = jeu->joueurs.size();
+		jeu->joueurs[jeu->tour%nb_joueurs]->score += 2;
+		if (not(jeu->etatJeu->getUnite(command->getPos()))){
+			jeu->joueurs[jeu->tour%nb_joueurs]->score += 2;
+		}
+	}
 	void DeepAI::runMinMax() {
 		// simulation mode
 		state::Position targetPos;
@@ -183,6 +191,9 @@ namespace ai {
 			engine->addCommand(liste_commands[command_iter]);
 			engine->update();
 			
+			if (liste_commands[command_iter]->getId() == 4) {
+				scoreAttack(liste_commands[command_iter]);
+			}
 			// Check if any attack is possible
 			/*if (enemyCote(targetPos).size()) {
 				// Add a point to the player to encourage attack
