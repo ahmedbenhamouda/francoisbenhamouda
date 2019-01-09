@@ -28,6 +28,7 @@ namespace state {
     Unite* selectedUnit     = nullptr;
     Batiment* selectedBatiment     = nullptr;
     int unit_type     = 0;
+    int simulation     = -1;
     // Operations
   public:
     Jeu (Terrain* etatJeu, std::vector<Joueur*> joueurs);

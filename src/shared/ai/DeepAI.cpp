@@ -3,6 +3,7 @@
 #include <chrono>
 #include <algorithm>
 #include "DeepAI.h"
+#include "HeuristicAI.h"
 #include "engine/CreateUnitCommand.h"
 #include "engine/SelectUnitCommand.h"
 #include "engine/SelectBatimentCommand.h"
@@ -14,13 +15,17 @@
 namespace ai {
 	DeepAI::DeepAI () {
 		randeng = std::mt19937(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+		liste_position_cmd = std::vector<state::Position>();
+		liste_type_score = std::vector<std::vector<int>>(); // [id_commande, score]
 	}
 	DeepAI::DeepAI (int color, engine::Engine* engine, state::Jeu* jeu) {
 		DeepAI();
 		this->color = color;
 		this->engine = engine;
 		this->jeu = jeu;
+		cloneAI = new HeuristicAI(color, engine, jeu);
 	}
+	
 	std::vector<state::Position> DeepAI::enemyCote(state::Position pos) {
 		int px = pos.getX();
 		int py = pos.getY();
@@ -41,6 +46,7 @@ namespace ai {
 		}
 		return liste;
 	}
+	
 	void DeepAI::fillStateList(){
 		// reset unite list
 		liste_unites = std::vector<state::Unite*>();
@@ -103,7 +109,9 @@ namespace ai {
 			// Check all possible movements
 			std::vector<state::Position> moves = jeu->selectedUnit->getLegalMove(jeu->etatJeu);
 			for (state::Position mv : moves) {
-				liste_commands.push_back(new engine::MoveUnitCommand(mv));
+				//if (not(mv == jeu->selectedUnit->position)) {
+					liste_commands.push_back(new engine::MoveUnitCommand(mv));
+				//}
 			}
 			// Check if any attack is possible
 			if (jeu->selectedUnit->can_attack) {
@@ -111,6 +119,7 @@ namespace ai {
 				for (state::Position enemyPos : enemyNearby) {
 					liste_commands.push_back(new engine::AttackUnitCommand(enemyPos));
 				}
+				
 			}
 		} else {
 			// Check for createUnit
@@ -134,129 +143,175 @@ namespace ai {
 			liste_commands.push_back(new engine::EndTurnCommand());
 		}
 	}
-	void DeepAI::poidCommande() {
-		// reset weight list
-		liste_poids = std::vector<int>(liste_commands.size(),0);
-
-		// Get all weights for non-move commands
-		for (size_t i =0; i<liste_poids.size(); i++) {
-			if (liste_commands[i]->getId() == 0) { //creerUnite
-				liste_poids[i] = 1;
-			}
-			if (liste_commands[i]->getId() == 2) { //selectUnite
-				liste_poids[i] = 2;
-			}
-			if (liste_commands[i]->getId() == 4) { //attackUnite
-				liste_poids[i] = 7;
-			}
-			if (liste_commands[i]->getId() == 5) { //selectBatiment
-				// The more units you have, the less likely you will choose to create one
-				liste_poids[i] = 1+3/(1+liste_unites.size());
-			}
-			if (liste_commands[i]->getId() == 8) { //endTurn
-				liste_poids[i] = 1;
-			}
-			if (liste_commands[i]->getId() == 9) { //selectUnitType
-				// Note : random choice between select an unit or end the turn
-				// The more units you have, the less likely you will choose to end your turn
-				liste_poids[i] = 1+liste_commands[i]->getPos().getX();
-			}
-		}
-	}
-	void DeepAI::poidDistance() {
-		state::Position pos;
-
-		// Current unit has flag, then has to go home
+	
+	void DeepAI::scoreDeplacement(engine::Command* command) {
+		state::Position objectif;
+		int nb_joueurs = jeu->joueurs.size();
+		
 		if (jeu->selectedUnit->has_flag) {
+			// Le QG est l'objectif si l'unite a un drapeau
 			for (size_t k=0; k<liste_batiments.size();k++){
 				if  (liste_batiments[k]->getId_b() == 0){
-					pos = liste_batiments[k]->position;
-				}
-			}
-		}
-		// Flag captured by ennemy
-		else if (flag_allies->is_owned) {
-			for (state::Unite* unite : liste_ennemies) {
-				if (unite->has_flag == flag_allies) {
-					pos = unite->position;
+					objectif = liste_batiments[k]->position;
 				}
 			}
 		} else {
-			// Flag is not in QG
-			state::Batiment* bat = jeu->etatJeu->getBatiment(flag_allies->position);
-			if (not(bat) or bat->getId_b() != 0) {
-				pos = flag_allies->position;
-			} else {
-				// Look for the closest enemy flag
-				if (liste_flags_ennemie.size() > 0){
-					int imp = (jeu->selectedUnit->position - liste_flags_ennemie[0]->position);
-					pos = liste_flags_ennemie[0]->position;	
-			
-					if (liste_flags_ennemie.size() > 1){
-						for (size_t i=1;i<liste_flags_ennemie.size();i++){
-							if (imp > (jeu->selectedUnit->position - liste_flags_ennemie[i]->position)){
-								imp = jeu->selectedUnit->position - liste_flags_ennemie[i]->position;
-								pos = liste_flags_ennemie[i]->position;
-							}
-						}	
-					}
-				} else {
-					 // Look for anyone carrying a flag (escort ally or attack enemy)
-					 for (state::Unite* unite : jeu->etatJeu->getUniteList()) {
-						if (unite->has_flag) {
-							pos = unite->position;
-						}
-					}
+			// Le drapeau ennemi le plus proche est l'objectif
+			int shortest_distance = 10000;
+			for (size_t k=0; k<liste_flags_ennemie.size();k++){
+				if  (liste_flags_ennemie[k]->position - jeu->selectedUnit->position < shortest_distance) {
+					shortest_distance = liste_flags_ennemie[k]->position - jeu->selectedUnit->position;
+					objectif = liste_flags_ennemie[k]->position;
 				}
 			}
 		}
+		
+		// Maintenant, on calcule la distance entre l'objectif et la commande
+		state::Position new_pos = command->getPos();
+		int delta_pos = (jeu->selectedUnit->position - objectif) - (new_pos - objectif);
+		jeu->joueurs[jeu->tour%nb_joueurs]->score += jeu->selectedUnit->getmvt() + delta_pos;
+		
+	}
+	//Score de l'attaque
+	void DeepAI::scoreAttack(engine::Command* command) {
+		int nb_joueurs = jeu->joueurs.size();
+		jeu->joueurs[jeu->tour%nb_joueurs]->score += 2;
+		if (not(jeu->etatJeu->getUnite(command->getPos()))){
+			jeu->joueurs[jeu->tour%nb_joueurs]->score += 2;
+		}
+	}
+	void DeepAI::runMinMax() {
+		bool skip = false;			
+		int nb_joueurs = jeu->joueurs.size();
+		jeu->simulation = jeu->tour%nb_joueurs;
+		
+		if (liste_position_cmd.size() == 0) { // Use the minmax function for the first time
+			engine->Clear();
+			liste_position_cmd = std::vector<state::Position>(liste_commands.size());
+			liste_type_score = std::vector<std::vector<int>>(liste_commands.size());
+			std::cout<<"Simulation tour "<<jeu->simulation<<std::endl;
+		}
+		
+		if (liste_commands[command_iter]->getId() == 3) { // Deplacement
+			scoreDeplacement(liste_commands[command_iter]);
+			// Si on atteint un score inferieur au score max, on abandonne le mouvement
+			if (jeu->joueurs[jeu->tour%nb_joueurs]->score < max_score) {
+				skip = true;
+			}
+		}
+		
+		if (liste_commands[command_iter]->getId() != 8 and !skip) {
+			engine->addCommand(liste_commands[command_iter]);
+			liste_commands.erase(liste_commands.begin()+command_iter);
+			engine->update();
+		}
+		
+		
+		if (liste_commands[command_iter]->getId() == 4) { // Attaque
+			scoreAttack(liste_commands[command_iter]);
+		}
 
-		// evaluate the distance between each command and the goal
-		for (size_t i =0; i<liste_poids.size(); i++) {
-			if (liste_commands[i]->getId() == 3) {	
-				state::Position poscom = liste_commands[i]->getPos();
-				// Scores how close to the target the next position is
-				int delta_pos = (jeu->selectedUnit->position - pos) - (poscom - pos);
-				liste_poids[i] = jeu->selectedUnit->getmvt() + delta_pos;
-				if (pos == poscom) { // going to the goal
-					liste_poids[i] += 2;
-				} else if (enemyCote(poscom).size()>0){ // engage combat
-					liste_poids[i] += 1;
+		command_iter++;
+		
+		if (!skip) {
+			// End turn
+			engine->addCommand(new engine::EndTurnCommand());
+		}
+		
+	}
+	
+	void DeepAI::run () {
+		int nb_joueurs = jeu->joueurs.size();
+		if (jeu->joueurs[jeu->tour%nb_joueurs]->color == color) { //It's time to play !
+		
+			fillStateList ();
+			fillCommandList ();
+			
+			if (jeu->simulation < 0) { // No one is simulating right now			
+				if (jeu->selectedUnit) {
+					if (liste_position_cmd.size()>0 and (size_t)command_iter >= liste_position_cmd.size()) { // Last level of the minmax tree
+					
+						engine->Clear();
+						selectFinalCommand();
+						std::cout<<"End of simulation."<<std::endl;
+						
+					} else {
+						// Use minmax algorithm for move
+						runMinMax();
+						std::cout<<" * Test numero "<<command_iter<<std::endl;
+					}
+				} else {
+					runHeuristic();
 				}
 				
+			} else if (jeu->joueurs[jeu->simulation]->color == color) { // You are currently simulating
+					
+					// Rollback
+					ListeScore();
+					
+			} else { // Someone else is simulating
+			
+				runHeuristic();
 			}
 		}
 	}
-	void DeepAI::run () {
+	
+	void DeepAI::runHeuristic() {
+		cloneAI->run();
+	}
+	
+	//lister les score de chaque mouvement
+	void DeepAI::ListeScore(){
 		int nb_joueurs = jeu->joueurs.size();
-		if (jeu->joueurs[jeu->tour%nb_joueurs]->color == color) {
-			//It's time to play !
-			fillStateList ();
-			fillCommandList ();
-			poidCommande();
-			if (jeu->selectedUnit) {
-				poidDistance();
-			}
-
-			// evaluate maximum weight command
-			int max_val = *std::max_element(liste_poids.begin(), liste_poids.end());
-			
-			// select only the maximum weight commands
-			std::vector<int> max_commands_index;
-			for (size_t i=0; i<liste_poids.size(); i++) {
-				if (liste_poids[i] == max_val) {
-					max_commands_index.push_back(i);
-				}
-			}
-
-			// random number generation
-			std::uniform_int_distribution<int> index(0,max_commands_index.size()-1);
-
-			// add command
-			int id = index(randeng);
-			engine->addCommand(liste_commands[max_commands_index[id]]);
-			liste_commands.erase(liste_commands.begin()+max_commands_index[id]);
+		if (engine->commands.size()>0) { // Vérifier qu'une commande n'a pas été passée car pas intéressante
+			liste_position_cmd[command_iter-1] = engine->commands[0]->getPos();
+			liste_type_score[command_iter-1] = {engine->commands[0]->getId(), jeu->joueurs[jeu->tour%nb_joueurs]->score};
+		} else {
+			liste_position_cmd[command_iter-1] = state::Position(0,0);
+			liste_type_score[command_iter-1] = {-1, -1000};
 		}
+		
+		// Rechercher le score max
+		if (jeu->joueurs[jeu->tour%nb_joueurs]->score > max_score) {
+			max_score = jeu->joueurs[jeu->tour%nb_joueurs]->score;
+		}
+		while(engine->commands.size() > 0) {
+			engine->RollBack();
+		}
+		//std::cout<<"Checkpoint 2"<<std::endl;
+		jeu->joueurs[jeu->tour%nb_joueurs]->score = 0;
+		jeu->simulation = -2; // etat intermediaire entre la fin d'exploration de deux etats
+	}
+	
+	//choisir le meilleur score possible
+	void DeepAI::selectFinalCommand(){
+		jeu->simulation = -1;
+		std::cout<<"select final command"<<std::endl;
+		
+		std::vector<int> list_aleatoire;
+		
+		for(size_t i=0; i<liste_commands.size(); i++){
+			if (liste_type_score[i][1] >= max_score){
+				list_aleatoire.push_back(i);
+			}
+		}
+		
+		// Selection aleatoire de la meilleure commande		
+		std::uniform_int_distribution<int> index(0,list_aleatoire.size()-1);
+		int id = list_aleatoire[index(randeng)];
+		
+		if (liste_type_score[id][0] == 3) { // deplacement
+			engine->addCommand(new engine::MoveUnitCommand(liste_position_cmd[id]));
+		} else if (liste_type_score[id][0] == 4) { // attaque
+			engine->addCommand(new engine::AttackUnitCommand(liste_position_cmd[id]));
+		}
+		
+		// Fin de la simulation
+		command_iter = 0;
+		//jeu->simulation = -1;
+		max_score = -1000;
+		liste_position_cmd = std::vector<state::Position>();
+		liste_type_score = std::vector<std::vector<int>>();
 	}
 	DeepAI::~DeepAI() {
 	}

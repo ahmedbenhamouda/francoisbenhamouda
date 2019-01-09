@@ -30,6 +30,9 @@ namespace state {
 		res = std::abs((pos.getX()-this->getX()) + (pos.getY()-this->getY()));
 		return (res);
 	}
+	bool Position::operator<(Position const& pos) {
+		return (this->getX() + this->getY() < pos.getX() + pos.getY());
+	}
 	Position::~Position(){
 	}
 }
