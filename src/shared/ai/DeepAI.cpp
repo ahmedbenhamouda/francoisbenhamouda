@@ -170,7 +170,21 @@ namespace ai {
 		state::Position new_pos = command->getPos();
 		int delta_pos = (jeu->selectedUnit->position - objectif) - (new_pos - objectif);
 		jeu->joueurs[jeu->tour%nb_joueurs]->score += jeu->selectedUnit->getmvt() + delta_pos;
-		
+		// Score de l'attaque si possible
+		std::vector<state::Position> enemyNearby = enemyCote(jeu->selectedUnit->position);
+		int ET = 0; //enemies qu'on peut tuer
+		if (jeu->selectedUnit->can_attack and enemyNearby.size() > 0){
+			jeu->joueurs[jeu->tour%nb_joueurs]->score += 2;
+			for (size_t k=0;k<enemyNearby.size(); k++){
+				if (jeu->selectedUnit->getpuissance() >= jeu->etatJeu->getUnite(enemyNearby[k])->getvie()){
+					jeu->joueurs[jeu->tour%nb_joueurs]->score += 6;
+					ET += 1;
+				}
+				if (ET>1){
+					jeu->joueurs[jeu->tour%nb_joueurs]->score -= 6*(ET-1);
+				}	
+			}
+		}
 	}
 	//Score de l'attaque
 	void DeepAI::scoreAttack(engine::Command* command) {
