@@ -52,7 +52,24 @@ namespace engine {
 				object->attacker(target);
 				int life = target->getvie();
 				std::cout<<"Enemy's life : "<<life<<std::endl;
+				
+				// Get points for attacking
+				if (jeu->simulation >= 0) {
+					if (jeu->selectedUnit->color == jeu->joueurs[jeu->simulation]->color) { // The simulating IA is attacking
+						jeu->joueurs[jeu->simulation]->score += 2;
+					} else { // The simulating IA is getting attacked
+						jeu->joueurs[jeu->simulation]->score -= 2;
+					}
+				}
+				
 				if (life == 0) {
+					// Get additional points for attacking
+					if (jeu->selectedUnit->color == jeu->joueurs[jeu->simulation]->color) { // The simulating IA is attacking
+						jeu->joueurs[jeu->simulation]->score += 2;
+					} else { // The simulating IA is getting attacked
+						jeu->joueurs[jeu->simulation]->score -= 2;
+					}
+					
 					engine->addCommand(new DropFlagCommand(targetPos));
 					engine->update();
 					engine->addCommand(new DeleteUnitCommand(targetPos));
