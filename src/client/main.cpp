@@ -91,9 +91,9 @@ void AIPlay(AI* ai, Jeu* jeu) {
 	this_thread::sleep_for(chrono::milliseconds(1000));
 	while(1) {
 		if (jeu->simulation == -1) {
-			this_thread::sleep_for(chrono::milliseconds(250));
-		} else {
 			this_thread::sleep_for(chrono::milliseconds(125));
+		} else {
+			this_thread::sleep_for(chrono::milliseconds(67));
 		}
 		m1.lock();
 		ai->run();

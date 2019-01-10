@@ -158,10 +158,17 @@ namespace ai {
 		} else {
 			// Le drapeau ennemi le plus proche est l'objectif
 			int shortest_distance = 10000;
-			for (size_t k=0; k<liste_flags_ennemie.size();k++){
-				if  (liste_flags_ennemie[k]->position - jeu->selectedUnit->position < shortest_distance) {
-					shortest_distance = liste_flags_ennemie[k]->position - jeu->selectedUnit->position;
-					objectif = liste_flags_ennemie[k]->position;
+			for (state::Flag* flag : liste_flags_ennemie){
+				if  (not(flag->is_owned) and flag->position - jeu->selectedUnit->position < shortest_distance) {
+					shortest_distance = flag->position - jeu->selectedUnit->position;
+					objectif = flag->position;
+				}
+			}
+			// L'unité ennemie la plus proche qui possède un drapeau est l'objectif
+			for (state::Unite* unit : liste_ennemies){
+				if  (unit->has_flag and unit->position - jeu->selectedUnit->position < shortest_distance) {
+					shortest_distance = unit->position - jeu->selectedUnit->position;
+					objectif = unit->position;
 				}
 			}
 		}
@@ -189,7 +196,7 @@ namespace ai {
 			engine->Clear();
 			liste_position_cmd = std::vector<state::Position>(liste_commands.size());
 			liste_type_score = std::vector<std::vector<int>>(liste_commands.size());
-			std::cout<<"Simulation tour "<<jeu->simulation<<std::endl;
+			std::cout<<"Simulation"<<std::endl;
 		}
 		
 		if (liste_commands[command_iter]->getId() == 3) { // Deplacement
@@ -238,7 +245,7 @@ namespace ai {
 					} else {
 						// Use minmax algorithm for move
 						runMinMax();
-						std::cout<<" * Test numero "<<command_iter<<std::endl;
+						//std::cout<<" * Test numero "<<command_iter<<std::endl;
 					}
 				} else {
 					runHeuristic();
@@ -303,6 +310,7 @@ namespace ai {
 		if (liste_type_score[id][0] == 3) { // deplacement
 			engine->addCommand(new engine::MoveUnitCommand(liste_position_cmd[id]));
 		} else if (liste_type_score[id][0] == 4) { // attaque
+			std::cout<<"Time to attack."<<std::endl;
 			engine->addCommand(new engine::AttackUnitCommand(liste_position_cmd[id]));
 		}
 		

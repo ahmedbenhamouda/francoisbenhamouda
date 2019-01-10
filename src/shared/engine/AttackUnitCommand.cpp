@@ -64,9 +64,11 @@ namespace engine {
 				jeu->selectedUnit = nullptr;
 
 				// animation
-				jeu->etatJeu->explosions.push_back(targetPos);
-				std::this_thread::sleep_for(std::chrono::milliseconds(100));
-				jeu->etatJeu->explosions = std::vector<state::Position>();
+				if (jeu->simulation < 0) {
+					jeu->etatJeu->explosions.push_back(targetPos);
+					std::this_thread::sleep_for(std::chrono::milliseconds(100));
+					jeu->etatJeu->explosions = std::vector<state::Position>();
+				}
 
 
 				
