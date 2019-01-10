@@ -35,12 +35,14 @@ namespace ai {
     std::vector<state::Unite*> liste_unites;
     std::vector<state::Batiment*> liste_batiments;
     std::vector<engine::Command*> liste_commands;
-    std::vector<int> liste_score;
+    std::vector<state::Position> liste_position_cmd;
+    std::vector<std::vector<int>> liste_type_score;
     std::vector<state::Flag*> liste_flags_ennemie;
     state::Flag* flag_allies;
     std::vector<state::Unite*> liste_ennemies;
     int command_iter     = 0;
     HeuristicAI* cloneAI;
+    int max_score     = -1000;
     // Operations
   public:
     DeepAI ();

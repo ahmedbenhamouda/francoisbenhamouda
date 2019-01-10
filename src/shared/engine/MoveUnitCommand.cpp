@@ -42,20 +42,24 @@ namespace engine {
 		jeu->selectedUnit->can_move = false;
 
 		// animation
-		while (not (object-> position == targetPos)) {
-			int px = object->position.getX();
-			int py = object->position.getY();
-			int dx = px < targetPos.getX()?1:-1;
-			int dy = py < targetPos.getY()?1:-1;
-			if (px != targetPos.getX()) {
-				object->move(state::Position(px+dx,py));
-			} else {
-				object->move(state::Position(px,py+dy));
+		if (jeu->simulation < 0) {
+			while (not (object-> position == targetPos)) {
+				int px = object->position.getX();
+				int py = object->position.getY();
+				int dx = px < targetPos.getX()?1:-1;
+				int dy = py < targetPos.getY()?1:-1;
+				if (px != targetPos.getX()) {
+					object->move(state::Position(px+dx,py));
+				} else {
+					object->move(state::Position(px,py+dy));
+				}
+				std::this_thread::sleep_for(std::chrono::milliseconds(100));
 			}
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		} else {
+			object->move(targetPos);
 		}
 
-		// Check if a flag has been sent to the unit's HQ
+		// On vérifie que l'unité se pose sur son QG et possède un drapeau
 		state::Batiment* bat = jeu->etatJeu->getBatiment(targetPos);
 		if (bat and bat->getId_b() == 0 and bat->getColor() == object->getColor()) {
 			engine->addCommand(new DropFlagCommand(object->position));

@@ -28,7 +28,7 @@ using namespace ai;
 
 mutex m1;
 
-void displayWindow(Layers* layers, UI* ui) {
+void displayWindow(Layers* layers, UI* ui, Jeu* jeu) {
 	sf::RenderWindow window(sf::VideoMode(640,740), "Advance Wars");
 		while(window.isOpen()) {
 			sf::Event event;
@@ -54,53 +54,47 @@ void displayWindow(Layers* layers, UI* ui) {
 					m1.unlock();
 				}
 			}
-			window.clear();
-			// update layers
-			layers->setUniteSurface ();
-			layers->setFlagSurface ();
-			layers->setMiscSurface ();
-			layers->displayLayers (&window);
-			// update UI
-			ui->setGeneralData();
-			ui->setUnitData();
-			ui->setBatimentData();
-			ui->displayUI(&window);
-
-			window.display();
+			//if (jeu->simulation == -1) {
+				window.clear();
+				// update layers
+				layers->setUniteSurface ();
+				layers->setFlagSurface ();
+				layers->setMiscSurface ();
+				layers->displayLayers (&window);
+				// update UI
+				ui->setGeneralData();
+				ui->setUnitData();
+				ui->setBatimentData();
+				ui->displayUI(&window);
+				window.display();
+			//}
 		}	
 }
 
 
 void runEngine(Engine* engine) {
-	bool reverse = false;
 	//cout<<engine->commands.size()<<endl;
 	while(1) {
-		if (engine->commands.size() == 0) {
-			reverse = false;
-		}
-		if (engine->jeu->tour == 16) {
-			if (!reverse) {
-				cout<<"Rollback !"<<endl;
-			}
-			reverse = true;
-		}
 		//if (engine->commands[0]) {
 			m1.lock();
-			if (reverse) {
-				this_thread::sleep_for(chrono::milliseconds(250));
-				engine->RollBack();
-			} else {
-				engine->update();
-			}
+			engine->update();
+			/*if (engine->jeu->simulation == -1) {
+				engine->Clear();
+			}*/
 			m1.unlock();
 		//}
 	}
 }
 
 
-void AIPlay(AI* ai) {
+void AIPlay(AI* ai, Jeu* jeu) {
+	this_thread::sleep_for(chrono::milliseconds(1000));
 	while(1) {
-		this_thread::sleep_for(chrono::milliseconds(250));
+		if (jeu->simulation == -1) {
+			this_thread::sleep_for(chrono::milliseconds(500));
+		} else {
+			this_thread::sleep_for(chrono::milliseconds(250));
+		}
 		m1.lock();
 		ai->run();
 		m1.unlock();
@@ -173,12 +167,12 @@ void AITest() {
     cout<<"Initializing the engine..."<<endl;
 
     // Creation d'un thread dedie a l'affichage
-    thread lyr(displayWindow, layers.get(), ui.get());
+    thread lyr(displayWindow, layers.get(), ui.get(), jeu.get());
     cout<<"Initializing the graphics..."<<endl;
 
     // Creation de deux threads dedies a l'IA
-    thread ia_th1(AIPlay, crazyAI.get());
-    thread ia_th2(AIPlay, geniusAI.get());
+    thread ia_th1(AIPlay, crazyAI.get(), jeu.get());
+    thread ia_th2(AIPlay, geniusAI.get(), jeu.get());
     cout<<"Initializing the AI..."<<endl;
 
     cout<<"Hit Ctrl-C to close the game."<<endl;

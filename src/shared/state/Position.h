@@ -19,6 +19,7 @@ namespace state {
     int getY () const;
     bool operator== (Position const& pos);
     int operator- (Position const& pos);
+    bool operator< (Position const& pos);
     ~Position ();
     // Setters and Getters
   };

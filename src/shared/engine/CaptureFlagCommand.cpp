@@ -17,6 +17,11 @@ namespace engine {
 		} else {
 			unite = jeu->etatJeu->getUnite(targetPos);
 		}
+		// On vérifie que l'unité ne tente pas de capturer son drapeau sur son QG
+		state::Batiment* bat = jeu->etatJeu->getBatiment(targetPos);
+		if (bat and bat->getId_b() == 0 and bat->getColor() == unite->getColor()) {
+			return;
+		}
 		state::Flag* flag = jeu->etatJeu->getFlag(targetPos);
 		if (flag and not(flag->is_owned)) {
 			// Check if it is your flag

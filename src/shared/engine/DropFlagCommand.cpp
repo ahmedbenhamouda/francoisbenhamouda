@@ -10,7 +10,7 @@ namespace engine {
 	}
 	void DropFlagCommand::execute(state::Jeu* jeu, Engine* engine) {
 		state::Unite* unite = jeu->etatJeu->getUnite(targetPos);
-		if (unite and unite->has_flag) {
+		if (unite and unite->has_flag) { // On vérifie quand-même que l'unité possède un drapeau
 			state::Flag* flag = unite->has_flag;
 			flag->position = unite->position;
 			flag->is_owned = false;

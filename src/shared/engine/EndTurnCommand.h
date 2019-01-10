@@ -2,7 +2,6 @@
 #ifndef ENGINE__ENDTURNCOMMAND__H
 #define ENGINE__ENDTURNCOMMAND__H
 
-#include <vector>
 
 namespace state {
   class Jeu;
@@ -21,7 +20,6 @@ namespace engine {
     // Attributes
   public:
     int id     = 8;
-    std::vector<std::vector<bool>> possible_moves;
     // Operations
   public:
     EndTurnCommand ();
