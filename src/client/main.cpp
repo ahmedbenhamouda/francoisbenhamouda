@@ -54,7 +54,7 @@ void displayWindow(Layers* layers, UI* ui, Jeu* jeu) {
 					m1.unlock();
 				}
 			}
-			//if (jeu->simulation == -1) {
+			if (jeu->simulation == -1) {
 				window.clear();
 				// update layers
 				layers->setUniteSurface ();
@@ -67,7 +67,7 @@ void displayWindow(Layers* layers, UI* ui, Jeu* jeu) {
 				ui->setBatimentData();
 				ui->displayUI(&window);
 				window.display();
-			//}
+			}
 		}	
 }
 
@@ -91,9 +91,9 @@ void AIPlay(AI* ai, Jeu* jeu) {
 	this_thread::sleep_for(chrono::milliseconds(1000));
 	while(1) {
 		if (jeu->simulation == -1) {
-			this_thread::sleep_for(chrono::milliseconds(500));
-		} else {
 			this_thread::sleep_for(chrono::milliseconds(250));
+		} else {
+			this_thread::sleep_for(chrono::milliseconds(125));
 		}
 		m1.lock();
 		ai->run();

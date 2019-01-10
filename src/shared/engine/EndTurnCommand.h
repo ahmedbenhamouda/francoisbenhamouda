@@ -2,6 +2,7 @@
 #ifndef ENGINE__ENDTURNCOMMAND__H
 #define ENGINE__ENDTURNCOMMAND__H
 
+#include <vector>
 
 namespace state {
   class Jeu;
@@ -20,6 +21,8 @@ namespace engine {
     // Attributes
   public:
     int id     = 8;
+    std::vector<state::Position> cannot_move_list;
+    std::vector<state::Position> cannot_attack_list;
     // Operations
   public:
     EndTurnCommand ();
