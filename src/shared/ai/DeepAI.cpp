@@ -206,8 +206,8 @@ namespace ai {
 		
 		if (liste_position_cmd.size() == 0) { // Use the minmax function for the first time
 			engine->Clear();
-			liste_position_cmd = std::vector<state::Position>(liste_commands.size());
-			liste_type_score = std::vector<std::vector<int>>(liste_commands.size());
+			liste_position_cmd = std::vector<state::Position>(liste_commands.size(), state::Position(0,0));
+			liste_type_score = std::vector<std::vector<int>>(liste_commands.size(), {-1, -1000});
 			std::cout<<"Simulation"<<std::endl;
 		}
 		
@@ -285,10 +285,10 @@ namespace ai {
 		if (engine->commands.size()>0) { // Vérifier qu'une commande n'a pas été passée car pas intéressante
 			liste_position_cmd[command_iter-1] = engine->commands[0]->getPos();
 			liste_type_score[command_iter-1] = {engine->commands[0]->getId(), jeu->joueurs[jeu->tour%nb_joueurs]->score};
-		} else {
+		}/* else {
 			liste_position_cmd[command_iter-1] = state::Position(0,0);
 			liste_type_score[command_iter-1] = {-1, -1000};
-		}
+		}*/
 		
 		// Rechercher le score max
 		if (jeu->joueurs[jeu->tour%nb_joueurs]->score > max_score) {
@@ -309,7 +309,9 @@ namespace ai {
 		
 		std::vector<int> list_aleatoire;
 		
-		for(size_t i=0; i<liste_commands.size(); i++){
+		//std::cout<<"Nombre de scores : "<<liste_type_score.size()<<std::endl;
+		for(size_t i=0; i<liste_type_score.size(); i++){
+			//std::cout<<"Liste type score "<<i<<" : "<<liste_type_score[i][1]<<std::endl;
 			if (liste_type_score[i][1] >= max_score){
 				list_aleatoire.push_back(i);
 			}
