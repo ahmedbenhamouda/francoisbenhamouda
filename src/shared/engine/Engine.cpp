@@ -35,10 +35,10 @@ namespace engine {
 	void Engine::RollBack() {
 		if (commands.size()>0) {
 			Command* cmd = commands[commands.size()-1];
+			commands.pop_back();
 			//std::cout<<"Rollback command "<<cmd<<" with id : "<<cmd->getId()<<std::endl;
 			cmd->Undo(jeu, this);
 			delete cmd;
-			commands.pop_back();
 		}
 	}
 	void Engine::Clear() {

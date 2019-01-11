@@ -110,11 +110,11 @@ void AITest() {
 
 
     // Creation d'objets Batiment
-    unique_ptr<Batiment> batiment1 (new Usine(Position(7, 4), 5));
+    unique_ptr<Batiment> batiment1 (new Usine(Position(5, 3), 5));
     unique_ptr<Batiment> batiment2 (new QG(Position(5, 5), 5));
 
-    unique_ptr<Batiment> batiment3 (new Usine(Position(12, 15), 4));
-    unique_ptr<Batiment> batiment4 (new QG(Position(14, 14), 4));
+    unique_ptr<Batiment> batiment3 (new Usine(Position(5, 10), 4));
+    unique_ptr<Batiment> batiment4 (new QG(Position(5, 8), 4));
 
     vector<Batiment*> batiments;
     batiments.push_back(batiment1.get());
@@ -126,7 +126,7 @@ void AITest() {
 
     // Creation d'objets Flag
     unique_ptr<Flag> flag1 (new Flag(Position(5,5),5));
-    unique_ptr<Flag> flag2 (new Flag(Position(14,14),4));
+    unique_ptr<Flag> flag2 (new Flag(Position(5,8),4));
 
     std::vector<Flag*> flags {flag1.get(), flag2.get()};
 

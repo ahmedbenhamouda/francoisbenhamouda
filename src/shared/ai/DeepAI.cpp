@@ -196,7 +196,7 @@ namespace ai {
 		int nb_joueurs = jeu->joueurs.size();
 		jeu->joueurs[jeu->tour%nb_joueurs]->score += 2;
 		if (not(jeu->etatJeu->getUnite(command->getPos()))){
-			jeu->joueurs[jeu->tour%nb_joueurs]->score += 2;
+			jeu->joueurs[jeu->tour%nb_joueurs]->score += 4;
 		}
 	}
 	void DeepAI::runMinMax() {
@@ -306,6 +306,11 @@ namespace ai {
 		}
 		//std::cout<<" -- Recherche du score max : fait"<<std::endl;
 		while(engine->commands.size() > 0) {
+			//std::cout<<" -- Nombre de commandes restantes : "<<engine->commands.size()<<std::endl;
+			//std::cout<<" --- Commande annulee  : "<<engine->commands[engine->commands.size()-1]<<std::endl;
+			//std::cout<<" --- ID de la commande annulee  : "<<engine->commands[engine->commands.size()-1]->getId()<<std::endl;
+			//state::Position pos = engine->commands[engine->commands.size()-1]->getPos();
+			//std::cout<<" --- Position  : x="<<pos.getX()<<", y="<<pos.getY()<<std::endl;
 			engine->RollBack();
 		}
 		//std::cout<<" -- Rollback des commandes suivantes : fait"<<std::endl;
