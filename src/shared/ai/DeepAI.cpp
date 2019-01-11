@@ -145,7 +145,7 @@ namespace ai {
 	}
 	
 	void DeepAI::scoreDeplacement(engine::Command* command) {
-		state::Position objectif;
+		state::Position objectif(-1,-1);
 		int nb_joueurs = jeu->joueurs.size();
 		
 		if (jeu->selectedUnit->has_flag) {
@@ -159,16 +159,20 @@ namespace ai {
 			// Le drapeau ennemi le plus proche est l'objectif
 			int shortest_distance = 10000;
 			for (state::Flag* flag : liste_flags_ennemie){
-				if  (not(flag->is_owned) and flag->position - jeu->selectedUnit->position < shortest_distance) {
-					shortest_distance = flag->position - jeu->selectedUnit->position;
-					objectif = flag->position;
+				if  (not(flag->is_owned)) {
+					if (objectif.getX() == -1 or (flag->position - jeu->selectedUnit->position < shortest_distance)) { // aucun objectif predefini ou objectif precedent est plus loin
+						shortest_distance = flag->position - jeu->selectedUnit->position;
+						objectif = flag->position;
+					}
 				}
 			}
 			// L'unité la plus proche qui possède un drapeau est l'objectif
 			for (state::Unite* unit : jeu->etatJeu->getUniteList()){
-				if  (unit->has_flag and (unit->position - jeu->selectedUnit->position > 1) and (unit->position - jeu->selectedUnit->position < shortest_distance)) {
-					shortest_distance = unit->position - jeu->selectedUnit->position;
-					objectif = unit->position;
+				if  (unit->has_flag) {
+					if (objectif.getX() == -1 or (unit->position - jeu->selectedUnit->position < shortest_distance)) {
+						shortest_distance = unit->position - jeu->selectedUnit->position;
+						objectif = unit->position;
+					}
 				}
 			}
 		}
@@ -218,7 +222,7 @@ namespace ai {
 			//std::cout<<"Peut attaquer : "<<jeu->selectedUnit->can_attack<<std::endl;
 		}
 		
-		std::cout<<" -- Etapes du minmax :"<<std::endl;
+		//std::cout<<" -- Etapes du minmax :"<<std::endl;
 		if (liste_commands[command_iter]->getId() == 3) { // Deplacement
 			scoreDeplacement(liste_commands[command_iter]);
 			// Si on atteint un score inferieur au score max, on abandonne le mouvement
@@ -251,7 +255,7 @@ namespace ai {
 			engine->addCommand(new engine::EndTurnCommand());
 		}
 		
-		std::cout<<" -- Fin du minmax"<<std::endl;
+		//std::cout<<" -- Fin du minmax"<<std::endl;
 		
 	}
 	
@@ -297,7 +301,7 @@ namespace ai {
 	
 	//lister les score de chaque mouvement
 	void DeepAI::ListeScore(){
-		std::cout<<" -- Etapes du rollback :"<<std::endl;
+		//std::cout<<" -- Etapes du rollback :"<<std::endl;
 		int nb_joueurs = jeu->joueurs.size();
 		if (engine->commands.size()>0) { // Vérifier qu'une commande n'a pas été passée car pas intéressante
 			liste_position_cmd[command_iter-1] = engine->commands[0]->getPos();
@@ -325,7 +329,7 @@ namespace ai {
 		//std::cout<<"Checkpoint 2"<<std::endl;
 		jeu->joueurs[jeu->tour%nb_joueurs]->score = 0;
 		jeu->simulation = -2; // etat intermediaire entre la fin d'exploration de deux etats
-		std::cout<<" -- Fin du rollback"<<std::endl;
+		//std::cout<<" -- Fin du rollback"<<std::endl;
 	}
 	
 	//choisir le meilleur score possible
@@ -347,10 +351,10 @@ namespace ai {
 		std::uniform_int_distribution<int> index(0,list_aleatoire.size()-1);
 		int id = list_aleatoire[index(randeng)];
 		
-		std::cout<<"ID de la commande selectionnee : "<<liste_type_score[id][0]<<std::endl;
-		std::cout<<"Score de la commande selectionnee : "<<liste_type_score[id][1]<<std::endl;
+		//std::cout<<"ID de la commande selectionnee : "<<liste_type_score[id][0]<<std::endl;
+		//std::cout<<"Score de la commande selectionnee : "<<liste_type_score[id][1]<<std::endl;
 		state::Position pos = liste_position_cmd[id];
-		std::cout<<"Position : x="<<pos.getX()<<", y="<<pos.getY()<<std::endl;
+		//std::cout<<"Position : x="<<pos.getX()<<", y="<<pos.getY()<<std::endl;
 		if (liste_type_score[id][0] == 3) { // deplacement
 			engine->addCommand(new engine::MoveUnitCommand(liste_position_cmd[id]));
 		} else if (liste_type_score[id][0] == 4) { // attaque

@@ -63,7 +63,7 @@ namespace engine {
 		state::Batiment* bat = jeu->etatJeu->getBatiment(targetPos);
 		if (bat and bat->getId_b() == 0 and bat->getColor() == object->getColor()) {
 			engine->addCommand(new DropFlagCommand(object->position));
-			engine->update(); 
+			engine->update();
 		} else {
 			// Try to see if there is any flag to capture
 			state::Flag* flag = jeu->etatJeu->getFlag(targetPos);

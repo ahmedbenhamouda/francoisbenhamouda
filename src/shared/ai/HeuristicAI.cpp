@@ -101,9 +101,11 @@ namespace ai {
 			liste_commands.push_back(new engine::CreateUnitCommand());
 		} else if (jeu->selectedUnit) {
 			// Check all possible movements
-			std::vector<state::Position> moves = jeu->selectedUnit->getLegalMove(jeu->etatJeu);
-			for (state::Position mv : moves) {
-				liste_commands.push_back(new engine::MoveUnitCommand(mv));
+			if (jeu->selectedUnit->can_move) {
+				std::vector<state::Position> moves = jeu->selectedUnit->getLegalMove(jeu->etatJeu);
+				for (state::Position mv : moves) {
+					if (not(mv == jeu->selectedUnit->position)) liste_commands.push_back(new engine::MoveUnitCommand(mv));
+				}
 			}
 			// Check if any attack is possible
 			if (jeu->selectedUnit->can_attack) {

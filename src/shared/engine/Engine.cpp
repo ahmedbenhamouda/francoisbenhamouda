@@ -20,7 +20,7 @@ namespace engine {
 			//std::cout<<" -- Update de l'engine"<<std::endl;
 			if (not(latest_command) or latest_command != commands[commands.size()-1]) {
 				latest_command = commands[commands.size()-1];
-				//std::cout<<" -- Execution d'une commande dont l'ID est : "<<latest_command->getId()<<std::endl;
+				//std::cout<<" -- Execution de la commande "<<latest_command<<" dont l'ID est : "<<latest_command->getId()<<std::endl;
 				latest_command->execute(jeu, this);
 				/*if (jeu->simulation == -1) {
 					std::cout<<"Command executed with id "<<commands[commands.size()-1]->getId()<<std::endl;
