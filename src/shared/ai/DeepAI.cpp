@@ -107,9 +107,11 @@ namespace ai {
 			liste_commands.push_back(new engine::CreateUnitCommand());
 		} else if (jeu->selectedUnit) {
 			// Check all possible movements
-			std::vector<state::Position> moves = jeu->selectedUnit->getLegalMove(jeu->etatJeu);
-			for (state::Position mv : moves) {
-				liste_commands.push_back(new engine::MoveUnitCommand(mv));
+			if (jeu->selectedUnit->can_move) {
+				std::vector<state::Position> moves = jeu->selectedUnit->getLegalMove(jeu->etatJeu);
+				for (state::Position mv : moves) {
+					if (not(mv == jeu->selectedUnit->position)) liste_commands.push_back(new engine::MoveUnitCommand(mv));
+				}
 			}
 			// Check if any attack is possible
 			if (jeu->selectedUnit->can_attack) {
@@ -193,11 +195,13 @@ namespace ai {
 	}
 	//Score de l'attaque
 	void DeepAI::scoreAttack(engine::Command* command) {
+		std::cout<<"Test score attack"<<std::endl;
 		int nb_joueurs = jeu->joueurs.size();
 		jeu->joueurs[jeu->tour%nb_joueurs]->score += 2;
 		if (not(jeu->etatJeu->getUnite(command->getPos()))){
 			jeu->joueurs[jeu->tour%nb_joueurs]->score += 4;
 		}
+		std::cout<<"Done score attack"<<std::endl;
 	}
 	void DeepAI::runMinMax() {
 		bool skip = false;			
@@ -206,12 +210,15 @@ namespace ai {
 		
 		if (liste_position_cmd.size() == 0) { // Use the minmax function for the first time
 			engine->Clear();
-			liste_position_cmd = std::vector<state::Position>(liste_commands.size(), state::Position(0,0));
+			liste_position_cmd = std::vector<state::Position>(liste_commands.size(), state::Position(-1,-1));
 			liste_type_score = std::vector<std::vector<int>>(liste_commands.size(), {-1, -1000});
-			std::cout<<"Nombre de commandes : "<<liste_type_score.size()<<std::endl;
+			//std::cout<<"Nombre de commandes : "<<liste_type_score.size()<<std::endl;
+			
+			//std::cout<<"Peut se deplacer : "<<jeu->selectedUnit->can_move<<std::endl;
+			//std::cout<<"Peut attaquer : "<<jeu->selectedUnit->can_attack<<std::endl;
 		}
 		
-		//std::cout<<" -- Etapes du minmax :"<<std::endl;
+		std::cout<<" -- Etapes du minmax :"<<std::endl;
 		if (liste_commands[command_iter]->getId() == 3) { // Deplacement
 			scoreDeplacement(liste_commands[command_iter]);
 			// Si on atteint un score inferieur au score max, on abandonne le mouvement
@@ -222,6 +229,7 @@ namespace ai {
 		
 		//std::cout<<" -- Calcul du deplacement fait"<<std::endl;
 		
+		//std::cout<<" -- Id de la commande : "<<liste_commands[command_iter]->getId()<<std::endl;
 		if (liste_commands[command_iter]->getId() != 8 and !skip) {
 			engine->addCommand(liste_commands[command_iter]);
 			liste_commands.erase(liste_commands.begin()+command_iter);
@@ -243,7 +251,7 @@ namespace ai {
 			engine->addCommand(new engine::EndTurnCommand());
 		}
 		
-		//std::cout<<" -- Fin du test"<<std::endl;
+		std::cout<<" -- Fin du minmax"<<std::endl;
 		
 	}
 	
@@ -289,7 +297,7 @@ namespace ai {
 	
 	//lister les score de chaque mouvement
 	void DeepAI::ListeScore(){
-		//std::cout<<" -- Etapes du rollback :"<<std::endl;
+		std::cout<<" -- Etapes du rollback :"<<std::endl;
 		int nb_joueurs = jeu->joueurs.size();
 		if (engine->commands.size()>0) { // Vérifier qu'une commande n'a pas été passée car pas intéressante
 			liste_position_cmd[command_iter-1] = engine->commands[0]->getPos();
@@ -317,7 +325,7 @@ namespace ai {
 		//std::cout<<"Checkpoint 2"<<std::endl;
 		jeu->joueurs[jeu->tour%nb_joueurs]->score = 0;
 		jeu->simulation = -2; // etat intermediaire entre la fin d'exploration de deux etats
-		//std::cout<<" -- Fin du rollback"<<std::endl;
+		std::cout<<" -- Fin du rollback"<<std::endl;
 	}
 	
 	//choisir le meilleur score possible
@@ -339,10 +347,13 @@ namespace ai {
 		std::uniform_int_distribution<int> index(0,list_aleatoire.size()-1);
 		int id = list_aleatoire[index(randeng)];
 		
+		std::cout<<"ID de la commande selectionnee : "<<liste_type_score[id][0]<<std::endl;
+		std::cout<<"Score de la commande selectionnee : "<<liste_type_score[id][1]<<std::endl;
+		state::Position pos = liste_position_cmd[id];
+		std::cout<<"Position : x="<<pos.getX()<<", y="<<pos.getY()<<std::endl;
 		if (liste_type_score[id][0] == 3) { // deplacement
 			engine->addCommand(new engine::MoveUnitCommand(liste_position_cmd[id]));
 		} else if (liste_type_score[id][0] == 4) { // attaque
-			std::cout<<"Time to attack."<<std::endl;
 			engine->addCommand(new engine::AttackUnitCommand(liste_position_cmd[id]));
 		}
 		
