@@ -182,11 +182,11 @@ namespace ai {
 			jeu->joueurs[jeu->tour%nb_joueurs]->score += 2;
 			for (size_t k=0;k<enemyNearby.size(); k++){
 				if (jeu->selectedUnit->getpuissance() >= jeu->etatJeu->getUnite(enemyNearby[k])->getvie()){
-					jeu->joueurs[jeu->tour%nb_joueurs]->score += 6;
+					jeu->joueurs[jeu->tour%nb_joueurs]->score += 8;
 					ET += 1;
 				}
 				if (ET>1){
-					jeu->joueurs[jeu->tour%nb_joueurs]->score -= 6*(ET-1);
+					jeu->joueurs[jeu->tour%nb_joueurs]->score -= 8*(ET-1);
 				}	
 			}
 		}

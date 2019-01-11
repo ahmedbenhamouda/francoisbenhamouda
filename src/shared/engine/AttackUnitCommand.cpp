@@ -63,11 +63,11 @@ namespace engine {
 				}
 				
 				if (life == 0) {
-					// Get additional points for attacking
+					// Get additional points for killing
 					if (jeu->selectedUnit->color == jeu->joueurs[jeu->simulation]->color) { // The simulating IA is attacking
-						jeu->joueurs[jeu->simulation]->score += 2;
+						jeu->joueurs[jeu->simulation]->score += 4;
 					} else { // The simulating IA is getting attacked
-						jeu->joueurs[jeu->simulation]->score -= 2;
+						jeu->joueurs[jeu->simulation]->score -= 4;
 					}
 					
 					engine->addCommand(new DropFlagCommand(targetPos));
