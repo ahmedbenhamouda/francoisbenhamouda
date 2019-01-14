@@ -17,22 +17,26 @@ namespace engine {
 		} else {
 			unite = jeu->etatJeu->getUnite(targetPos);
 		}
-		// On vérifie que l'unité ne tente pas de capturer son drapeau sur son QG
-		state::Batiment* bat = jeu->etatJeu->getBatiment(targetPos);
-		if (bat and bat->getId_b() == 0 and bat->getColor() == unite->getColor()) {
-			return;
-		}
-		state::Flag* flag = jeu->etatJeu->getFlag(targetPos);
-		if (flag and not(flag->is_owned)) {
-			// Check if it is your flag
-			if (flag->color == unite->getColor()) {
-				std::cout<<"Your flag has been retrieved."<<std::endl;
-			} else {
-				std::cout<<"The flag has been captured."<<std::endl;
+		
+		std::vector<state::Flag*> flag = jeu->etatJeu->getFlag(targetPos);
+		
+		if (flag.size() != 0){
+			for(size_t i=0; i<flag.size(); i++){
+				state::Batiment* bat = jeu->etatJeu->getBatiment(targetPos);
+				// On vérifie que l'unité ne tente pas de capturer son drapeau sur son QG
+				if (not(bat and bat->getId_b() == 0 and bat->getColor() == unite->getColor()) or (flag[i]->color != unite->getColor())) {
+					// Check if it is your flag
+					if (flag[i]->color == unite->getColor()) {
+						
+						std::cout<<"Your flag has been retrieved."<<std::endl;
+					} else {
+						std::cout<<"The flag has been captured."<<std::endl;
+					}
+					// Capture the flag
+					unite->has_flag = flag[i];
+					flag[i]->is_owned = true;
+				}
 			}
-			// Capture the flag
-			unite->has_flag = flag;
-			flag->is_owned = true;
 		}
 	}
 	CaptureFlagCommand::~CaptureFlagCommand() {

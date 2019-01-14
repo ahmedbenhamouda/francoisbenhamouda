@@ -23,7 +23,6 @@ namespace engine {
 	}
 	void MoveUnitCommand::execute(state::Jeu* jeu, Engine* engine) {
 		state::Unite* object = jeu->selectedUnit;
-		
 		if (object) {
 			this->objectPos = jeu->selectedUnit->position;
 			if (not(isLegalMove(jeu, object)) or jeu->etatJeu->getUnite(targetPos)) {
@@ -66,10 +65,14 @@ namespace engine {
 			engine->update();
 		} else {
 			// Try to see if there is any flag to capture
-			state::Flag* flag = jeu->etatJeu->getFlag(targetPos);
-			if (flag and not(flag->is_owned)) {
-				engine->addCommand(new CaptureFlagCommand());
-				engine->update(); 
+			std::vector<state::Flag*> flag = jeu->etatJeu->getFlag(targetPos);
+			if (flag.size() != 0){
+				for (size_t i=0; i<flag.size(); i++){
+					if (not(flag[i]->color == object->getColor())) {
+						engine->addCommand(new CaptureFlagCommand());
+						engine->update(); 
+					}
+				}
 			}
 		}
 
