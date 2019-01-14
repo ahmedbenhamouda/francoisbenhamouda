@@ -42,7 +42,7 @@ namespace state {
     Terrain ();
     Unite* getUnite (Position position);
     Batiment* getBatiment (Position position);
-    Flag* getFlag (Position position);
+    std::vector<Flag*> getFlag (Position position);
     TerrainTypeId getGround (Position position);
     void addUnite (Unite* unite);
     void deleteUnite (Position position);

@@ -29,13 +29,14 @@ namespace state {
 		}
 		return nullptr;
 	}
-	Flag* Terrain::getFlag(Position position) {
+	std::vector<Flag*> Terrain::getFlag(Position position) {
+		std::vector<Flag*> flag_list = std::vector<Flag*>();
 		for (Flag* flag : flags) {
-			if (flag->position == position) {
-				return flag;
+			if (flag->position == position and not(flag->is_owned)) {
+				 flag_list.push_back(flag);
 			}
 		}
-		return nullptr;
+		return flag_list;
 	}
 	TerrainTypeId Terrain::getGround(Position position) {
 		return sol.get(position);
