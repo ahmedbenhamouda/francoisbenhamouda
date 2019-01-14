@@ -175,6 +175,7 @@ namespace ai {
 					}
 				}
 			}
+			//std::cout<<"Objectif : x="<<objectif.getX()<<", y="<<objectif.getY()<<std::endl;
 		}
 		
 		// Maintenant, on calcule la distance entre l'objectif et la commande
@@ -196,6 +197,7 @@ namespace ai {
 				}	
 			}
 		}
+		//std::cout<<"- Deplacement : x="<<new_pos.getX()<<", y="<<new_pos.getY()<<", score="<<jeu->joueurs[jeu->tour%nb_joueurs]->score<<std::endl;
 	}
 	//Score de l'attaque
 	void DeepAI::scoreAttack(engine::Command* command) {

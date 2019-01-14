@@ -27,7 +27,7 @@ namespace state {
 	}
 	int Position::operator-(Position const& pos) {
 		int res;
-		res = std::abs((pos.getX()-this->getX()) + (pos.getY()-this->getY()));
+		res = std::abs(pos.getX()-this->getX()) + std::abs(pos.getY()-this->getY());
 		return (res);
 	}
 	bool Position::operator<(Position const& pos) {
