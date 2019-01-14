@@ -91,9 +91,9 @@ void AIPlay(AI* ai, Jeu* jeu) {
 	this_thread::sleep_for(chrono::milliseconds(1000));
 	while(1) {
 		if (jeu->simulation == -1) {
-			this_thread::sleep_for(chrono::milliseconds(250));
-		} else {
 			this_thread::sleep_for(chrono::milliseconds(100));
+		} else {
+			this_thread::sleep_for(chrono::milliseconds(50));
 		}
 		m1.lock();
 		ai->run();
@@ -113,8 +113,8 @@ void AITest() {
     unique_ptr<Batiment> batiment1 (new Usine(Position(5, 4), 5));
     unique_ptr<Batiment> batiment2 (new QG(Position(5, 5), 5));
 
-    unique_ptr<Batiment> batiment3 (new Usine(Position(8, 4 ), 4));
-    unique_ptr<Batiment> batiment4 (new QG(Position(8,5), 4));
+    unique_ptr<Batiment> batiment3 (new Usine(Position(14, 15), 4));
+    unique_ptr<Batiment> batiment4 (new QG(Position(14, 14), 4));
 
     vector<Batiment*> batiments;
     batiments.push_back(batiment1.get());
@@ -126,7 +126,7 @@ void AITest() {
 
     // Creation d'objets Flag
     unique_ptr<Flag> flag1 (new Flag(Position(5,5),5));
-    unique_ptr<Flag> flag2 (new Flag(Position(8,5),4));
+    unique_ptr<Flag> flag2 (new Flag(Position(14,14),4));
 
     std::vector<Flag*> flags {flag1.get(), flag2.get()};
 

@@ -68,10 +68,8 @@ namespace engine {
 			std::vector<state::Flag*> flag = jeu->etatJeu->getFlag(targetPos);
 			if (flag.size() != 0){
 				for (size_t i=0; i<flag.size(); i++){
-					if (not(flag[i]->color == object->getColor())) {
-						engine->addCommand(new CaptureFlagCommand());
-						engine->update(); 
-					}
+					engine->addCommand(new CaptureFlagCommand());
+					engine->update(); 
 				}
 			}
 		}
