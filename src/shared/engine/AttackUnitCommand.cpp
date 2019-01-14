@@ -42,6 +42,9 @@ namespace engine {
 					jeu->selectedUnit = nullptr;
 					return;
 				}
+				
+				jeu->selectedUnit->can_attack = false;
+				
 				// Get the position of the attacker
 				this->objectPos = jeu->selectedUnit->position;
 				
@@ -71,7 +74,6 @@ namespace engine {
 				}
 
 				// end action
-				jeu->selectedUnit->can_attack = false;
 				jeu->selectedUnit = nullptr;
 
 				// animation

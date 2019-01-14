@@ -15,8 +15,8 @@
 namespace ai {
 	DeepAI::DeepAI () {
 		randeng = std::mt19937(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-		liste_position_cmd = std::vector<state::Position>();
-		liste_type_score = std::vector<std::vector<int>>(); // [id_commande, score]
+		position_cmd = state::Position(-1,-1);
+		cmd_id = -1;
 	}
 	DeepAI::DeepAI (int color, engine::Engine* engine, state::Jeu* jeu) {
 		DeepAI();
@@ -212,10 +212,11 @@ namespace ai {
 		int nb_joueurs = jeu->joueurs.size();
 		jeu->simulation = jeu->tour%nb_joueurs;
 		
-		if (liste_position_cmd.size() == 0) { // Use the minmax function for the first time
+		if (max_score == -1000) { // Use the minmax function for the first time
 			engine->Clear();
-			liste_position_cmd = std::vector<state::Position>(liste_commands.size(), state::Position(-1,-1));
-			liste_type_score = std::vector<std::vector<int>>(liste_commands.size(), {-1, -1000});
+			position_cmd = state::Position(-1,-1);
+			cmd_id = -1;
+			max_score = 0;
 			//std::cout<<"Nombre de commandes : "<<liste_type_score.size()<<std::endl;
 			
 			//std::cout<<"Peut se deplacer : "<<jeu->selectedUnit->can_move<<std::endl;
@@ -268,7 +269,7 @@ namespace ai {
 			
 			if (jeu->simulation < 0) { // No one is simulating right now			
 				if (jeu->selectedUnit) {
-					if (liste_position_cmd.size()>0 and (size_t)command_iter >= liste_position_cmd.size()) { // Last level of the minmax tree
+					if (max_score>=0 and (size_t)command_iter >= liste_commands.size()) { // Last level of the minmax tree
 					
 						engine->Clear();
 						selectFinalCommand();
@@ -304,18 +305,15 @@ namespace ai {
 		//std::cout<<" -- Etapes du rollback :"<<std::endl;
 		int nb_joueurs = jeu->joueurs.size();
 		if (engine->commands.size()>0) { // Vérifier qu'une commande n'a pas été passée car pas intéressante
-			liste_position_cmd[command_iter-1] = engine->commands[0]->getPos();
-			liste_type_score[command_iter-1] = {engine->commands[0]->getId(), jeu->joueurs[jeu->tour%nb_joueurs]->score};
-		}/* else {
-			liste_position_cmd[command_iter-1] = state::Position(0,0);
-			liste_type_score[command_iter-1] = {-1, -1000};
-		}*/
-		//std::cout<<" -- Ajout du score de la commande testee : fait"<<std::endl;
-		
-		// Rechercher le score max
-		if (jeu->joueurs[jeu->tour%nb_joueurs]->score > max_score) {
-			max_score = jeu->joueurs[jeu->tour%nb_joueurs]->score;
+			if (jeu->joueurs[jeu->tour%nb_joueurs]->score > max_score) { 
+				max_score = jeu->joueurs[jeu->tour%nb_joueurs]->score;
+				position_cmd = engine->commands[0]->getPos();
+				cmd_id = engine->commands[0]->getId();
+			}
 		}
+		
+		//std::cout<<" -- Ajout du score de la commande testee : fait"<<std::endl;
+
 		//std::cout<<" -- Recherche du score max : fait"<<std::endl;
 		while(engine->commands.size() > 0) {
 			//std::cout<<" -- Nombre de commandes restantes : "<<engine->commands.size()<<std::endl;
@@ -337,36 +335,21 @@ namespace ai {
 		jeu->simulation = -1;
 		std::cout<<"select final command"<<std::endl;
 		
-		std::vector<int> list_aleatoire;
-		
-		//std::cout<<"Nombre de scores : "<<liste_type_score.size()<<std::endl;
-		for(size_t i=0; i<liste_type_score.size(); i++){
-			//std::cout<<"Liste type score "<<i<<" : "<<liste_type_score[i][1]<<std::endl;
-			if (liste_type_score[i][1] >= max_score){
-				list_aleatoire.push_back(i);
-			}
-		}
-		
-		// Selection aleatoire de la meilleure commande		
-		std::uniform_int_distribution<int> index(0,list_aleatoire.size()-1);
-		int id = list_aleatoire[index(randeng)];
-		
 		//std::cout<<"ID de la commande selectionnee : "<<liste_type_score[id][0]<<std::endl;
 		//std::cout<<"Score de la commande selectionnee : "<<liste_type_score[id][1]<<std::endl;
-		state::Position pos = liste_position_cmd[id];
 		//std::cout<<"Position : x="<<pos.getX()<<", y="<<pos.getY()<<std::endl;
-		if (liste_type_score[id][0] == 3) { // deplacement
-			engine->addCommand(new engine::MoveUnitCommand(liste_position_cmd[id]));
-		} else if (liste_type_score[id][0] == 4) { // attaque
-			engine->addCommand(new engine::AttackUnitCommand(liste_position_cmd[id]));
+		if (cmd_id == 3) { // deplacement
+			engine->addCommand(new engine::MoveUnitCommand(position_cmd));
+		} else if (cmd_id == 4) { // attaque
+			engine->addCommand(new engine::AttackUnitCommand(position_cmd));
 		}
 		
 		// Fin de la simulation
 		command_iter = 0;
 		//jeu->simulation = -1;
 		max_score = -1000;
-		liste_position_cmd = std::vector<state::Position>();
-		liste_type_score = std::vector<std::vector<int>>();
+		position_cmd = state::Position(-1,-1);
+		cmd_id = -1;
 	}
 	DeepAI::~DeepAI() {
 	}

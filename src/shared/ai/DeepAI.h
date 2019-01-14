@@ -35,8 +35,8 @@ namespace ai {
     std::vector<state::Unite*> liste_unites;
     std::vector<state::Batiment*> liste_batiments;
     std::vector<engine::Command*> liste_commands;
-    std::vector<state::Position> liste_position_cmd;
-    std::vector<std::vector<int>> liste_type_score;
+    state::Position position_cmd;
+    int cmd_id;
     std::vector<state::Flag*> liste_flags_ennemie;
     state::Flag* flag_allies;
     std::vector<state::Unite*> liste_ennemies;
