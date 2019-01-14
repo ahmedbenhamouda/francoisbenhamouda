@@ -17,7 +17,7 @@ namespace engine {
 		for (state::Unite* unite : jeu->etatJeu->getUniteList()) {
 			//save can_move for all units
 			if (!unite->can_move) cannot_move_list.push_back(unite->position);
-			if (!unite->can_attack) cannot_move_list.push_back(unite->position);
+			if (!unite->can_attack) cannot_attack_list.push_back(unite->position);
 			
 			// all units can move and attack
 			unite->can_move = true;

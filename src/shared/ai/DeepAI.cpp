@@ -221,8 +221,8 @@ namespace ai {
 			max_score = 0;
 			//std::cout<<"Nombre de commandes : "<<liste_type_score.size()<<std::endl;
 			
-			//std::cout<<"Peut se deplacer : "<<jeu->selectedUnit->can_move<<std::endl;
-			//std::cout<<"Peut attaquer : "<<jeu->selectedUnit->can_attack<<std::endl;
+			std::cout<<"Peut se deplacer : "<<jeu->selectedUnit->can_move<<std::endl;
+			std::cout<<"Peut attaquer : "<<jeu->selectedUnit->can_attack<<std::endl;
 		}
 		
 		//std::cout<<" -- Etapes du minmax :"<<std::endl;
