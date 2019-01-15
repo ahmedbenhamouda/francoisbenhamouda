@@ -104,17 +104,17 @@ void AIPlay(AI* ai, Jeu* jeu) {
 
 void AITest() {
     // Creation d'objets Joueur
-    unique_ptr<Joueur> joueur1(new Joueur(4,true));
-    unique_ptr<Joueur> joueur2(new Joueur(5,true));
+    unique_ptr<Joueur> joueur1(new Joueur(6,true));
+    unique_ptr<Joueur> joueur2(new Joueur(7,true));
     std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
 
 
     // Creation d'objets Batiment
-    unique_ptr<Batiment> batiment1 (new Usine(Position(5, 4), 5));
-    unique_ptr<Batiment> batiment2 (new QG(Position(5, 5), 5));
+    unique_ptr<Batiment> batiment1 (new Usine(Position(5, 4), 6));
+    unique_ptr<Batiment> batiment2 (new QG(Position(5, 5), 6));
 
-    unique_ptr<Batiment> batiment3 (new Usine(Position(14, 15), 4));
-    unique_ptr<Batiment> batiment4 (new QG(Position(14, 14), 4));
+    unique_ptr<Batiment> batiment3 (new Usine(Position(14, 15), 7));
+    unique_ptr<Batiment> batiment4 (new QG(Position(14, 14), 7));
 
     vector<Batiment*> batiments;
     batiments.push_back(batiment1.get());
@@ -125,8 +125,8 @@ void AITest() {
 
 
     // Creation d'objets Flag
-    unique_ptr<Flag> flag1 (new Flag(Position(5,5),5));
-    unique_ptr<Flag> flag2 (new Flag(Position(14,14),4));
+    unique_ptr<Flag> flag1 (new Flag(Position(5,5),6));
+    unique_ptr<Flag> flag2 (new Flag(Position(14,14),7));
 
     std::vector<Flag*> flags {flag1.get(), flag2.get()};
 
@@ -143,8 +143,8 @@ void AITest() {
     unique_ptr<Engine> engine(new Engine(jeu.get()));
 
     // Creation d'une IA
-    unique_ptr<DeepAI> crazyAI(new DeepAI(4,engine.get(),jeu.get()));
-    unique_ptr<DeepAI> geniusAI(new DeepAI(5,engine.get(),jeu.get()));
+    unique_ptr<DeepAI> crazyAI(new DeepAI(6,engine.get(),jeu.get()));
+    unique_ptr<DeepAI> geniusAI(new DeepAI(7,engine.get(),jeu.get()));
 
     // Creation d'objets Tileset
     render::Tileset<Unite> uniteTileset("res/units.png");
