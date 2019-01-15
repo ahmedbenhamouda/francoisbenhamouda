@@ -35,9 +35,11 @@ namespace client {
     // Operations
   public:
     Client ();
+    Client (state::Jeu* jeu);
     void engineUpdating ();
     void engineUpdated ();
     void run ();
+    ~Client ();
     // Setters and Getters
   };
 
