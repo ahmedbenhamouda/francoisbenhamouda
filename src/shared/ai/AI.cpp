@@ -6,4 +6,6 @@ namespace ai {
 	}
 	void AI::fillCommandList() {
 	}
+	AI::~AI() {
+	}
 }

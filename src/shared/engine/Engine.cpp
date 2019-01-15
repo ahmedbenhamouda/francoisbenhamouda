@@ -16,6 +16,7 @@ namespace engine {
 		}*/
 	}
 	void Engine::update() {
+		notifyUpdating();
 		if (commands.size()>0) {
 			//std::cout<<" -- Update de l'engine"<<std::endl;
 			if (not(latest_command) or latest_command != commands[commands.size()-1]) {
@@ -31,6 +32,7 @@ namespace engine {
 		} else {
 			latest_command = 0;
 		}
+		notifyUpdated();
 	}
 	void Engine::RollBack() {
 		if (commands.size()>0) {

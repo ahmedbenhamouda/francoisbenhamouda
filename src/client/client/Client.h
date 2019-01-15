@@ -12,10 +12,14 @@ namespace state {
 namespace ai {
   class HeuristicAI;
 };
+namespace engine {
+  class Engine_Observer;
+};
 namespace render {
   class Layers;
 }
 
+#include "engine/Engine_Observer.h"
 #include "render/Layers.h"
 #include "ai/HeuristicAI.h"
 #include "engine/Engine.h"
@@ -24,7 +28,7 @@ namespace render {
 namespace client {
 
   /// class Client - 
-  class Client {
+  class Client : public engine::Engine_Observer {
     // Associations
     // Attributes
   public:

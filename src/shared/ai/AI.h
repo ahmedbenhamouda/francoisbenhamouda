@@ -35,6 +35,7 @@ namespace ai {
     virtual void fillStateLists ();
     virtual void fillCommandList ();
     virtual void run () = 0;
+    virtual ~AI ();
     // Setters and Getters
   };
 

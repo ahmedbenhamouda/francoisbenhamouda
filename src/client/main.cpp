@@ -151,14 +151,14 @@ void clientTest() {
 
     /*// Creation d'une IA
     unique_ptr<DeepAI> crazyAI(new DeepAI(6,engine.get(),jeu.get()));
-    unique_ptr<DeepAI> geniusAI(new DeepAI(7,engine.get(),jeu.get()));
+    unique_ptr<DeepAI> geniusAI(new DeepAI(7,engine.get(),jeu.get()));*/
 
     // Creation d'objets Tileset
     render::Tileset<Unite> uniteTileset("res/units.png");
     render::Tileset<Batiment> batimentTileset("res/batiments.png");
     render::Tileset<Flag> flagTileset("res/flags.png");
     render::Tileset<TerrainTile> terrainTileset("res/terrain.png");
-    render::Tileset<MiscTile> miscTileset("res/misc.png");*/ 
+    render::Tileset<MiscTile> miscTileset("res/misc.png");
 
     // creation d'un objet Layers
     unique_ptr<Layers> layers(new Layers(jeu.get(), client->engine, &uniteTileset,  &batimentTileset, &flagTileset, &terrainTileset, &miscTileset));
@@ -170,7 +170,7 @@ void clientTest() {
     unique_ptr<UI> ui(new UI(jeu.get()));
     
     // Creation d'un thread dedie au client
-    thread cli(runClient, client.get());
+    thread cli(runClient, client.get(), jeu.get());
     cout<<"Initializing the client..."<<endl;
     
     // Creation d'un thread dedie a l'affichage
@@ -204,15 +204,15 @@ int main(int argc,char* argv[])
     //exemple.setX(53);
 
     if (argc < 2) {
-        cout << "Missing the \"deep_ai\" argument." << endl;
+        cout << "Missing the \"record\" argument." << endl;
     } else if (argc > 2) {
         cout << "Too many arguments." << endl;
     } else {
         string myString(argv[1]);
-        if (myString != "deep_ai") {
+        if (myString != "record") {
             cout << "Invalid argument." << endl;
         } else {
-	    AITest();
+	    clientTest();
         }
     }
     return 0;

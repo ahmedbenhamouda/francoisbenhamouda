@@ -7,6 +7,7 @@ namespace client {
 	Client::Client(state::Jeu* jeu) {
 		this->jeu = jeu;
 		this->engine = new engine::Engine(jeu);
+		this->engine->registerObserver(this);
 		this->ai1 = new ai::HeuristicAI(jeu->joueurs[0]->color,engine,jeu);
 		this->ai2 = new ai::HeuristicAI(jeu->joueurs[2]->color,engine,jeu);
 	}
