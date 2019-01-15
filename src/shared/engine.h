@@ -2,6 +2,8 @@
 #ifndef __ENGINE__H
 #define __ENGINE__H
 
+#include "engine/Engine_Observer.h"
+#include "engine/Engine_Observable.h"
 #include "engine/Command.h"
 #include "engine/Engine.h"
 #include "engine/MoveUnitCommand.h"
