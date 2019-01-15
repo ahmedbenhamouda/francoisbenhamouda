@@ -9,15 +9,15 @@ namespace engine {
 namespace state {
   class Jeu;
 };
-namespace render {
-  class Layers;
-};
 namespace ai {
   class HeuristicAI;
+};
+namespace render {
+  class Layers;
 }
 
-#include "ai/HeuristicAI.h"
 #include "render/Layers.h"
+#include "ai/HeuristicAI.h"
 #include "engine/Engine.h"
 #include "state/Jeu.h"
 
@@ -30,13 +30,14 @@ namespace client {
   public:
     engine::Engine* engine;
     state::Jeu* jeu;
-    render::Layers* layers;
+    ai::HeuristicAI* ai1;
+    ai::HeuristicAI* ai2;
     // Operations
   public:
     Client ();
     void engineUpdating ();
     void engineUpdated ();
-    run ();
+    void run ();
     // Setters and Getters
   };
 
