@@ -87,7 +87,7 @@ void displayWindow(Layers* layers, UI* ui, Jeu* jeu) {
 void runClient(Client* client, Jeu* jeu) {
 	while(1) {
 		m1.lock();
-		this_thread::sleep_for(chrono::milliseconds(100));
+		this_thread::sleep_for(chrono::milliseconds(500));
 		client->run();
 		m1.unlock();
 	}

@@ -62,14 +62,15 @@ namespace engine {
 		state::Batiment* bat = jeu->etatJeu->getBatiment(targetPos);
 		if (bat and bat->getId_b() == 0 and bat->getColor() == object->getColor()) {
 			engine->addCommand(new DropFlagCommand(object->position));
-			engine->update();
+			//engine->update();
 		} else {
 			// Try to see if there is any flag to capture
 			std::vector<state::Flag*> flag = jeu->etatJeu->getFlag(targetPos);
 			if (flag.size() != 0){
 				for (size_t i=0; i<flag.size(); i++){
-					engine->addCommand(new CaptureFlagCommand());
-					engine->update(); 
+					std::cout<<"Preparing to capture the flag"<<std::endl;
+					engine->addCommand(new CaptureFlagCommand(targetPos));
+					//engine->update(); 
 				}
 			}
 		}

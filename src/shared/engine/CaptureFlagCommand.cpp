@@ -9,6 +9,7 @@ namespace engine {
 		this->targetPos = targetPos;
 	}
 	void CaptureFlagCommand::execute(state::Jeu* jeu, Engine* engine) {
+		//std::cout<<"Capture the flag !"<<std::endl;
 		state::Unite* unite;
 		if (jeu->selectedUnit) {
 			unite = jeu->selectedUnit;
