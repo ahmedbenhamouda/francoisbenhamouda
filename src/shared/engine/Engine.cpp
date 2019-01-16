@@ -13,17 +13,20 @@ namespace engine {
 	}
 	void Engine::addCommand (Command* command) {
 		record.append(command->toJson());
+		commands.push_back(command);
 		/*if (jeu->simulation == -1) {
 			std::cout<<"Command received with id : "<<command->getId()<<std::endl;
 		}*/
 	}
 	void Engine::update() {
-		if (commands.size()>0) notifyUpdating();
+		
+		if (commands.size()==0) notifyUpdating();
 		size_t index = 0;
+		
 		while (index < commands.size()) {
 			commands[index]->execute(jeu, this);
 			index++;
-			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			//std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		}
 		notifyUpdated();
 	}

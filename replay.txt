@@ -1,0 +1,382 @@
+[
+   {
+      " Position_X " : 5,
+      " Position_Y " : 4,
+      " Type " : 5
+   },
+   {
+      " Type " : 9,
+      " Unite " : 4
+   },
+   {
+      " Position_X " : 0,
+      " Position_Y " : 0,
+      " Type " : 0
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 4,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 6,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 4,
+      " Type " : 5
+   },
+   {
+      " Type " : 9,
+      " Unite " : 2
+   },
+   {
+      " Position_X " : 0,
+      " Position_Y " : 0,
+      " Type " : 0
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 4,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 4,
+      " Position_Y " : 7,
+      " Type " : 3
+   },
+   {
+      " Type " : 8
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 15,
+      " Type " : 5
+   },
+   {
+      " Type " : 9,
+      " Unite " : 4
+   },
+   {
+      " Position_X " : 0,
+      " Position_Y " : 0,
+      " Type " : 0
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 15,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 13,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 15,
+      " Type " : 5
+   },
+   {
+      " Type " : 9,
+      " Unite " : 2
+   },
+   {
+      " Position_X " : 0,
+      " Position_Y " : 0,
+      " Type " : 0
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 15,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 11,
+      " Position_Y " : 16,
+      " Type " : 3
+   },
+   {
+      " Type " : 8
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 6,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 8,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 4,
+      " Type " : 5
+   },
+   {
+      " Position_X " : 0,
+      " Position_Y " : 0,
+      " Type " : 0
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 4,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 8,
+      " Position_Y " : 4,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 4,
+      " Position_Y " : 7,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 8,
+      " Position_Y " : 7,
+      " Type " : 3
+   },
+   {
+      " Type " : 8
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 13,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 12,
+      " Position_Y " : 13,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 15,
+      " Type " : 5
+   },
+   {
+      " Position_X " : 0,
+      " Position_Y " : 0,
+      " Type " : 0
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 15,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 12,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 11,
+      " Position_Y " : 16,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 11,
+      " Position_Y " : 12,
+      " Type " : 3
+   },
+   {
+      " Type " : 8
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 8,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 10,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 8,
+      " Position_Y " : 4,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 11,
+      " Position_Y " : 4,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 8,
+      " Position_Y " : 7,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 11,
+      " Position_Y " : 8,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 4,
+      " Type " : 5
+   },
+   {
+      " Position_X " : 0,
+      " Position_Y " : 0,
+      " Type " : 0
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 4,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 6,
+      " Position_Y " : 6,
+      " Type " : 3
+   },
+   {
+      " Type " : 8
+   },
+   {
+      " Position_X " : 12,
+      " Position_Y " : 13,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 10,
+      " Position_Y " : 13,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 12,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 9,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 11,
+      " Position_Y " : 12,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 7,
+      " Position_Y " : 12,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 15,
+      " Type " : 5
+   },
+   {
+      " Position_X " : 0,
+      " Position_Y " : 0,
+      " Type " : 0
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 15,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 12,
+      " Position_Y " : 14,
+      " Type " : 3
+   },
+   {
+      " Type " : 8
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 10,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 5,
+      " Position_Y " : 12,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 11,
+      " Position_Y " : 8,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 13,
+      " Position_Y " : 10,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 6,
+      " Position_Y " : 6,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 9,
+      " Position_Y " : 6,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 11,
+      " Position_Y " : 4,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 4,
+      " Type " : 3
+   },
+   {
+      " Type " : 8
+   },
+   {
+      " Position_X " : 10,
+      " Position_Y " : 13,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 8,
+      " Position_Y " : 13,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 7,
+      " Position_Y " : 12,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 6,
+      " Position_Y " : 9,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 12,
+      " Position_Y " : 14,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 12,
+      " Position_Y " : 11,
+      " Type " : 3
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 9,
+      " Type " : 2
+   },
+   {
+      " Position_X " : 14,
+      " Position_Y " : 6,
+      " Type " : 3
+   },
+   {
+      " Type " : 8
+   }
+]

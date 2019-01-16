@@ -1,5 +1,5 @@
 #include "Client.h"
-
+#include <iostream>
 
 namespace client {
 	Client::Client() {
