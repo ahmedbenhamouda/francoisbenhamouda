@@ -38,4 +38,8 @@ namespace engine {
 		}
 		commands = std::vector<Command*>();
 	}
+	void Engine::saveCommand () {
+	}
+	void Engine::loadCommand () {
+	}
 }

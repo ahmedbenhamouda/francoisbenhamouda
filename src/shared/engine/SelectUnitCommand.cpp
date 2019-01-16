@@ -29,4 +29,11 @@ namespace engine {
 	int SelectUnitCommand::getId() {
 		return this->id;
 	}
+	Json::Value SelectUnitCommand::toJson(){
+		Json::Value cmd;
+		cmd[" Type "]=this->getId();
+		cmd[" Position_X "]=this->objectPos.getX();
+		cmd[" Position_Y "]=this->objectPos.getY();
+		return cmd;
+	}
 }

@@ -22,4 +22,10 @@ namespace engine {
 	int SelectUnitTypeCommand::getId() {
 		return this->id;
 	}
+	Json::Value SelectUnitTypeCommand::toJson(){
+		Json::Value cmd;
+		cmd[" Type "]=this->getId();
+		cmd[" Unite "]=this->unit_id;
+		return cmd;
+	}
 }

@@ -46,4 +46,11 @@ namespace engine {
 		DeleteUnitCommand(objectPos).execute(jeu, engine);
 		jeu->joueurs[jeu->tour%nb_joueurs]->monnaie.gainTour(price);
 	}
+	Json::Value CreateUnitCommand::toJson(){
+		Json::Value cmd;
+		cmd[" Type "]=this->getId();
+		cmd[" Position_X "]=this->objectPos.getX();
+		cmd[" Position_Y "]=this->objectPos.getY();
+		return cmd;
+	}
 }

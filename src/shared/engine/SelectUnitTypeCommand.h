@@ -2,6 +2,7 @@
 #ifndef ENGINE__SELECTUNITTYPECOMMAND__H
 #define ENGINE__SELECTUNITTYPECOMMAND__H
 
+#include <json/json.h>
 
 namespace state {
   class Jeu;
@@ -30,6 +31,7 @@ namespace engine {
     int getId ();
     ~SelectUnitTypeCommand ();
     void Undo (state::Jeu* jeu, Engine* engine);
+    Json::Value toJson ();
     // Setters and Getters
   };
 

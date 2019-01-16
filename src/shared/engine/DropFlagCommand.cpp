@@ -29,4 +29,11 @@ namespace engine {
 	void DropFlagCommand::Undo(state::Jeu* jeu, Engine* engine){
 		CaptureFlagCommand(targetPos).execute(jeu, engine);
 	}
+	Json::Value DropFlagCommand::toJson(){
+		Json::Value cmd;
+		cmd[" Type "]=this->getId();
+		cmd[" Position_X "]=this->targetPos.getX();
+		cmd[" Position_Y "]=this->targetPos.getY();
+		return cmd;
+	}
 }
