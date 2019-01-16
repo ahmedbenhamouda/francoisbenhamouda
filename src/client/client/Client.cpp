@@ -25,6 +25,9 @@ namespace client {
 	void Client::save() {
 		engine->saveCommand();
 	}
+	void Client::load() {
+		engine->loadCommand();
+	}
 	Client::~Client() {
 		delete ai1;
 		delete ai2;

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <thread>
 #include <chrono>
+#include <string>
 
 namespace engine {
 	Engine::Engine(state::Jeu* jeu) {
@@ -26,7 +27,7 @@ namespace engine {
 		while (index < commands.size()) {
 			commands[index]->execute(jeu, this);
 			index++;
-			//std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		}
 		notifyUpdated();
 	}
@@ -53,5 +54,30 @@ namespace engine {
 			std::cerr<<"Pas de fichier \"replay.txt\""<<std::endl;
 		}
 		//record["commands"] = Json::Value::Array(json_commands);
+	}
+	void Engine::loadCommand() {
+		std::ifstream fichier("replay.txt", std::ios::in);
+		if (fichier) {
+			std::string json_str;
+			fichier>>json_str;
+			record = Json::Value(json_str);
+		} else {
+			std::cerr<<"Pas de fichier \"replay.txt\""<<std::endl;
+		}
+		for (Json::Value cmd : record) {
+			if (cmd[" Type "] == 8) commands.push_back(new EndTurnCommand());
+			else if (cmd[" Type "] == 9) commands.push_back(new SelectUnitTypeCommand((int)cmd[" Unite "]));
+			else {
+				state::Position pos((int)cmd[" Position_X "],(int)cmd[" Position_X "]);
+				if (cmd[" Type "] == 0) commands.push_back(new CreateUnitCommand(pos));
+				if (cmd[" Type "] == 1) commands.push_back(new DeleteUnitCommand(pos));
+				if (cmd[" Type "] == 2) commands.push_back(new SelectUnitCommand(pos));
+				if (cmd[" Type "] == 3) commands.push_back(new MoveUnitCommand(pos));
+				if (cmd[" Type "] == 4) commands.push_back(new AttackUnitCommand(pos));
+				if (cmd[" Type "] == 5) commands.push_back(new SelectBatimentCommand(pos));
+				if (cmd[" Type "] == 6) commands.push_back(new CaptureFlagCommand(pos));
+				if (cmd[" Type "] == 7) commands.push_back(new DropFlagCommand(pos));
+			}
+		}
 	}
 }
