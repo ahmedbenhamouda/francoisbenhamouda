@@ -22,7 +22,9 @@ namespace client {
 	void Client::run(){
 		engine->update();
 	}
-	
+	void Client::save() {
+		engine->saveCommand();
+	}
 	Client::~Client() {
 		delete ai1;
 		delete ai2;

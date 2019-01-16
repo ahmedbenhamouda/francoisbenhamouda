@@ -25,6 +25,7 @@ using namespace render;
 using namespace client;
 
 mutex m1;
+bool record;
 
 void displayWindow(Layers* layers, UI* ui, Jeu* jeu) {
 	sf::RenderWindow window(sf::VideoMode(640,740), "Advance Wars");
@@ -85,11 +86,14 @@ void displayWindow(Layers* layers, UI* ui, Jeu* jeu) {
 }*/
 
 void runClient(Client* client, Jeu* jeu) {
-	while(1) {
-		m1.lock();
-		this_thread::sleep_for(chrono::milliseconds(500));
-		client->run();
-		m1.unlock();
+	cout<<"Record : "<<record<<std::endl;
+	if (record) {
+		while(jeu->tour<8) {
+			m1.lock();
+			client->run();
+			m1.unlock();
+		}
+		client->save();
 	}
 }
 
@@ -212,6 +216,7 @@ int main(int argc,char* argv[])
         if (myString != "record") {
             cout << "Invalid argument." << endl;
         } else {
+            record = true;
 	    clientTest();
         }
     }

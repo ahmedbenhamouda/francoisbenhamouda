@@ -54,6 +54,11 @@ namespace engine {
 			target->has_flag = flag;
 		}*/
 	}
-	Json::Value DeleteUnitCommand::toJson() {
+	Json::Value DeleteUnitCommand::toJson(){
+		Json::Value cmd;
+		cmd[" Type "]=this->getId();
+		cmd[" Position_X "]=this->objectPos.getX();
+		cmd[" Position_Y "]=this->objectPos.getY();
+		return cmd;
 	}
 }

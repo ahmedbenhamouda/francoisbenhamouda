@@ -2,10 +2,11 @@
 #include "Command.h"
 #include <iostream>
 #include <fstream>
+#include <thread>
+#include <chrono>
 
 namespace engine {
 	Engine::Engine(state::Jeu* jeu) {
-		std::vector<Json::Value> json_commands;
 		this->jeu = jeu;
 	}
 	Engine::~Engine() {
@@ -17,11 +18,12 @@ namespace engine {
 		}*/
 	}
 	void Engine::update() {
-		notifyUpdating();
+		if (commands.size()>0) notifyUpdating();
 		size_t index = 0;
 		while (index < commands.size()) {
 			commands[index]->execute(jeu, this);
 			index++;
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		}
 		notifyUpdated();
 	}
@@ -42,6 +44,7 @@ namespace engine {
 	void Engine::saveCommand() {
 		std::ofstream fichier("replay.txt", std::ios::out|std::ios::out);
 		if (fichier) {
+			fichier<<record.toStyledString();
 			fichier.close();
 		} else {
 			std::cerr<<"Pas de fichier \"replay.txt\""<<std::endl;

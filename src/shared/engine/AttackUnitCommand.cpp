@@ -13,6 +13,7 @@
 #include "state/Tank.h"
 #include "state/HTank.h"
 
+
 namespace engine {
 	AttackUnitCommand::AttackUnitCommand (state::Position targetPos) {
 		this->targetPos = targetPos;
@@ -110,6 +111,11 @@ namespace engine {
 	int AttackUnitCommand::getId() {
 		return this->id;
 	}
-	Json::Value AttackUnitCommand::toJson() {
+	Json::Value AttackUnitCommand::toJson(){
+		Json::Value cmd;
+		cmd[" Type "]=this->getId();
+		cmd[" Position_X "]=this->targetPos.getX();
+		cmd[" Position_Y "]=this->targetPos.getY();
+		return cmd;
 	}
 }

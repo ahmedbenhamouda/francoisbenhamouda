@@ -100,6 +100,11 @@ namespace engine {
 	int MoveUnitCommand::getId() {
 		return this->id;
 	}
-	Json::Value MoveUnitCommand::toJson() {
+	Json::Value MoveUnitCommand::toJson(){
+		Json::Value cmd;
+		cmd[" Type "]=this->getId();
+		cmd[" Position_X "]=this->targetPos.getX();
+		cmd[" Position_Y "]=this->targetPos.getY();
+		return cmd;
 	}
 }

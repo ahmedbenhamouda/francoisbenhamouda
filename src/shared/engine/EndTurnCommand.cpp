@@ -70,6 +70,9 @@ namespace engine {
 	int EndTurnCommand::getId() {
 		return this->id;
 	}
-	Json::Value EndTurnCommand::toJson() {
+	Json::Value EndTurnCommand::toJson(){
+		Json::Value cmd;
+		cmd[" Type "]=this->getId();
+		return cmd;
 	}
 }
