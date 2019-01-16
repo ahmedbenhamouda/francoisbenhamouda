@@ -29,4 +29,6 @@ namespace engine {
 	int SelectUnitCommand::getId() {
 		return this->id;
 	}
+	Json::Value SelectUnitCommand::toJson() {
+	}
 }

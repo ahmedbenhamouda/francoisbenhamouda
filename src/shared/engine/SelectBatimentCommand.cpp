@@ -31,4 +31,6 @@ namespace engine {
 	void SelectBatimentCommand::Undo(state::Jeu* jeu, Engine* engine){
 		jeu->selectedBatiment = nullptr;
 	}
+	Json::Value SelectBatimentCommand::toJson() {
+	}
 }

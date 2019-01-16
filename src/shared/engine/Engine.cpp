@@ -1,16 +1,17 @@
 #include "Engine.h"
 #include "Command.h"
 #include <iostream>
+#include <fstream>
 
 namespace engine {
 	Engine::Engine(state::Jeu* jeu) {
-		commands = std::vector<Command*>();
+		std::vector<Json::Value> json_commands;
 		this->jeu = jeu;
 	}
 	Engine::~Engine() {
 	}
 	void Engine::addCommand (Command* command) {
-		commands.push_back(command);
+		record.append(command->toJson());
 		/*if (jeu->simulation == -1) {
 			std::cout<<"Command received with id : "<<command->getId()<<std::endl;
 		}*/
@@ -37,5 +38,14 @@ namespace engine {
 			delete cmd;
 		}
 		commands = std::vector<Command*>();
+	}
+	void Engine::saveCommand() {
+		std::ofstream fichier("replay.txt", std::ios::out|std::ios::out);
+		if (fichier) {
+			fichier.close();
+		} else {
+			std::cerr<<"Pas de fichier \"replay.txt\""<<std::endl;
+		}
+		//record["commands"] = Json::Value::Array(json_commands);
 	}
 }

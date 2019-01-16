@@ -100,4 +100,6 @@ namespace engine {
 	int MoveUnitCommand::getId() {
 		return this->id;
 	}
+	Json::Value MoveUnitCommand::toJson() {
+	}
 }

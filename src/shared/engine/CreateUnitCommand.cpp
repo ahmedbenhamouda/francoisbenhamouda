@@ -46,4 +46,6 @@ namespace engine {
 		DeleteUnitCommand(objectPos).execute(jeu, engine);
 		jeu->joueurs[jeu->tour%nb_joueurs]->monnaie.gainTour(price);
 	}
+	Json::Value CreateUnitCommand::toJson() {
+	}
 }

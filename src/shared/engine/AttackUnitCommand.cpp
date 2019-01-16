@@ -110,4 +110,6 @@ namespace engine {
 	int AttackUnitCommand::getId() {
 		return this->id;
 	}
+	Json::Value AttackUnitCommand::toJson() {
+	}
 }

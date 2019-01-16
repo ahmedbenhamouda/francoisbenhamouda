@@ -2,6 +2,7 @@
 #ifndef ENGINE__COMMAND__H
 #define ENGINE__COMMAND__H
 
+#include <json/json.h>
 
 namespace state {
   class Jeu;
@@ -27,6 +28,7 @@ namespace engine {
     virtual void Undo (state::Jeu* jeu, Engine* engine) = 0;
     virtual state::Position getPos () = 0;
     virtual int getId () = 0;
+    virtual Json::Value toJson () = 0;
     // Setters and Getters
   };
 

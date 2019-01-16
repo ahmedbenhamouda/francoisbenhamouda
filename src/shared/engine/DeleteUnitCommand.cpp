@@ -54,4 +54,6 @@ namespace engine {
 			target->has_flag = flag;
 		}*/
 	}
+	Json::Value DeleteUnitCommand::toJson() {
+	}
 }
