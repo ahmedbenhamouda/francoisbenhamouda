@@ -3,6 +3,7 @@
 #define ENGINE__ENGINE__H
 
 #include <vector>
+#include <json/json.h>
 
 namespace state {
   class Jeu;
@@ -25,6 +26,7 @@ namespace engine {
     state::Jeu* jeu;
     std::vector<Command*> commands;
     Command* latest_command;
+    Json::Value record;
     // Operations
   public:
     Engine ();
@@ -34,6 +36,8 @@ namespace engine {
     void update ();
     void Clear ();
     void RollBack ();
+    void saveCommand ();
+    void loadCommand ();
     // Setters and Getters
   };
 

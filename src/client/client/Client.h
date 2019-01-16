@@ -44,6 +44,8 @@ namespace client {
     void engineUpdated ();
     void run ();
     ~Client ();
+    void save ();
+    void load ();
     // Setters and Getters
   };
 
