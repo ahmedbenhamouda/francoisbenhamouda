@@ -86,14 +86,26 @@ void displayWindow(Layers* layers, UI* ui, Jeu* jeu) {
 }*/
 
 void runClient(Client* client, Jeu* jeu) {
-	cout<<"Record : "<<record<<std::endl;
 	if (record) {
+		cout<<"Recording :"<<std::endl;
 		while(jeu->tour<8) {
 			m1.lock();
 			client->run();
 			m1.unlock();
 		}
 		client->save();
+		cout<<"Done."<<std::endl;
+	} else {
+		cout<<"Replaying :"<<std::endl;
+		client->load();
+		if (client->engine->commands.size()>0) {
+			this_thread::sleep_for(chrono::milliseconds(2000));
+			cout<<"Nombre de commandes : "<<client->engine->commands.size()<<endl;
+			client->run();
+			cout<<"Done."<<std::endl;
+		} else {
+			cout<<"Nothing was recorded."<<std::endl;
+		}
 	}
 }
 
@@ -208,16 +220,19 @@ int main(int argc,char* argv[])
     //exemple.setX(53);
 
     if (argc < 2) {
-        cout << "Missing the \"record\" argument." << endl;
+        cout << "Missing either the \"record\" or the \"play\" argument." << endl;
     } else if (argc > 2) {
         cout << "Too many arguments." << endl;
     } else {
         string myString(argv[1]);
-        if (myString != "record") {
-            cout << "Invalid argument." << endl;
-        } else {
+        if (myString == "record") {
             record = true;
 	    clientTest();
+	} else  if (myString == "play") {
+	    record = false;
+	    clientTest();
+        } else {
+            cout << "Invalid argument." << endl;
         }
     }
     return 0;

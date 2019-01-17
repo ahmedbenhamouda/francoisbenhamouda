@@ -9,8 +9,6 @@
       " Unite " : 4
    },
    {
-      " Position_X " : 0,
-      " Position_Y " : 0,
       " Type " : 0
    },
    {
@@ -33,8 +31,6 @@
       " Unite " : 2
    },
    {
-      " Position_X " : 0,
-      " Position_Y " : 0,
       " Type " : 0
    },
    {
@@ -60,8 +56,6 @@
       " Unite " : 4
    },
    {
-      " Position_X " : 0,
-      " Position_Y " : 0,
       " Type " : 0
    },
    {
@@ -84,8 +78,6 @@
       " Unite " : 2
    },
    {
-      " Position_X " : 0,
-      " Position_Y " : 0,
       " Type " : 0
    },
    {
@@ -117,8 +109,6 @@
       " Type " : 5
    },
    {
-      " Position_X " : 0,
-      " Position_Y " : 0,
       " Type " : 0
    },
    {
@@ -160,8 +150,6 @@
       " Type " : 5
    },
    {
-      " Position_X " : 0,
-      " Position_Y " : 0,
       " Type " : 0
    },
    {
@@ -223,8 +211,6 @@
       " Type " : 5
    },
    {
-      " Position_X " : 0,
-      " Position_Y " : 0,
       " Type " : 0
    },
    {
@@ -276,8 +262,6 @@
       " Type " : 5
    },
    {
-      " Position_X " : 0,
-      " Position_Y " : 0,
       " Type " : 0
    },
    {
