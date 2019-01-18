@@ -8,7 +8,7 @@ namespace client {
 		this->jeu = jeu;
 		this->engine = new engine::Engine(jeu);
 		this->engine->registerObserver(this);
-		this->ai1 = new ai::HeuristicAI(jeu->joueurs[0]->color,engine,jeu);
+		//this->ai1 = new ai::HeuristicAI(jeu->joueurs[0]->color,engine,jeu);
 		this->ai2 = new ai::HeuristicAI(jeu->joueurs[1]->color,engine,jeu);
 	}
 	
@@ -29,7 +29,7 @@ namespace client {
 		engine->loadCommand();
 	}
 	Client::~Client() {
-		delete ai1;
+		//delete ai1;
 		delete ai2;
 		delete engine;
 	}

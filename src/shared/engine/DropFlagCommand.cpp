@@ -16,6 +16,11 @@ namespace engine {
 			flag->is_owned = false;
 			unite->has_flag = nullptr;
 			std::cout<<"The flag has been dropped."<<std::endl;
+			state::Batiment* bat = jeu->etatJeu->getBatiment(targetPos);
+			if (bat and bat->color != flag->color) {
+				jeu->fin = true;
+				std::cout<<"End of game !"<<std::endl;
+			}
 		}
 	}
 	DropFlagCommand::~DropFlagCommand() {

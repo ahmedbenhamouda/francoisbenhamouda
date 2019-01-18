@@ -35,22 +35,24 @@ void displayWindow(Layers* layers, UI* ui, Jeu* jeu) {
 				if(event.type == sf::Event::Closed) {
 					window.close();
 				}
-				if(event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
-					int px = event.mouseButton.x/32;
-					int py = event.mouseButton.y/32;
-					//cout<<"("<<px<<","<<py<<")"<<endl;
-					m1.lock();
-					if (py<20) {
-						layers->sendUnitCommand (Position(px,py));
-					} else {
-						layers->sendUICommand (px,py);
+				if (record) {
+					if(event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left) {
+						int px = event.mouseButton.x/32;
+						int py = event.mouseButton.y/32;
+						//cout<<"("<<px<<","<<py<<")"<<endl;
+						m1.lock();
+						if (py<20) {
+							layers->sendUnitCommand (Position(px,py));
+						} else {
+							layers->sendUICommand (px,py);
+						}
+						m1.unlock();
 					}
-					m1.unlock();
-				}
-				if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Escape) {
-					m1.lock();
-					layers->sendTurnCommand();
-					m1.unlock();
+					if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Escape) {
+						m1.lock();
+						layers->sendTurnCommand();
+						m1.unlock();
+					}
 				}
 			}
 			if (jeu->simulation == -1) {
@@ -88,7 +90,7 @@ void displayWindow(Layers* layers, UI* ui, Jeu* jeu) {
 void runClient(Client* client, Jeu* jeu) {
 	if (record) {
 		cout<<"Recording :"<<std::endl;
-		while(jeu->tour<8) {
+		while(!jeu->fin) {
 			m1.lock();
 			client->run();
 			m1.unlock();
@@ -127,7 +129,7 @@ void runClient(Client* client, Jeu* jeu) {
 
 void clientTest() {
     // Creation d'objets Joueur
-    unique_ptr<Joueur> joueur1(new Joueur(6,true));
+    unique_ptr<Joueur> joueur1(new Joueur(6,false));
     unique_ptr<Joueur> joueur2(new Joueur(7,true));
     std::vector<Joueur*> listeJoueurs {joueur1.get(), joueur2.get()};
 
